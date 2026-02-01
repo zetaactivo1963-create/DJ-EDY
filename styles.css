@@ -1,0 +1,19 @@
+/* Básico para que todo se vea bien incluso si Tailwind tarda en cargar */
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  background: #000;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
