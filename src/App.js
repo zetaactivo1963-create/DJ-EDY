@@ -114,7 +114,7 @@ const djSetups = [
     name: "Montaje Sencillo",
     media: "/montajeSencillo.jpg",
     features: [
-      "Pantalla TV 32"",
+      "Pantalla TV 32\"",
       "Karaoke / Just Dance",
       "1 micrófono inalámbrico",
       "DJ Booth iluminado",
@@ -128,7 +128,7 @@ const djSetups = [
     name: "Montaje Mediano",
     media: "/montajeMediano.jpg",
     features: [
-      "Pantalla gigante 100"",
+      "Pantalla gigante 100\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
@@ -144,7 +144,7 @@ const djSetups = [
     name: "Montaje Premium",
     media: "/montajePremium.jpg",
     features: [
-      "2 pantallas TV 55"",
+      "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
