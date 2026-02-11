@@ -4,7 +4,7 @@ import {
   Music2,
   Lightbulb,
   Sparkles,
-  Mic2,
+  Mic2, 
   Camera,
   Video,
   Headphones,
