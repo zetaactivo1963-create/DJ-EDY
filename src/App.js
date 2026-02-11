@@ -8,7 +8,7 @@ import {
   Camera,
   Video,
   Headphones,
-  Phone as PhoneIcon,
+  Phone as PhoneIcon, 
   Mail,
   Instagram,
   Facebook,
