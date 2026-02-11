@@ -333,7 +333,7 @@ function Navbar() {
               <img
                 src={PRIMARY_LOGO}
                 alt="DJ EDY"
-                className="h-10 md:h-12 w-auto"
+                className="h-14 md:h-20 w-auto"
                 onError={(e) => {
                   e.currentTarget.src = FALLBACK_LOGO;
                 }}
