@@ -701,163 +701,206 @@ function BestSellers() {
     <Section id="bestsellers" className="bg-black">
       {/* Cards grandes: Paquetes vs Montajes */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* PAQUETES - Card grande */}
+        {/* PAQUETES - Card grande con foto */}
         <motion.a
           href="#paquetes"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-fuchsia-500 to-purple-600 p-8 md:p-12 min-h-[400px] flex flex-col justify-between hover:scale-[1.02] transition-transform"
+          className="group relative overflow-hidden rounded-3xl min-h-[500px] hover:scale-[1.02] transition-transform"
         >
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6">
+          {/* Foto de fondo - EDITABLE */}
+          <div 
+            className="absolute inset-0 w-full h-full bg-cover bg-center"
+            style={{ backgroundImage: 'url(/montajePremium.jpg)' }}
+          />
+          {/* Overlay oscuro */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+          
+          {/* Contenido */}
+          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
               <Star className="w-4 h-4" />
               Lo más vendido
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
               Paquetes Completos
             </h2>
-            <p className="text-xl text-white/90 mb-6 leading-relaxed">
+            <p className="text-lg text-white/90 mb-2">
               La experiencia completa para tu evento.
-              <br />
-              <span className="text-base text-white/70">
-                DJ + Sonido + Iluminación + Pista + Efectos + Más
-              </span>
             </p>
+            <p className="text-sm text-white/70 mb-6">
+              DJ · Sonido · Iluminación · Pista · Efectos · Más
+            </p>
+            <div className="flex items-center gap-2 text-white font-semibold">
+              Explorar paquetes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-white font-semibold">
-            Explorar paquetes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-          </div>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
         </motion.a>
 
-        {/* MONTAJES - Card grande */}
+        {/* MONTAJES - Card grande con foto */}
         <motion.a
           href="#montajes"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-zinc-700 to-zinc-900 p-8 md:p-12 min-h-[400px] flex flex-col justify-between hover:scale-[1.02] transition-transform"
+          className="group relative overflow-hidden rounded-3xl min-h-[500px] hover:scale-[1.02] transition-transform"
         >
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6">
-              <Music2 className="w-4 h-4" />
+          {/* Foto de fondo - EDITABLE */}
+          <div 
+            className="absolute inset-0 w-full h-full bg-cover bg-center"
+            style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }}
+          />
+          {/* Overlay oscuro */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+          
+          {/* Contenido */}
+          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
               Opción básica
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
               Solo Montaje DJ
             </h2>
-            <p className="text-xl text-white/90 mb-6 leading-relaxed">
+            <p className="text-lg text-white/90 mb-2">
               Lo esencial para tu evento.
-              <br />
-              <span className="text-base text-white/70">
-                DJ + Sonido + Luces básicas + Pantalla
-              </span>
             </p>
+            <p className="text-sm text-white/70 mb-6">
+              DJ · Sonido · Luces básicas · Pantalla
+            </p>
+            <div className="flex items-center gap-2 text-white font-semibold">
+              Ver montajes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-white font-semibold">
-            Ver montajes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-          </div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -ml-32 -mb-32" />
         </motion.a>
       </div>
 
-      {/* Cards medianas: Servicios individuales */}
+      {/* Cards medianas: Servicios individuales - EDITABLES */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {/* Sonido */}
+        {/* Card 1: Sonido - EDITA backgroundImage */}
         <motion.a
           href="#servicios"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
         >
-          <Headphones className="w-10 h-10 text-cyan-400" />
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1">Sonido</h3>
-            <p className="text-xs text-zinc-400">Profesional</p>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/sonido-placeholder.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="relative h-full p-6 flex flex-col justify-end">
+            <Headphones className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
+            <h3 className="text-base font-semibold text-white">Sonido</h3>
+            <p className="text-xs text-white/80">Profesional</p>
           </div>
         </motion.a>
 
-        {/* Iluminación */}
+        {/* Card 2: Iluminación - EDITA backgroundImage */}
         <motion.a
           href="#servicios"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.25 }}
-          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
         >
-          <Lightbulb className="w-10 h-10 text-yellow-400" />
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1">Iluminación</h3>
-            <p className="text-xs text-zinc-400">Arquitectónica</p>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/iluminacion-placeholder.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="relative h-full p-6 flex flex-col justify-end">
+            <Lightbulb className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
+            <h3 className="text-base font-semibold text-white">Iluminación</h3>
+            <p className="text-xs text-white/80">Arquitectónica</p>
           </div>
         </motion.a>
 
-        {/* Pistas */}
+        {/* Card 3: Pistas LED - EDITA backgroundImage */}
         <motion.a
           href="#servicios"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
         >
-          <Sparkles className="w-10 h-10 text-fuchsia-400" />
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1">Pistas LED</h3>
-            <p className="text-xs text-zinc-400">Iluminadas</p>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/pista-led-placeholder.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="relative h-full p-6 flex flex-col justify-end">
+            <Sparkles className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
+            <h3 className="text-base font-semibold text-white">Pistas LED</h3>
+            <p className="text-xs text-white/80">Iluminadas</p>
           </div>
         </motion.a>
 
-        {/* Photo Booth */}
+        {/* Card 4: Photo Booth - EDITA backgroundImage */}
         <motion.a
           href="#servicios"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.35 }}
-          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
         >
-          <Camera className="w-10 h-10 text-pink-400" />
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1">Photo Booth</h3>
-            <p className="text-xs text-zinc-400">360° & más</p>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/photobooth-placeholder.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="relative h-full p-6 flex flex-col justify-end">
+            <Camera className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
+            <h3 className="text-base font-semibold text-white">Photo Booth</h3>
+            <p className="text-xs text-white/80">360° & más</p>
           </div>
         </motion.a>
 
-        {/* Efectos */}
+        {/* Card 5: Efectos - EDITA backgroundImage */}
         <motion.a
           href="#servicios"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
         >
-          <Sparkles className="w-10 h-10 text-orange-400" />
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1">Efectos</h3>
-            <p className="text-xs text-zinc-400">Chispas, humo</p>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/efectos-placeholder.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="relative h-full p-6 flex flex-col justify-end">
+            <Sparkles className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
+            <h3 className="text-base font-semibold text-white">Efectos</h3>
+            <p className="text-xs text-white/80">Chispas, humo</p>
           </div>
         </motion.a>
 
-        {/* Animación */}
+        {/* Card 6: Animación - EDITA backgroundImage */}
         <motion.a
           href="#servicios"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.45 }}
-          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
         >
-          <Mic2 className="w-10 h-10 text-green-400" />
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-1">Animación</h3>
-            <p className="text-xs text-zinc-400">MC & más</p>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/animacion-placeholder.jpg)' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="relative h-full p-6 flex flex-col justify-end">
+            <Mic2 className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
+            <h3 className="text-base font-semibold text-white">Animación</h3>
+            <p className="text-xs text-white/80">MC & más</p>
           </div>
         </motion.a>
       </div>
@@ -870,8 +913,8 @@ function BestSellers() {
         <div className="grid md:grid-cols-2 gap-6 text-left">
           <div className={`p-6 rounded-xl ${glass}`}>
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-fuchsia-500/20">
-                <Package className="w-6 h-6 text-fuchsia-400" />
+              <div className="p-3 rounded-lg bg-white/10">
+                <Package className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h4 className="text-lg font-semibold text-white mb-2">Paquetes</h4>
@@ -886,8 +929,8 @@ function BestSellers() {
 
           <div className={`p-6 rounded-xl ${glass}`}>
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-cyan-500/20">
-                <Music2 className="w-6 h-6 text-cyan-400" />
+              <div className="p-3 rounded-lg bg-white/10">
+                <Music2 className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h4 className="text-lg font-semibold text-white mb-2">Montajes</h4>
