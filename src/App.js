@@ -661,16 +661,16 @@ function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="#paquetes"
+              href="#bestsellers"
               className="w-full sm:w-auto px-8 py-4 bg-white text-black rounded-full text-base font-semibold hover:bg-zinc-200 transition-all shadow-2xl"
             >
-              Ver paquetes
+              Explorar servicios
             </a>
             <a
-              href="#montajes"
+              href="#cotizar"
               className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/30 text-white rounded-full text-base font-semibold hover:bg-white/10 transition-all"
             >
-              Solo montaje DJ
+              Cotizar evento
             </a>
           </div>
         </motion.div>
@@ -690,6 +690,218 @@ function Hero() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+/* ============
+   BEST SELLERS
+   ============ */
+function BestSellers() {
+  return (
+    <Section id="bestsellers" className="bg-black">
+      {/* Cards grandes: Paquetes vs Montajes */}
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        {/* PAQUETES - Card grande */}
+        <motion.a
+          href="#paquetes"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-fuchsia-500 to-purple-600 p-8 md:p-12 min-h-[400px] flex flex-col justify-between hover:scale-[1.02] transition-transform"
+        >
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6">
+              <Star className="w-4 h-4" />
+              Lo más vendido
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Paquetes Completos
+            </h2>
+            <p className="text-xl text-white/90 mb-6 leading-relaxed">
+              La experiencia completa para tu evento.
+              <br />
+              <span className="text-base text-white/70">
+                DJ + Sonido + Iluminación + Pista + Efectos + Más
+              </span>
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-white font-semibold">
+            Explorar paquetes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+          </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
+        </motion.a>
+
+        {/* MONTAJES - Card grande */}
+        <motion.a
+          href="#montajes"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-zinc-700 to-zinc-900 p-8 md:p-12 min-h-[400px] flex flex-col justify-between hover:scale-[1.02] transition-transform"
+        >
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-6">
+              <Music2 className="w-4 h-4" />
+              Opción básica
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Solo Montaje DJ
+            </h2>
+            <p className="text-xl text-white/90 mb-6 leading-relaxed">
+              Lo esencial para tu evento.
+              <br />
+              <span className="text-base text-white/70">
+                DJ + Sonido + Luces básicas + Pantalla
+              </span>
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-white font-semibold">
+            Ver montajes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+          </div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl -ml-32 -mb-32" />
+        </motion.a>
+      </div>
+
+      {/* Cards medianas: Servicios individuales */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {/* Sonido */}
+        <motion.a
+          href="#servicios"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+        >
+          <Headphones className="w-10 h-10 text-cyan-400" />
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Sonido</h3>
+            <p className="text-xs text-zinc-400">Profesional</p>
+          </div>
+        </motion.a>
+
+        {/* Iluminación */}
+        <motion.a
+          href="#servicios"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.25 }}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+        >
+          <Lightbulb className="w-10 h-10 text-yellow-400" />
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Iluminación</h3>
+            <p className="text-xs text-zinc-400">Arquitectónica</p>
+          </div>
+        </motion.a>
+
+        {/* Pistas */}
+        <motion.a
+          href="#servicios"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+        >
+          <Sparkles className="w-10 h-10 text-fuchsia-400" />
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Pistas LED</h3>
+            <p className="text-xs text-zinc-400">Iluminadas</p>
+          </div>
+        </motion.a>
+
+        {/* Photo Booth */}
+        <motion.a
+          href="#servicios"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.35 }}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+        >
+          <Camera className="w-10 h-10 text-pink-400" />
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Photo Booth</h3>
+            <p className="text-xs text-zinc-400">360° & más</p>
+          </div>
+        </motion.a>
+
+        {/* Efectos */}
+        <motion.a
+          href="#servicios"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+        >
+          <Sparkles className="w-10 h-10 text-orange-400" />
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Efectos</h3>
+            <p className="text-xs text-zinc-400">Chispas, humo</p>
+          </div>
+        </motion.a>
+
+        {/* Animación */}
+        <motion.a
+          href="#servicios"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.45 }}
+          className="group relative overflow-hidden rounded-2xl bg-zinc-900 p-6 aspect-square flex flex-col justify-between hover:bg-zinc-800 transition-colors"
+        >
+          <Mic2 className="w-10 h-10 text-green-400" />
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-1">Animación</h3>
+            <p className="text-xs text-zinc-400">MC & más</p>
+          </div>
+        </motion.a>
+      </div>
+
+      {/* Explicación clara */}
+      <div className="mt-16 text-center max-w-4xl mx-auto">
+        <h3 className="text-2xl font-bold text-white mb-4">
+          ¿Paquete o Montaje? Te explicamos
+        </h3>
+        <div className="grid md:grid-cols-2 gap-6 text-left">
+          <div className={`p-6 rounded-xl ${glass}`}>
+            <div className="flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-fuchsia-500/20">
+                <Package className="w-6 h-6 text-fuchsia-400" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-2">Paquetes</h4>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  <strong className="text-white">Todo incluido:</strong> DJ, sonido, iluminación, pista de baile, 
+                  photo booth, efectos especiales y más. Un solo precio, sin complicaciones. 
+                  Perfecto si quieres la experiencia completa.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className={`p-6 rounded-xl ${glass}`}>
+            <div className="flex items-start gap-4">
+              <div className="p-3 rounded-lg bg-cyan-500/20">
+                <Music2 className="w-6 h-6 text-cyan-400" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-2">Montajes</h4>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  <strong className="text-white">Lo esencial:</strong> Solo DJ + sonido + luces básicas + pantalla. 
+                  Precio más accesible. Puedes añadir servicios extras después si quieres. 
+                  Ideal si tienes presupuesto ajustado.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
   );
 }
 
@@ -1572,6 +1784,7 @@ export default function App() {
       ) : (
         <>
           <Hero />
+          <BestSellers />
           <Gallery />
           <Testimonials />
           <Contact />
