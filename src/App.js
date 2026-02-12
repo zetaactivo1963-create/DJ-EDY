@@ -694,253 +694,282 @@ function Hero() {
 }
 
 /* ============
-   BEST SELLERS
+   BEST SELLERS - Estilo Apple
    ============ */
 function BestSellers() {
   return (
     <Section id="bestsellers" className="bg-black">
-      {/* Cards grandes: Paquetes vs Montajes */}
+      {/* 1. CARD GIGANTE - Full width (Paquetes) */}
+      <motion.a
+        href="#paquetes"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="group relative overflow-hidden rounded-3xl min-h-[600px] mb-6 block hover:scale-[1.01] transition-transform"
+      >
+        {/* Foto de fondo - EDITABLE */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center"
+          style={{ backgroundImage: 'url(/montajePremium.jpg)' }}
+        />
+        {/* Overlay oscuro */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        
+        {/* Contenido */}
+        <div className="relative h-full p-8 md:p-16 flex flex-col justify-end max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
+            <Star className="w-4 h-4" />
+            Lo más vendido
+          </div>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+            Paquetes Completos
+          </h2>
+          <p className="text-xl md:text-2xl text-white/90 mb-3">
+            La experiencia completa para tu evento.
+          </p>
+          <p className="text-base text-white/70 mb-8">
+            DJ · Sonido · Iluminación · Pista · Efectos · Más
+          </p>
+          <div className="flex items-center gap-2 text-white text-lg font-semibold">
+            Explorar paquetes <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+          </div>
+        </div>
+      </motion.a>
+
+      {/* 2. CARD GRANDE - Full width (Montajes) */}
+      <motion.a
+        href="#montajes"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className="group relative overflow-hidden rounded-3xl min-h-[500px] mb-6 block hover:scale-[1.01] transition-transform"
+      >
+        {/* Foto de fondo - EDITABLE */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center"
+          style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }}
+        />
+        {/* Overlay oscuro */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        
+        {/* Contenido */}
+        <div className="relative h-full p-8 md:p-16 flex flex-col justify-end max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
+            Opción básica
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            Solo Montaje DJ
+          </h2>
+          <p className="text-lg md:text-xl text-white/90 mb-3">
+            Lo esencial para tu evento.
+          </p>
+          <p className="text-base text-white/70 mb-8">
+            DJ · Sonido · Luces básicas · Pantalla
+          </p>
+          <div className="flex items-center gap-2 text-white text-lg font-semibold">
+            Ver montajes <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+          </div>
+        </div>
+      </motion.a>
+
+      {/* 3. GRID 2x2 - Primera fila */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* PAQUETES - Card grande con foto */}
+        {/* Sonido */}
         <motion.a
-          href="#paquetes"
-          initial={{ opacity: 0, y: 30 }}
+          href="#servicio/sonido-profesional"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="group relative overflow-hidden rounded-3xl min-h-[500px] hover:scale-[1.02] transition-transform"
+          transition={{ delay: 0.2 }}
+          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
         >
-          {/* Foto de fondo - EDITABLE */}
           <div 
-            className="absolute inset-0 w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: 'url(/montajePremium.jpg)' }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/sonido-service.jpg)' }}
           />
-          {/* Overlay oscuro */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-          
-          {/* Contenido */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
-              <Star className="w-4 h-4" />
-              Lo más vendido
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
-              Paquetes Completos
-            </h2>
-            <p className="text-lg text-white/90 mb-2">
-              La experiencia completa para tu evento.
-            </p>
-            <p className="text-sm text-white/70 mb-6">
-              DJ · Sonido · Iluminación · Pista · Efectos · Más
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Sonido Profesional
+            </h3>
+            <p className="text-base text-white/80 mb-6">
+              Line Array · Subwoofers · Técnico dedicado
             </p>
             <div className="flex items-center gap-2 text-white font-semibold">
-              Explorar paquetes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </div>
           </div>
         </motion.a>
 
-        {/* MONTAJES - Card grande con foto */}
+        {/* Iluminación */}
         <motion.a
-          href="#montajes"
-          initial={{ opacity: 0, y: 30 }}
+          href="#servicio/iluminacion"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[500px] hover:scale-[1.02] transition-transform"
+          transition={{ delay: 0.25 }}
+          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
         >
-          {/* Foto de fondo - EDITABLE */}
           <div 
-            className="absolute inset-0 w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/iluminacion-service.jpg)' }}
           />
-          {/* Overlay oscuro */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-          
-          {/* Contenido */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
-              Opción básica
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-3">
-              Solo Montaje DJ
-            </h2>
-            <p className="text-lg text-white/90 mb-2">
-              Lo esencial para tu evento.
-            </p>
-            <p className="text-sm text-white/70 mb-6">
-              DJ · Sonido · Luces básicas · Pantalla
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Iluminación
+            </h3>
+            <p className="text-base text-white/80 mb-6">
+              Moving Heads · LED Bars · Lasers · Técnico
             </p>
             <div className="flex items-center gap-2 text-white font-semibold">
-              Ver montajes <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </div>
           </div>
         </motion.a>
       </div>
 
-      {/* Cards medianas: Servicios individuales - EDITABLES */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {/* Card 1: Sonido - EDITA backgroundImage */}
+      {/* 4. GRID 2x2 - Segunda fila */}
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        {/* Pistas */}
         <motion.a
-          href="#servicios"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/sonido-placeholder.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="relative h-full p-6 flex flex-col justify-end">
-            <Headphones className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
-            <h3 className="text-base font-semibold text-white">Sonido</h3>
-            <p className="text-xs text-white/80">Profesional</p>
-          </div>
-        </motion.a>
-
-        {/* Card 2: Iluminación - EDITA backgroundImage */}
-        <motion.a
-          href="#servicios"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.25 }}
-          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/iluminacion-placeholder.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="relative h-full p-6 flex flex-col justify-end">
-            <Lightbulb className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
-            <h3 className="text-base font-semibold text-white">Iluminación</h3>
-            <p className="text-xs text-white/80">Arquitectónica</p>
-          </div>
-        </motion.a>
-
-        {/* Card 3: Pistas LED - EDITA backgroundImage */}
-        <motion.a
-          href="#servicios"
+          href="#servicio/pistas-de-baile"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
         >
           <div 
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/pista-led-placeholder.jpg)' }}
+            style={{ backgroundImage: 'url(/pista-led-service.jpg)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="relative h-full p-6 flex flex-col justify-end">
-            <Sparkles className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
-            <h3 className="text-base font-semibold text-white">Pistas LED</h3>
-            <p className="text-xs text-white/80">Iluminadas</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Pistas de Baile
+            </h3>
+            <p className="text-base text-white/80 mb-6">
+              LED Infinity · Pista Clásica
+            </p>
+            <div className="flex items-center gap-2 text-white font-semibold">
+              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
           </div>
         </motion.a>
 
-        {/* Card 4: Photo Booth - EDITA backgroundImage */}
+        {/* Photo Booth */}
         <motion.a
-          href="#servicios"
+          href="#servicio/photo-booths"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.35 }}
-          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
         >
           <div 
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/photobooth-placeholder.jpg)' }}
+            style={{ backgroundImage: 'url(/photobooth-service.jpg)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="relative h-full p-6 flex flex-col justify-end">
-            <Camera className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
-            <h3 className="text-base font-semibold text-white">Photo Booth</h3>
-            <p className="text-xs text-white/80">360° & más</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Photo Booths
+            </h3>
+            <p className="text-base text-white/80 mb-6">
+              360° · Estático · Entrega digital
+            </p>
+            <div className="flex items-center gap-2 text-white font-semibold">
+              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
           </div>
         </motion.a>
+      </div>
 
-        {/* Card 5: Efectos - EDITA backgroundImage */}
+      {/* 5. GRID 2x2 - Tercera fila */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Efectos */}
         <motion.a
-          href="#servicios"
+          href="#servicio/efectos-especiales"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
         >
           <div 
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/efectos-placeholder.jpg)' }}
+            style={{ backgroundImage: 'url(/efectos-service.jpg)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="relative h-full p-6 flex flex-col justify-end">
-            <Sparkles className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
-            <h3 className="text-base font-semibold text-white">Efectos</h3>
-            <p className="text-xs text-white/80">Chispas, humo</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Efectos Especiales
+            </h3>
+            <p className="text-base text-white/80 mb-6">
+              Chispas frías · Confeti · Humo
+            </p>
+            <div className="flex items-center gap-2 text-white font-semibold">
+              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
           </div>
         </motion.a>
 
-        {/* Card 6: Animación - EDITA backgroundImage */}
+        {/* Animación */}
         <motion.a
-          href="#servicios"
+          href="#servicio/animacion-mc"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.45 }}
-          className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
         >
           <div 
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/animacion-placeholder.jpg)' }}
+            style={{ backgroundImage: 'url(/animacion-service.jpg)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="relative h-full p-6 flex flex-col justify-end">
-            <Mic2 className="w-8 h-8 text-white mb-3 drop-shadow-lg" />
-            <h3 className="text-base font-semibold text-white">Animación</h3>
-            <p className="text-xs text-white/80">MC & más</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              Animación & MC
+            </h3>
+            <p className="text-base text-white/80 mb-6">
+              Maestro de Ceremonias · Animador · Coordinación
+            </p>
+            <div className="flex items-center gap-2 text-white font-semibold">
+              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
           </div>
         </motion.a>
       </div>
 
       {/* Explicación clara */}
-      <div className="mt-16 text-center max-w-4xl mx-auto">
-        <h3 className="text-2xl font-bold text-white mb-4">
-          ¿Paquete o Montaje? Te explicamos
+      <div className="mt-20 text-center max-w-4xl mx-auto">
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
+          ¿Paquete o Montaje?
         </h3>
         <div className="grid md:grid-cols-2 gap-6 text-left">
-          <div className={`p-6 rounded-xl ${glass}`}>
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-white/10">
-                <Package className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-2">Paquetes</h4>
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  <strong className="text-white">Todo incluido:</strong> DJ, sonido, iluminación, pista de baile, 
-                  photo booth, efectos especiales y más. Un solo precio, sin complicaciones. 
-                  Perfecto si quieres la experiencia completa.
-                </p>
-              </div>
-            </div>
+          <div className={`p-8 rounded-2xl ${glass}`}>
+            <h4 className="text-xl font-semibold text-white mb-3">Paquetes Completos</h4>
+            <p className="text-sm text-zinc-300 leading-relaxed mb-4">
+              Todo incluido en un solo precio: DJ, sonido, iluminación, pista de baile, 
+              photo booth, efectos especiales y más. Sin complicaciones.
+            </p>
+            <p className="text-xs text-zinc-500">
+              Perfecto si quieres la experiencia completa sin preocuparte por detalles.
+            </p>
           </div>
 
-          <div className={`p-6 rounded-xl ${glass}`}>
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-white/10">
-                <Music2 className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-2">Montajes</h4>
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  <strong className="text-white">Lo esencial:</strong> Solo DJ + sonido + luces básicas + pantalla. 
-                  Precio más accesible. Puedes añadir servicios extras después si quieres. 
-                  Ideal si tienes presupuesto ajustado.
-                </p>
-              </div>
-            </div>
+          <div className={`p-8 rounded-2xl ${glass}`}>
+            <h4 className="text-xl font-semibold text-white mb-3">Solo Montaje DJ</h4>
+            <p className="text-sm text-zinc-300 leading-relaxed mb-4">
+              Lo esencial: DJ + sonido + luces básicas + pantalla. 
+              Precio más accesible. Puedes añadir servicios extras después.
+            </p>
+            <p className="text-xs text-zinc-500">
+              Ideal si tienes presupuesto ajustado o quieres armar tu propio paquete.
+            </p>
           </div>
         </div>
       </div>
@@ -1188,6 +1217,417 @@ function MontajesPage() {
           >
             Ver paquetes completos <ChevronRight className="w-5 h-5" />
           </a>
+        </div>
+      </Section>
+    </>
+  );
+}
+
+
+/* ===========================
+   INDIVIDUAL SERVICE PAGES
+   (Inserta esto ANTES de ServicesPage en App.js, alrededor de línea 1226)
+   =========================== */
+
+function IndividualServicePage({ slug }) {
+  // Data detallada de cada servicio
+  const serviceData = {
+    "sonido-profesional": {
+      title: "Sonido Profesional",
+      subtitle: "Line Array de alta fidelidad",
+      description: "Sistema de sonido profesional con ecualización avanzada y técnico dedicado. Adaptable a cualquier espacio y aforo.",
+      features: [
+        {
+          title: "Sistema Line Array",
+          items: [
+            "6 bocinas dB-Technologies T8",
+            "Cada una con bocinas internas de 8\", 6.5\" y drivers de 1\"",
+            "2 subwoofers dB-Technologies S30",
+            "Cada subwoofer con 2 bocinas de 18\"",
+          ]
+        },
+        {
+          title: "Control & Mezcla",
+          items: [
+            "Consola digital MIDAS M32 para mezcla profesional",
+            "Sistema de networking y ecualización avanzada",
+            "Técnico de sonido dedicado",
+            "Ecualización y ajustes en vivo",
+          ]
+        },
+        {
+          title: "Microfonía",
+          items: [
+            "6 micrófonos inalámbricos Shure",
+            "Microfonería completa para bandas",
+            "Cablería y stands profesionales",
+            "In-ear monitoring disponible",
+          ]
+        },
+        {
+          title: "Instalación",
+          items: [
+            "Cablería profesional completa (señal, corriente, networking)",
+            "Stands y accesorios para montaje seguro",
+            "Montaje y desmontaje incluidos",
+            "Supervisión durante todo el evento",
+          ]
+        },
+      ],
+      capacity: "Contamos con más de 24 cajas y 6 subwoofers dobles. Sistema escalable para cualquier tipo de espacio y aforo.",
+      images: [
+        "/sonido-1.jpg",
+        "/sonido-2.jpg",
+        "/sonido-3.jpg",
+        "/sonido-4.jpg",
+      ],
+      cta: "Este servicio se cotiza según las necesidades del evento. Agenda una reunión para discutir tu proyecto.",
+    },
+
+    "iluminacion": {
+      title: "Iluminación Profesional",
+      subtitle: "Diseño lumínico integral",
+      description: "Sistema completo de iluminación inteligente con técnico dedicado. Desde arquitectónica hasta efectos dinámicos de concierto.",
+      features: [
+        {
+          title: "Luces Inteligentes",
+          items: [
+            "Más de 16 luces móviles globo inteligente",
+            "Más de 34 luces móviles Wash",
+            "Control DMX y programación de escenas",
+            "Sincronización con música",
+          ]
+        },
+        {
+          title: "Iluminación LED",
+          items: [
+            "Barras LED RGB de alto brillo",
+            "Uplighting arquitectónico",
+            "Iluminación de pista personalizable",
+            "Control de color y temperatura",
+          ]
+        },
+        {
+          title: "Efectos Especiales",
+          items: [
+            "Lasers profesionales",
+            "Color Strike estilo concierto",
+            "Máquinas de humo vertical",
+            "Máquina Haze para efectos atmosféricos",
+          ]
+        },
+        {
+          title: "Estructuras",
+          items: [
+            "Estructuras trussing modulares",
+            "Diseños custom según el espacio",
+            "Técnico de luces dedicado",
+            "Montaje y programación incluidos",
+          ]
+        },
+      ],
+      capacity: "Inventario completo de iluminación profesional. Desde montajes íntimos hasta producciones de gran escala.",
+      images: [
+        "/iluminacion-1.jpg",
+        "/iluminacion-2.jpg",
+        "/iluminacion-3.jpg",
+        "/iluminacion-4.jpg",
+      ],
+      cta: "Cotización personalizada según el diseño y tamaño del evento. Contáctanos para una propuesta.",
+    },
+
+    "pistas-de-baile": {
+      title: "Pistas de Baile",
+      subtitle: "Pistas LED interactivas",
+      description: "Dos modelos disponibles de pistas iluminadas profesionales. Instalación segura y acabados premium.",
+      features: [
+        {
+          title: "Pista 3D Full Infinity",
+          items: [
+            "Efecto 3D con profundidad infinita",
+            "Iluminación LED full color",
+            "Patrones y animaciones personalizables",
+            "Acabado espejo premium",
+          ]
+        },
+        {
+          title: "Pista Clásica Iluminada",
+          items: [
+            "Superficie blanca con puntos LED",
+            "Iluminación reactiva a la música",
+            "Diseño elegante y atemporal",
+            "Perfecto para eventos formales",
+          ]
+        },
+        {
+          title: "Instalación",
+          items: [
+            "Montaje profesional y nivelado",
+            "Sistema anti-resbalante",
+            "Transiciones suaves en los bordes",
+            "Desmontaje incluido",
+          ]
+        },
+      ],
+      capacity: "Disponibles en diferentes tamaños: 12x12, 16x16 y configuraciones custom.",
+      images: [
+        "/pista-infinity.jpg",
+        "/pista-clasica.jpg",
+      ],
+      cta: "Consulta disponibilidad y precio según el tamaño requerido.",
+    },
+
+    "photo-booths": {
+      title: "Photo Booths",
+      subtitle: "Captura los mejores momentos",
+      description: "Dos opciones disponibles para que tus invitados se lleven recuerdos inolvidables.",
+      features: [
+        {
+          title: "360° Photo Booth",
+          items: [
+            "Plataforma giratoria profesional",
+            "Video desde todos los ángulos",
+            "Cámara de alta resolución",
+            "Brazo mecánico con movimiento suave",
+          ]
+        },
+        {
+          title: "Photo Booth Estático",
+          items: [
+            "Fotos de alta calidad",
+            "Envío instantáneo por mensaje de texto",
+            "Filtros y marcos personalizables",
+            "Impresión opcional",
+          ]
+        },
+        {
+          title: "Entrega",
+          items: [
+            "Galería digital completa",
+            "Envío automático a los invitados",
+            "Branding personalizado disponible",
+            "Props y accesorios incluidos",
+          ]
+        },
+      ],
+      capacity: "Ambos modelos disponibles con operador incluido.",
+      images: [
+        "/photobooth-360.jpg",
+        "/photobooth-estatico.jpg",
+      ],
+      cta: "Añade este servicio a tu paquete o montaje.",
+    },
+
+    "efectos-especiales": {
+      title: "Efectos Especiales",
+      subtitle: "Momentos wow garantizados",
+      description: "Efectos seguros y espectaculares para darle ese toque especial a tu evento.",
+      features: [
+        {
+          title: "Chispas Frías",
+          items: [
+            "Máquinas de chispa fría seguras",
+            "Efecto visual impactante",
+            "Ideales para primer baile o entrada",
+            "Sujeto a permisos del venue",
+          ]
+        },
+        {
+          title: "Confeti",
+          items: [
+            "Máquinas lanzadoras profesionales",
+            "Confeti biodegradable disponible",
+            "Efecto espectacular para momentos clave",
+            "Requiere autorización del venue",
+          ]
+        },
+        {
+          title: "Humo & Neblina",
+          items: [
+            "Máquinas de humo vertical",
+            "Máquina Haze para efectos atmosféricos",
+            "Humo bajo para \"baile en nubes\"",
+            "Control de densidad y dispersión",
+          ]
+        },
+      ],
+      capacity: "Todos los efectos cumplen con estándares de seguridad. Consultamos permisos del venue antes de confirmar.",
+      images: [
+        "/chispas-frias.jpg",
+        "/confeti.jpg",
+        "/humo-bajo.jpg",
+      ],
+      cta: "Importante: La disponibilidad de estos efectos depende de los permisos y regulaciones del venue.",
+    },
+
+    "animacion-mc": {
+      title: "Animación & MC",
+      subtitle: "La energía que tu evento necesita",
+      description: "Maestro de ceremonias, animadores y coordinadores profesionales. Contamos con una red amplia de talento de confianza.",
+      features: [
+        {
+          title: "Maestro de Ceremonias",
+          items: [
+            "Conducción profesional del evento",
+            "Manejo de protocolos y agenda",
+            "Voz clara y carismática",
+            "Experiencia en eventos corporativos y sociales",
+          ]
+        },
+        {
+          title: "Animador",
+          items: [
+            "Interacción dinámica con invitados",
+            "Juegos y actividades",
+            "Energía y carisma",
+            "Perfecto para eventos juveniles",
+          ]
+        },
+        {
+          title: "Coordinador de Evento",
+          items: [
+            "Manejo de timeline completo",
+            "Coordinación con suplidores",
+            "Comunicación con el venue",
+            "Supervisión de montaje y desmontaje",
+          ]
+        },
+        {
+          title: "Extras",
+          items: [
+            "Batucada (3-5 integrantes)",
+            "Hora loca con accesorios",
+            "Equipo coordinado y profesional",
+          ]
+        },
+      ],
+      capacity: "Red amplia de contactos verificados. Recomendamos profesionales según el tipo y estilo de tu evento.",
+      images: [
+        "/mc.jpg",
+        "/animador.jpg",
+        "/coordinador.jpg",
+      ],
+      cta: "Trabajamos con los mejores profesionales. Cotización según el servicio y duración requerida.",
+    },
+  };
+
+  const service = serviceData[slug];
+
+  if (!service) {
+    return (
+      <Section>
+        <div className="text-center py-20">
+          <h2 className="text-2xl text-white mb-4">Servicio no encontrado</h2>
+          <a href="#home" className="text-zinc-400 hover:text-white">
+            Volver al inicio
+          </a>
+        </div>
+      </Section>
+    );
+  }
+
+  return (
+    <>
+      {/* Botón atrás */}
+      <section className="pt-28 pb-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <a
+            href="#home"
+            className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" /> Volver
+          </a>
+        </div>
+      </section>
+
+      {/* Hero del servicio */}
+      <Section className="pt-0">
+        <div className="max-w-4xl">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+            {service.title}
+          </h1>
+          <p className="text-2xl text-zinc-400 mb-6">{service.subtitle}</p>
+          <p className="text-lg text-zinc-300 leading-relaxed">
+            {service.description}
+          </p>
+        </div>
+      </Section>
+
+      {/* Galería de fotos */}
+      {service.images && service.images.length > 0 && (
+        <Section className="py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {service.images.map((img, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="aspect-square rounded-2xl overflow-hidden bg-zinc-900"
+              >
+                <div
+                  className="w-full h-full bg-cover bg-center"
+                  style={{ backgroundImage: `url(${img})` }}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* Features detalladas */}
+      <Section>
+        <div className="grid md:grid-cols-2 gap-8">
+          {service.features.map((feature, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className={`p-8 rounded-2xl ${glass}`}
+            >
+              <h3 className="text-2xl font-bold text-white mb-6">
+                {feature.title}
+              </h3>
+              <ul className="space-y-3">
+                {feature.items.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-zinc-300">
+                    <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Capacidad / Info adicional */}
+      {service.capacity && (
+        <Section className="py-12">
+          <div className={`p-8 rounded-2xl ${glass} max-w-3xl mx-auto text-center`}>
+            <h3 className="text-xl font-semibold text-white mb-4">
+              Capacidad y disponibilidad
+            </h3>
+            <p className="text-zinc-300 leading-relaxed">{service.capacity}</p>
+          </div>
+        </Section>
+      )}
+
+      {/* CTA */}
+      <Section className="py-12">
+        <div className="text-center max-w-2xl mx-auto">
+          <div className={`p-8 rounded-2xl ${glass}`}>
+            <p className="text-zinc-300 mb-6 leading-relaxed">{service.cta}</p>
+            <a
+              href="#cotizar"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors"
+            >
+              Cotizar este servicio <ChevronRight className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       </Section>
     </>
@@ -1766,6 +2206,11 @@ export default function App() {
   const showServices = hash === "#servicios";
   const showQuote = hash === "#cotizar";
 
+  // Sub-páginas de servicios individuales: #servicio/<slug>
+  const serviceSlug = hash.startsWith("#servicio/")
+    ? decodeURIComponent(hash.slice("#servicio/".length))
+    : null;
+
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [hash]);
@@ -1788,7 +2233,12 @@ export default function App() {
 
       <Navbar />
 
-      {showQuote ? (
+      {serviceSlug ? (
+        <>
+          <IndividualServicePage slug={serviceSlug} />
+          <Footer />
+        </>
+      ) : showQuote ? (
         <>
           <section className="pt-28 pb-0">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
