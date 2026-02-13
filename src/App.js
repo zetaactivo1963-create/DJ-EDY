@@ -694,12 +694,12 @@ function Hero() {
 }
 
 /* ============
-   BEST SELLERS - Estilo Apple
+   BEST SELLERS - MOBILE FIRST, SUPER SIMPLE
    ============ */
 function BestSellers() {
   return (
     <Section id="bestsellers" className="bg-black">
-      {/* 1. CARD GIGANTE - Full width (Paquetes) */}
+      {/* 1. PAQUETES - Card Gigante */}
       <motion.a
         href="#paquetes"
         initial={{ opacity: 0, y: 30 }}
@@ -707,36 +707,34 @@ function BestSellers() {
         viewport={{ once: true }}
         className="group relative overflow-hidden rounded-3xl min-h-[600px] mb-6 block hover:scale-[1.01] transition-transform"
       >
-        {/* Foto de fondo - EDITABLE */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: 'url(/montajePremium.jpg)' }}
         />
-        {/* Overlay oscuro */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
         
-        {/* Contenido */}
-        <div className="relative h-full p-8 md:p-16 flex flex-col justify-end max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
-            <Star className="w-4 h-4" />
-            Lo más vendido
-          </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+        {/* Título CENTRADO ARRIBA */}
+        <div className="absolute top-0 left-0 right-0 pt-12 text-center">
+          <h2 className="text-5xl md:text-6xl font-bold text-white">
             Paquetes Completos
           </h2>
-          <p className="text-xl md:text-2xl text-white/90 mb-3">
-            La experiencia completa para tu evento.
+        </div>
+        
+        {/* Contenido abajo */}
+        <div className="relative h-full p-8 md:p-16 flex flex-col justify-end">
+          <p className="text-xl md:text-2xl text-white/90 mb-3 text-center">
+            Todo incluido para tu evento
           </p>
-          <p className="text-base text-white/70 mb-8">
-            DJ · Sonido · Iluminación · Pista · Efectos · Más
+          <p className="text-base text-white/70 mb-8 text-center">
+            DJ · Sonido · Iluminación · Pista · Efectos
           </p>
-          <div className="flex items-center gap-2 text-white text-lg font-semibold">
-            Explorar paquetes <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+          <div className="flex items-center justify-center gap-2 text-white text-lg font-semibold">
+            Ver paquetes <ChevronRight className="w-6 h-6" />
           </div>
         </div>
       </motion.a>
 
-      {/* 2. CARD GRANDE - Full width (Montajes) */}
+      {/* 2. MONTAJES DJ - Card Grande CON FOTO */}
       <motion.a
         href="#montajes"
         initial={{ opacity: 0, y: 30 }}
@@ -745,230 +743,125 @@ function BestSellers() {
         transition={{ delay: 0.1 }}
         className="group relative overflow-hidden rounded-3xl min-h-[500px] mb-6 block hover:scale-[1.01] transition-transform"
       >
-        {/* Foto de fondo - EDITABLE */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }}
         />
-        {/* Overlay oscuro */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
         
-        {/* Contenido */}
-        <div className="relative h-full p-8 md:p-16 flex flex-col justify-end max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-medium mb-4 w-fit">
-            Opción básica
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            Solo Montaje DJ
+        {/* Título CENTRADO ARRIBA */}
+        <div className="absolute top-0 left-0 right-0 pt-12 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
+            Montajes DJ
           </h2>
-          <p className="text-lg md:text-xl text-white/90 mb-3">
-            Lo esencial para tu evento.
+        </div>
+        
+        <div className="relative h-full p-8 md:p-16 flex flex-col justify-end">
+          <p className="text-lg md:text-xl text-white/90 mb-3 text-center">
+            Lo esencial: DJ + Sonido + Luces
           </p>
-          <p className="text-base text-white/70 mb-8">
-            DJ · Sonido · Luces básicas · Pantalla
+          <p className="text-base text-white/70 mb-8 text-center">
+            Opción más económica
           </p>
-          <div className="flex items-center gap-2 text-white text-lg font-semibold">
-            Ver montajes <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+          <div className="flex items-center justify-center gap-2 text-white text-lg font-semibold">
+            Ver montajes <ChevronRight className="w-6 h-6" />
           </div>
         </div>
       </motion.a>
 
-      {/* 3. GRID 2x2 - Primera fila */}
+      {/* 3 y 4: Pista + Fotografía */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* Sonido */}
-        <motion.a
-          href="#servicio/sonido-profesional"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/sonido-service.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Sonido Profesional
-            </h3>
-            <p className="text-base text-white/80 mb-6">
-              Line Array · Subwoofers · Técnico dedicado
-            </p>
-            <div className="flex items-center gap-2 text-white font-semibold">
-              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </div>
-        </motion.a>
-
-        {/* Iluminación */}
-        <motion.a
-          href="#servicio/iluminacion"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.25 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/iluminacion-service.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Iluminación
-            </h3>
-            <p className="text-base text-white/80 mb-6">
-              Moving Heads · LED Bars · Lasers · Técnico
-            </p>
-            <div className="flex items-center gap-2 text-white font-semibold">
-              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </div>
-        </motion.a>
-      </div>
-
-      {/* 4. GRID 2x2 - Segunda fila */}
-      <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* Pistas */}
-        <motion.a
+        {/* Pista de Baile */}
+        <ServiceCard
           href="#servicio/pistas-de-baile"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/pista-led-service.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Pistas de Baile
-            </h3>
-            <p className="text-base text-white/80 mb-6">
-              LED Infinity · Pista Clásica
-            </p>
-            <div className="flex items-center gap-2 text-white font-semibold">
-              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </div>
-        </motion.a>
+          image="/pista-led-service.jpg"
+          title="Pista de Baile"
+          subtitle="LED iluminada · Diferentes tamaños"
+          delay={0.2}
+        />
 
-        {/* Photo Booth */}
-        <motion.a
+        {/* Fotografía */}
+        <ServiceCard
+          href="#servicio/fotografia"
+          image="/fotografia-service.jpg"
+          title="Fotografía"
+          subtitle="Cobertura completa de tu evento"
+          delay={0.25}
+        />
+      </div>
+
+      {/* 5 y 6: Photo Booths + Efectos */}
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <ServiceCard
           href="#servicio/photo-booths"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.35 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/photobooth-service.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Photo Booths
-            </h3>
-            <p className="text-base text-white/80 mb-6">
-              360° · Estático · Entrega digital
-            </p>
-            <div className="flex items-center gap-2 text-white font-semibold">
-              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </div>
-        </motion.a>
-      </div>
+          image="/photobooth-service.jpg"
+          title="Photo Booths"
+          subtitle="360° · Estático · Digital"
+          delay={0.3}
+        />
 
-      {/* 5. GRID 2x2 - Tercera fila */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Efectos */}
-        <motion.a
+        <ServiceCard
           href="#servicio/efectos-especiales"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/efectos-service.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Efectos Especiales
-            </h3>
-            <p className="text-base text-white/80 mb-6">
-              Chispas frías · Confeti · Humo
-            </p>
-            <div className="flex items-center gap-2 text-white font-semibold">
-              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </div>
-        </motion.a>
-
-        {/* Animación */}
-        <motion.a
-          href="#servicio/animacion-mc"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.45 }}
-          className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform"
-        >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/animacion-service.jpg)' }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="relative h-full p-8 md:p-12 flex flex-col justify-end">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Animación & MC
-            </h3>
-            <p className="text-base text-white/80 mb-6">
-              Maestro de Ceremonias · Animador · Coordinación
-            </p>
-            <div className="flex items-center gap-2 text-white font-semibold">
-              Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </div>
-        </motion.a>
+          image="/efectos-service.jpg"
+          title="Efectos Especiales"
+          subtitle="Chispas · Confeti · Humo"
+          delay={0.35}
+        />
       </div>
 
-      {/* Explicación clara */}
-      <div className="mt-20 text-center max-w-4xl mx-auto">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-          ¿Paquete o Montaje?
-        </h3>
-        <div className="grid md:grid-cols-2 gap-6 text-left">
-          <div className={`p-8 rounded-2xl ${glass}`}>
-            <h4 className="text-xl font-semibold text-white mb-3">Paquetes Completos</h4>
-            <p className="text-sm text-zinc-300 leading-relaxed mb-4">
-              Todo incluido en un solo precio: DJ, sonido, iluminación, pista de baile, 
-              photo booth, efectos especiales y más. Sin complicaciones.
-            </p>
-            <p className="text-xs text-zinc-500">
-              Perfecto si quieres la experiencia completa sin preocuparte por detalles.
-            </p>
-          </div>
+      {/* 7 y 8: Sonido + Iluminación & Trussing */}
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <ServiceCard
+          href="#servicio/sonido-profesional"
+          image="/sonido-service.jpg"
+          title="Sonido"
+          subtitle="Line Array · Técnico dedicado"
+          delay={0.4}
+        />
 
-          <div className={`p-8 rounded-2xl ${glass}`}>
-            <h4 className="text-xl font-semibold text-white mb-3">Solo Montaje DJ</h4>
-            <p className="text-sm text-zinc-300 leading-relaxed mb-4">
-              Lo esencial: DJ + sonido + luces básicas + pantalla. 
-              Precio más accesible. Puedes añadir servicios extras después.
+        <ServiceCard
+          href="#servicio/iluminacion-trussing"
+          image="/iluminacion-service.jpg"
+          title="Iluminación & Trussing"
+          subtitle="Moving Heads · LED · Estructuras"
+          delay={0.45}
+        />
+      </div>
+
+      {/* 9 y 10: Pantallas + Animación */}
+      <div className="grid md:grid-cols-2 gap-6">
+        <ServiceCard
+          href="#servicio/pantallas-visuales"
+          image="/pantallas-service.jpg"
+          title="Pantallas / Visuales"
+          subtitle="Pantallas LED · Proyección"
+          delay={0.5}
+        />
+
+        <ServiceCard
+          href="#servicio/animacion-coordinacion"
+          image="/animacion-service.jpg"
+          title="Animación & Coordinación"
+          subtitle="MC · Animador · Coordinador"
+          delay={0.55}
+        />
+      </div>
+
+      {/* Explicación SIMPLIFICADA */}
+      <div className="mt-16 text-center max-w-3xl mx-auto">
+        <div className={`p-8 rounded-2xl ${glass}`}>
+          <h3 className="text-2xl font-bold text-white mb-4">
+            ¿Cómo funciona?
+          </h3>
+          <div className="text-left space-y-4 text-lg text-zinc-300">
+            <p>
+              <strong className="text-white">Paquetes:</strong> Todo incluido. Un solo precio con DJ, sonido, luces, pista, efectos y más.
             </p>
-            <p className="text-xs text-zinc-500">
-              Ideal si tienes presupuesto ajustado o quieres armar tu propio paquete.
+            <p>
+              <strong className="text-white">Montajes:</strong> Solo lo básico (DJ + sonido + luces). Más económico.
+            </p>
+            <p>
+              <strong className="text-white">Servicios individuales:</strong> Añade lo que necesites a tu paquete o montaje.
             </p>
           </div>
         </div>
@@ -976,6 +869,41 @@ function BestSellers() {
     </Section>
   );
 }
+
+/* Helper Component */
+function ServiceCard({ href, image, title, subtitle, delay }) {
+  return (
+    <motion.a
+      href={href}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay }}
+      className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform block"
+    >
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${image})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
+      
+      {/* Título CENTRADO ARRIBA */}
+      <div className="absolute top-0 left-0 right-0 pt-8 px-6 text-center">
+        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          {title}
+        </h3>
+        <p className="text-base text-white/80">{subtitle}</p>
+      </div>
+      
+      <div className="relative h-full p-8 flex items-end justify-center">
+        <div className="flex items-center gap-2 text-white font-semibold">
+          Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
 
 
 /* PAQUETES - Diseño visual mejorado sin modal */
