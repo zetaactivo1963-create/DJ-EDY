@@ -714,20 +714,20 @@ function BestSellers() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
         
         {/* Título CENTRADO ARRIBA */}
-  <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
-    {/* Top */}
-    <div className="pt-6 text-center">
-      <h2 className="text-4xl md:text-5xl font-bold text-white">Montajes DJ</h2>
-      <p className="text-lg md:text-xl text-white/90 mt-3">Lo esencial: DJ + Sonido + Luces</p>
-      <p className="text-base text-white/70 mt-2">Opción más económica</p>
-    </div>
-
-    {/* Bottom */}
-    <div className="mt-auto flex items-center justify-center gap-2 text-white text-lg font-semibold pb-2">
-      Ver montajes <ChevronRight className="w-6 h-6" />
-    </div>
-  </div>
-</motion.a>
+          <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
+            {/* Top */}
+            <div className="pt-6 text-center">
+              <h2 className="text-4xl md:text-5xl font-bold text-white">Paquetes Completos</h2>
+              <p className="text-lg md:text-xl text-white/90 mt-3">Varios servicios: Montaje DJ + Pista + PhotoBooth</p>
+              <p className="text-base text-white/70 mt-2">Opción más completa</p>
+            </div>
+        
+            {/* Bottom */}
+            <div className="mt-auto flex items-center justify-center gap-2 text-white text-lg font-semibold pb-2">
+              Ver Paquetes <ChevronRight className="w-6 h-6" />
+            </div>
+          </div>
+        </motion.a>
 
       {/* 2. MONTAJES DJ - Card Grande CON FOTO */}
       <motion.a
