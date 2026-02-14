@@ -1182,7 +1182,6 @@ function MontajesPage() {
 /* ===========================
    INDIVIDUAL SERVICE PAGES
    =========================== */
-
 function IndividualServicePage({ slug }) {
   const serviceData = {
     "pistas-de-baile": {
