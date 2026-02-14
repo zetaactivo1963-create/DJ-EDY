@@ -1265,7 +1265,7 @@ function IndividualServicePage({ slug }) {
             {service.description}
           </p>
 
-          
+            <a
             href="#cotizar"
             className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors"
           >
