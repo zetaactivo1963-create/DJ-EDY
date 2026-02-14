@@ -764,7 +764,7 @@ function BestSellers() {
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         {/* Pista de Baile */}
         <ServiceCard
-          href="#servicio-pistas-de-baile"
+          href="#servicio/pistas-de-baile"
           image="/pista-led-service.jpg"
           title="Pista de Baile"
           subtitle="LED iluminada · Diferentes tamaños"
@@ -773,7 +773,7 @@ function BestSellers() {
 
         {/* Fotografía */}
         <ServiceCard
-          href="#servicio-fotografia"
+          href="#servicio/fotografia"
           image="/fotografia-service.jpg"
           title="Fotografía"
           subtitle="Cobertura completa de tu evento"
@@ -784,7 +784,7 @@ function BestSellers() {
       {/* 5 y 6: Photo Booths + Efectos */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <ServiceCard
-          href="#servicio-photo-booths"
+          href="#servicio/photo-booths"
           image="/photobooth-service.jpg"
           title="Photo Booths"
           subtitle="360° · Estático · Digital"
@@ -792,7 +792,7 @@ function BestSellers() {
         />
 
         <ServiceCard
-          href="#servicio-efectos-especiales"
+          href="#servicio/efectos-especiales"
           image="/efectos-service.jpg"
           title="Efectos Especiales"
           subtitle="Chispas · Confeti · Humo"
@@ -803,7 +803,7 @@ function BestSellers() {
       {/* 7 y 8: Sonido + Iluminación & Trussing */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <ServiceCard
-          href="#servicio-sonido-profesional"
+          href="#servicio/sonido-profesional"
           image="/sonido-service.jpg"
           title="Sonido"
           subtitle="Line Array · Técnico dedicado"
@@ -811,7 +811,7 @@ function BestSellers() {
         />
 
         <ServiceCard
-          href="#servicio-iluminacion-trussing"
+          href="#servicio/iluminacion-trussing"
           image="/iluminacion-service.jpg"
           title="Iluminación & Trussing"
           subtitle="Moving Heads · LED · Estructuras"
@@ -822,7 +822,7 @@ function BestSellers() {
       {/* 9 y 10: Pantallas + Animación */}
       <div className="grid md:grid-cols-2 gap-6">
         <ServiceCard
-          href="#servicio-pantallas-visuales"
+          href="#servicio/pantallas-visuales"
           image="/pantallas-service.jpg"
           title="Pantallas / Visuales"
           subtitle="Pantallas LED · Proyección"
@@ -830,7 +830,7 @@ function BestSellers() {
         />
 
         <ServiceCard
-          href="#servicio-animacion-coordinacion"
+          href="#servicio/animacion-coordinacion"
           image="/animacion-service.jpg"
           title="Animación & Coordinación"
           subtitle="MC · Animador · Coordinador"
