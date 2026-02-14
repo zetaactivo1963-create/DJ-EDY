@@ -1033,14 +1033,14 @@ function MontajesPage() {
     },
   ];
 
-  const serviciosAdicionales = [
-    { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio-pistas-de-baile" },
-    { name: "Photo Booth 360°", image: "/photobooth-service.jpg", href: "#servicio-photo-booths" },
-    { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio-efectos-especiales" },
-    { name: "Fotografía", image: "/fotografia-service.jpg", href: "#servicio-fotografia" },
-    { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio-iluminacion-trussing" },
-    { name: "Animación & MC", image: "/animacion-service.jpg", href: "#servicio-animacion-coordinacion" },
-  ];
+const serviciosAdicionales = [
+  { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
+  { name: "Photo Booth 360°", image: "/photobooth-service.jpg", href: "#servicio/photo-booths" },
+  { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
+  { name: "Fotografía", image: "/fotografia-service.jpg", href: "#servicio/fotografia" },
+  { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
+  { name: "Animación & MC", image: "/animacion-service.jpg", href: "#servicio/animacion-coordinacion" },
+];
 
   return (
     <>
