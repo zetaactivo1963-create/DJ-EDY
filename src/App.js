@@ -1258,6 +1258,103 @@ function MontajesPage() {
   );
 }
 
+/* ===========================
+   INDIVIDUAL SERVICE PAGES
+   =========================== */
+
+function IndividualServicePage({ slug }) {
+  const serviceData = {
+    "pistas-de-baile": {
+      title: "Pistas de Baile",
+      subtitle: "Pistas LED interactivas",
+      description: "Dos modelos disponibles. Instalación profesional.",
+    },
+    "fotografia": {
+      title: "Fotografía Profesional",
+      subtitle: "Captura cada momento",
+      description: "Cobertura completa de tu evento.",
+    },
+    "photo-booths": {
+      title: "Photo Booths",
+      subtitle: "Recuerdos instantáneos",
+      description: "360° y estático disponibles.",
+    },
+    "efectos-especiales": {
+      title: "Efectos Especiales",
+      subtitle: "Momentos wow",
+      description: "Chispas, confeti, humo y más.",
+    },
+    "sonido-profesional": {
+      title: "Sonido Profesional",
+      subtitle: "Line Array de alta fidelidad",
+      description: "Sistema completo con técnico dedicado.",
+    },
+    "iluminacion-trussing": {
+      title: "Iluminación & Trussing",
+      subtitle: "Diseño lumínico integral",
+      description: "Moving heads, LED, estructuras.",
+    },
+    "pantallas-visuales": {
+      title: "Pantallas / Visuales",
+      subtitle: "Pantallas LED profesionales",
+      description: "Proyección de alta calidad.",
+    },
+    "animacion-coordinacion": {
+      title: "Animación & Coordinación",
+      subtitle: "La energía del evento",
+      description: "MC, animadores, coordinadores.",
+    },
+  };
+
+  const service = serviceData[slug];
+
+  if (!service) {
+    return (
+      <Section>
+        <div className="text-center py-20">
+          <h2 className="text-2xl text-white mb-4">Servicio no encontrado</h2>
+          <a href="#home" className="text-zinc-400 hover:text-white">
+            Volver al inicio
+          </a>
+        </div>
+      </Section>
+    );
+  }
+
+  return (
+    <>
+      <section className="pt-28 pb-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+            href="#home"
+            className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" /> Volver
+          </a>
+        </div>
+      </section>
+
+      <Section className="pt-0">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+            {service.title}
+          </h1>
+          <p className="text-2xl text-zinc-400 mb-6">{service.subtitle}</p>
+          <p className="text-lg text-zinc-300 leading-relaxed mb-12">
+            {service.description}
+          </p>
+
+          
+            href="#cotizar"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors"
+          >
+            Cotizar este servicio <ChevronRight className="w-5 h-5" />
+          </a>
+        </div>
+      </Section>
+    </>
+  );
+}
 
 /* SERVICIOS - Lista visual actualizada como home */
 function ServicesPage() {
