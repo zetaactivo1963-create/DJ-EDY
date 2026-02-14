@@ -1279,14 +1279,14 @@ function IndividualServicePage({ slug }) {
 /* SERVICIOS - Lista visual actualizada como home */
 function ServicesPage() {
   const serviciosConFotos = [
-    { name: "Pista de Baile", image: "/pista-led-service.jpg", href: "#servicio-pistas-de-baile", desc: "LED iluminada · Diferentes tamaños" },
-    { name: "Fotografía", image: "/fotografia-service.jpg", href: "#servicio-fotografia", desc: "Cobertura completa" },
-    { name: "Photo Booths", image: "/photobooth-service.jpg", href: "#servicio-photo-booths", desc: "360° · Estático · Digital" },
-    { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio-efectos-especiales", desc: "Chispas · Confeti · Humo" },
-    { name: "Sonido", image: "/sonido-service.jpg", href: "#servicio-sonido-profesional", desc: "Line Array · Técnico dedicado" },
-    { name: "Iluminación & Trussing", image: "/iluminacion-service.jpg", href: "#servicio-iluminacion-trussing", desc: "Moving Heads · LED · Estructuras" },
-    { name: "Pantallas / Visuales", image: "/pantallas-service.jpg", href: "#servicio-pantallas-visuales", desc: "Pantallas LED · Proyección" },
-    { name: "Animación & Coordinación", image: "/animacion-service.jpg", href: "#servicio-animacion-coordinacion", desc: "MC · Animador · Coordinador" },
+    { name: "Pista de Baile", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile", desc: "LED iluminada · Diferentes tamaños" },
+    { name: "Fotografía", image: "/fotografia-service.jpg", href: "#servicio/fotografia", desc: "Cobertura completa" },
+    { name: "Photo Booths", image: "/photobooth-service.jpg", href: "#servicio/photo-booths", desc: "360° · Estático · Digital" },
+    { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales", desc: "Chispas · Confeti · Humo" },
+    { name: "Sonido", image: "/sonido-service.jpg", href: "#servicio/sonido-profesional", desc: "Line Array · Técnico dedicado" },
+    { name: "Iluminación & Trussing", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing", desc: "Moving Heads · LED · Estructuras" },
+    { name: "Pantallas / Visuales", image: "/pantallas-service.jpg", href: "#servicio/pantallas-visuales", desc: "Pantallas LED · Proyección" },
+    { name: "Animación & Coordinación", image: "/animacion-service.jpg", href: "#servicio/animacion-coordinacion", desc: "MC · Animador · Coordinador" },
   ];
 
   return (
