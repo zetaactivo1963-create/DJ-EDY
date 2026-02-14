@@ -699,7 +699,7 @@ function Hero() {
 function BestSellers() {
   return (
     <Section id="bestsellers" className="bg-black">
-      {/* 1. PAQUETES - Card Gigante */}
+      {/* 1. PAQUETES */}
       <motion.a
         href="#paquetes"
         initial={{ opacity: 0, y: 30 }}
@@ -707,29 +707,22 @@ function BestSellers() {
         viewport={{ once: true }}
         className="group relative overflow-hidden rounded-3xl min-h-[600px] mb-6 block hover:scale-[1.01] transition-transform"
       >
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: 'url(/montajePremium.jpg)' }}
-        />
+        <div className="absolute inset-0 w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url(/montajePremium.jpg)' }} />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
         
-        {/* Título CENTRADO ARRIBA */}
-          <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
-            {/* Top */}
-            <div className="pt-6 text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-white">Paquetes Completos</h2>
-              <p className="text-lg md:text-xl text-white/90 mt-3">Varios servicios: Montaje DJ + Pista + PhotoBooth</p>
-              <p className="text-base text-white/70 mt-2">Opción más completa</p>
-            </div>
-        
-            {/* Bottom */}
-            <div className="mt-auto flex items-center justify-center gap-2 text-white text-lg font-semibold pb-2">
-              Ver Paquetes <ChevronRight className="w-6 h-6" />
-            </div>
+        <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
+          <div className="pt-6 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white">Paquetes Completos</h2>
+            <p className="text-lg md:text-xl text-white/90 mt-3">Varios servicios: Montaje DJ + Pista + PhotoBooth</p>
+            <p className="text-base text-white/70 mt-2">Opción más completa</p>
           </div>
-        </motion.a>
+          <div className="mt-auto flex items-center justify-center gap-2 text-white text-lg font-semibold pb-2">
+            Ver Paquetes <ChevronRight className="w-6 h-6" />
+          </div>
+        </div>
+      </motion.a>
 
-      {/* 2. MONTAJES DJ - Card Grande CON FOTO */}
+      {/* 2. MONTAJES DJ */}
       <motion.a
         href="#montajes"
         initial={{ opacity: 0, y: 30 }}
@@ -738,122 +731,50 @@ function BestSellers() {
         transition={{ delay: 0.1 }}
         className="group relative overflow-hidden rounded-3xl min-h-[500px] mb-6 block hover:scale-[1.01] transition-transform"
       >
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }}
-        />
+        <div className="absolute inset-0 w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }} />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
         
-        {/* Título CENTRADO ARRIBA */}
-  <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
-    {/* Top */}
-    <div className="pt-6 text-center">
-      <h2 className="text-4xl md:text-5xl font-bold text-white">Montajes DJ</h2>
-      <p className="text-lg md:text-xl text-white/90 mt-3">Lo esencial: DJ + Sonido + Luces</p>
-      <p className="text-base text-white/70 mt-2">Opción más económica</p>
-    </div>
+        <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
+          <div className="pt-6 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white">Montajes DJ</h2>
+            <p className="text-lg md:text-xl text-white/90 mt-3">Lo esencial: DJ + Sonido + Luces</p>
+            <p className="text-base text-white/70 mt-2">Opción más económica</p>
+          </div>
+          <div className="mt-auto flex items-center justify-center gap-2 text-white text-lg font-semibold pb-2">
+            Ver montajes <ChevronRight className="w-6 h-6" />
+          </div>
+        </div>
+      </motion.a>
 
-    {/* Bottom */}
-    <div className="mt-auto flex items-center justify-center gap-2 text-white text-lg font-semibold pb-2">
-      Ver montajes <ChevronRight className="w-6 h-6" />
-    </div>
-  </div>
-</motion.a>
-
-      {/* 3 y 4: Pista + Fotografía */}
+      {/* Grid 2x2 servicios */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        {/* Pista de Baile */}
-        <ServiceCard
-          href="#servicio/pistas-de-baile"
-          image="/pista-led-service.jpg"
-          title="Pista de Baile"
-          subtitle="LED iluminada · Diferentes tamaños"
-          delay={0.2}
-        />
-
-        {/* Fotografía */}
-        <ServiceCard
-          href="#servicio/fotografia"
-          image="/fotografia-service.jpg"
-          title="Fotografía"
-          subtitle="Cobertura completa de tu evento"
-          delay={0.25}
-        />
+        <ServiceCard href="#servicio/pistas-de-baile" image="/pista-led-service.jpg" title="Pista de Baile" subtitle="LED iluminada · Diferentes tamaños" delay={0.2} />
+        <ServiceCard href="#servicio/fotografia" image="/fotografia-service.jpg" title="Fotografía" subtitle="Cobertura completa" delay={0.25} />
       </div>
 
-      {/* 5 y 6: Photo Booths + Efectos */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <ServiceCard
-          href="#servicio/photo-booths"
-          image="/photobooth-service.jpg"
-          title="Photo Booths"
-          subtitle="360° · Estático · Digital"
-          delay={0.3}
-        />
-
-        <ServiceCard
-          href="#servicio/efectos-especiales"
-          image="/efectos-service.jpg"
-          title="Efectos Especiales"
-          subtitle="Chispas · Confeti · Humo"
-          delay={0.35}
-        />
+        <ServiceCard href="#servicio/photo-booths" image="/photobooth-service.jpg" title="Photo Booths" subtitle="360° · Estático · Digital" delay={0.3} />
+        <ServiceCard href="#servicio/efectos-especiales" image="/efectos-service.jpg" title="Efectos Especiales" subtitle="Chispas · Confeti · Humo" delay={0.35} />
       </div>
 
-      {/* 7 y 8: Sonido + Iluminación & Trussing */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <ServiceCard
-          href="#servicio/sonido-profesional"
-          image="/sonido-service.jpg"
-          title="Sonido"
-          subtitle="Line Array · Técnico dedicado"
-          delay={0.4}
-        />
-
-        <ServiceCard
-          href="#servicio/iluminacion-trussing"
-          image="/iluminacion-service.jpg"
-          title="Iluminación & Trussing"
-          subtitle="Moving Heads · LED · Estructuras"
-          delay={0.45}
-        />
+        <ServiceCard href="#servicio/sonido-profesional" image="/sonido-service.jpg" title="Sonido" subtitle="Line Array · Técnico dedicado" delay={0.4} />
+        <ServiceCard href="#servicio/iluminacion-trussing" image="/iluminacion-service.jpg" title="Iluminación & Trussing" subtitle="Moving Heads · LED · Estructuras" delay={0.45} />
       </div>
 
-      {/* 9 y 10: Pantallas + Animación */}
       <div className="grid md:grid-cols-2 gap-6">
-        <ServiceCard
-          href="#servicio/pantallas-visuales"
-          image="/pantallas-service.jpg"
-          title="Pantallas / Visuales"
-          subtitle="Pantallas LED · Proyección"
-          delay={0.5}
-        />
-
-        <ServiceCard
-          href="#servicio/animacion-coordinacion"
-          image="/animacion-service.jpg"
-          title="Animación & Coordinación"
-          subtitle="MC · Animador · Coordinador"
-          delay={0.55}
-        />
+        <ServiceCard href="#servicio/pantallas-visuales" image="/pantallas-service.jpg" title="Pantallas / Visuales" subtitle="Pantallas LED · Proyección" delay={0.5} />
+        <ServiceCard href="#servicio/animacion-coordinacion" image="/animacion-service.jpg" title="Animación & Coordinación" subtitle="MC · Animador · Coordinador" delay={0.55} />
       </div>
 
-      {/* Explicación SIMPLIFICADA */}
+      {/* Explicación */}
       <div className="mt-16 text-center max-w-3xl mx-auto">
         <div className={`p-8 rounded-2xl ${glass}`}>
-          <h3 className="text-2xl font-bold text-white mb-4">
-            ¿Cómo funciona?
-          </h3>
+          <h3 className="text-2xl font-bold text-white mb-4">¿Cómo funciona?</h3>
           <div className="text-left space-y-4 text-lg text-zinc-300">
-            <p>
-              <strong className="text-white">Paquetes:</strong> Todo incluido. Un solo precio con DJ, sonido, luces, pista, efectos y más.
-            </p>
-            <p>
-              <strong className="text-white">Montajes:</strong> Solo lo básico (DJ + sonido + luces). Más económico.
-            </p>
-            <p>
-              <strong className="text-white">Servicios individuales:</strong> Añade lo que necesites a tu paquete o montaje.
-            </p>
+            <p><strong className="text-white">Paquetes:</strong> Todo incluido. Un solo precio.</p>
+            <p><strong className="text-white">Montajes:</strong> Solo lo básico. Más económico.</p>
+            <p><strong className="text-white">Servicios:</strong> Añade lo que necesites.</p>
           </div>
         </div>
       </div>
