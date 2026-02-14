@@ -1180,49 +1180,443 @@ const serviciosAdicionales = [
 }
 
 /* ===========================
-   INDIVIDUAL SERVICE PAGES
+   INDIVIDUAL SERVICE PAGES - VERSIÓN COMPLETA
    =========================== */
+
 function IndividualServicePage({ slug }) {
   const serviceData = {
     "pistas-de-baile": {
-      title: "Pistas de Baile",
-      subtitle: "Pistas LED interactivas",
-      description: "Dos modelos disponibles. Instalación profesional.",
+      title: "Pistas de Baile LED",
+      subtitle: "Iluminación interactiva para tu evento",
+      hero: "/pista-hero.jpg",
+      description: "Transforma tu pista de baile con tecnología LED de última generación. Dos modelos disponibles con instalación profesional incluida.",
+      
+      packages: [
+        {
+          name: "Pista 3D, Mirror & Frost",
+          image: "/pista-3d.jpg",
+          sizes: [
+            { size: "10x10", price: "$850" },
+            { size: "12x12", price: "$950" },
+            { size: "14x14", price: "$1,050" },
+            { size: "16x16", price: "$1,100" },
+          ],
+          features: [
+            "Efectos 3D interactivos",
+            "Acabado espejo",
+            "Efecto frost (escarcha)",
+            "Instalación profesional",
+            "Técnico dedicado",
+          ]
+        },
+        {
+          name: "Pista Blanca con Puntos LED",
+          image: "/pista-blanca.jpg",
+          sizes: [
+            { size: "10x10", price: "$750" },
+            { size: "12x12", price: "$850" },
+            { size: "14x14", price: "$950" },
+            { size: "16x16", price: "$1,000" },
+          ],
+          features: [
+            "Puntos LED programables",
+            "Base blanca elegante",
+            "Múltiples patrones",
+            "Instalación profesional",
+            "Técnico dedicado",
+          ]
+        }
+      ]
     },
+
     "fotografia": {
       title: "Fotografía Profesional",
-      subtitle: "Captura cada momento",
-      description: "Cobertura completa de tu evento.",
+      subtitle: "Captura cada momento especial",
+      hero: "/foto-hero.jpg",
+      description: "Cobertura fotográfica completa de tu evento con equipo profesional y entrega digital.",
+      
+      package: {
+        name: "Paquete Básico",
+        price: "Desde $XXX",
+        image: "/foto-paquete.jpg",
+        duration: "4 horas",
+        includes: [
+          "1 cámara profesional de alta resolución",
+          "1 flash profesional",
+          "1 fotógrafo experimentado",
+          "Cobertura completa del evento",
+          "Recorrido por todas las áreas",
+          "4 horas de servicio",
+          "Todas las fotos capturadas",
+          "Entrega digital por link de descarga",
+          "Edición básica de color",
+        ]
+      }
     },
+
     "photo-booths": {
       title: "Photo Booths",
-      subtitle: "Recuerdos instantáneos",
-      description: "360° y estático disponibles.",
+      subtitle: "Recuerdos instantáneos para tus invitados",
+      hero: "/photobooth-hero.jpg",
+      description: "Experiencias fotográficas interactivas que tus invitados amarán. Desde cabinas 360° hasta clásicas estáticas.",
+      
+      packages: [
+        {
+          name: "Photo Booth 360°",
+          image: "/booth-360.jpg",
+          prices: [
+            { duration: "2 horas", price: "$450" },
+            { duration: "3 horas", price: "$550" },
+          ],
+          features: [
+            "Plataforma giratoria profesional",
+            "Cámara de alta velocidad",
+            "Videos en cámara lenta",
+            "Entrega digital instantánea",
+            "Operador dedicado",
+            "Props y accesorios incluidos",
+            "Branding personalizable",
+          ]
+        },
+        {
+          name: "Photo Booth Estático",
+          image: "/booth-estatico.jpg",
+          prices: [
+            { duration: "2 horas", price: "$400" },
+          ],
+          features: [
+            "Cabina profesional",
+            "Impresión instantánea",
+            "Compartir por redes sociales",
+            "Entrega digital",
+            "Operador dedicado",
+            "Props y accesorios incluidos",
+            "Backdrop personalizable",
+          ]
+        },
+      ],
+
+      optional: {
+        name: "Cabina Inflable",
+        price: "+$150",
+        image: "/cabina-inflable.jpg",
+        specs: "10' x 10' x 8' (alto)",
+        features: [
+          "Cabina inflable completa",
+          "Iluminación LED integrada",
+          "Espacio para 6-8 personas",
+          "Montaje e instalación incluidos",
+        ]
+      }
     },
+
     "efectos-especiales": {
       title: "Efectos Especiales",
-      subtitle: "Momentos wow",
-      description: "Chispas, confeti, humo y más.",
+      subtitle: "Momentos mágicos e inolvidables",
+      hero: "/efectos-hero.jpg",
+      description: "Crea momentos wow con nuestros efectos especiales profesionales. Desde chispas frías hasta máquinas de humo.",
+      
+      effects: [
+        {
+          name: "Chispas Frías",
+          price: "$350",
+          image: "/chispas.jpg",
+          specs: "3 tiros de 15 segundos",
+          features: [
+            "Pirotecnia segura (fría al tacto)",
+            "3 disparos de 15 segundos cada uno",
+            "Altura hasta 15 pies",
+            "Ideal para primer baile",
+            "Técnico certificado incluido",
+            "Seguro y aprobado en venues",
+          ]
+        },
+        {
+          name: "Máquinas de Humo Vertical",
+          price: "$250",
+          image: "/humo-vertical.jpg",
+          specs: "2 máquinas incluidas",
+          features: [
+            "2 máquinas profesionales",
+            "Tiros prácticamente ilimitados",
+            "Efecto columna vertical",
+            "Fluido profesional incluido",
+            "Control remoto",
+            "Técnico dedicado",
+          ]
+        },
+        {
+          name: "Máquina de Confeti",
+          price: "Por cotización",
+          image: "/confeti.jpg",
+          features: [
+            "Lanzamiento aéreo profesional",
+            "Confeti biodegradable disponible",
+            "Control de timing preciso",
+            "Sujeto a permisos del venue",
+          ]
+        },
+        {
+          name: "Máquina de Espuma",
+          price: "Por cotización",
+          image: "/espuma.jpg",
+          features: [
+            "Espuma profesional no tóxica",
+            "Ideal para fiestas juveniles",
+            "Cañón de alta potencia",
+            "Sujeto a permisos del venue",
+          ]
+        },
+        {
+          name: "Humo Bajo (Baile en Nubes)",
+          price: "Por cotización",
+          image: "/humo-bajo.jpg",
+          features: [
+            "Efecto de nube baja",
+            "Humo denso que permanece abajo",
+            "Ideal para primer baile",
+            "Máquina profesional de hielo seco",
+          ]
+        },
+      ]
     },
+
     "sonido-profesional": {
-      title: "Sonido Profesional",
-      subtitle: "Line Array de alta fidelidad",
-      description: "Sistema completo con técnico dedicado.",
+      title: "Sonido Profesional Line Array",
+      subtitle: "Audio de calidad para cualquier evento",
+      hero: "/sonido-hero.jpg",
+      description: "Sistemas de sonido profesional desde eventos íntimos hasta conciertos. Técnicos certificados y equipo de primera línea.",
+      
+      systemBase: {
+        name: "Sistema Base Line Array",
+        image: "/sonido-base.jpg",
+        note: "Precio por cotización según evento",
+        includes: [
+          "6 bocinas Line Array dB-Technologies T8",
+          "Cada una con bocinas internas de 8\", 6.5\" y drivers de 1\"",
+          "2 subwoofers dB-Technologies S30",
+          "Cada uno con 2 bocinas de 18\"",
+          "Sistema de networking y ecualización avanzada",
+          "Consola digital MIDAS M32 para mezcla profesional",
+          "Técnico de sonido dedicado",
+          "Ecualización, ajustes en vivo y supervisión",
+          "Cablería profesional completa (señal, corriente, networking)",
+          "Stands y accesorios para montaje seguro",
+          "6 micrófonos inalámbricos Shure",
+          "Microfonería, cablería y stands para bandas",
+          "Montaje y desmontaje antes/después del evento",
+          "Precio especial para 2 días consecutivos sin desmontaje",
+        ]
+      },
+
+      systemComplete: {
+        name: "Sistema Completo (Eventos Grandes)",
+        image: "/sonido-completo.jpg",
+        note: "Cotización personalizada según especificaciones",
+        specs: [
+          "Hasta 24 cajas de bocinas Line Array",
+          "Hasta 8 bajos dobles de alta potencia",
+          "Microfonería profesional completa",
+          "Apto para bandas, artistas, exterior/interior",
+          "Cualquier capacidad de público",
+        ],
+        quoteFactors: [
+          "Artistas o bandas participantes",
+          "Ubicación del evento (interior/exterior)",
+          "Capacidad del venue",
+          "Cantidad de personas esperadas",
+          "Croquis y especificaciones técnicas",
+          "Riders técnicos de artistas",
+        ]
+      },
+
+      gallery: [
+        "/sonido-1.jpg",
+        "/sonido-2.jpg",
+        "/sonido-3.jpg",
+        "/sonido-4.jpg",
+      ]
     },
+
     "iluminacion-trussing": {
       title: "Iluminación & Trussing",
-      subtitle: "Diseño lumínico integral",
-      description: "Moving heads, LED, estructuras.",
+      subtitle: "Diseño lumínico profesional",
+      hero: "/luces-hero.jpg",
+      description: "Desde iluminación básica hasta shows de luces completos. Estructuras trussing de cualquier tamaño para tu evento.",
+      
+      note: "Cotización personalizada según el tipo de evento y necesidades específicas",
+
+      lighting: {
+        name: "Equipos de Iluminación",
+        inventory: [
+          "16+ Moving Heads Gobo (efectos proyectados)",
+          "36+ luces móviles Wash (barrido de color)",
+          "Barras LED profesionales",
+          "Color Strikes Chauvet",
+          "Sistemas laser profesionales",
+          "Técnicos profesionales de iluminación",
+        ]
+      },
+
+      trussing: {
+        name: "Estructuras Trussing",
+        options: [
+          "Estructuras de cualquier tipo y tamaño",
+          "Diseños totalmente personalizables",
+          "Desde montajes básicos hasta complejos",
+          "Arcos, torres, grids, estructuras aéreas",
+          "Instalación profesional certificada",
+        ]
+      },
+
+      applications: [
+        {
+          name: "Obras de Teatro",
+          image: "/luces-teatro.jpg",
+          description: "Iluminación dramática y control de escena"
+        },
+        {
+          name: "Conciertos",
+          image: "/luces-concierto.jpg",
+          description: "Shows de luces sincronizados con música"
+        },
+        {
+          name: "Eventos Corporativos",
+          image: "/luces-corporativo.jpg",
+          description: "Iluminación elegante con branding"
+        },
+        {
+          name: "Bodas y Sociales",
+          image: "/luces-boda.jpg",
+          description: "Ambientación romántica y festiva"
+        },
+      ],
+
+      levels: [
+        {
+          level: "Básico",
+          description: "2-4 luces en tarima con control básico",
+          image: "/setup-basico.jpg"
+        },
+        {
+          level: "Intermedio",
+          description: "8-12 luces con estructuras y control avanzado",
+          image: "/setup-medio.jpg"
+        },
+        {
+          level: "Completo",
+          description: "16+ luces, estructuras complejas, nivel plaza pública",
+          image: "/setup-completo.jpg"
+        },
+      ],
+
+      gallery: [
+        "/luces-1.jpg",
+        "/luces-2.jpg",
+        "/luces-3.jpg",
+        "/luces-4.jpg",
+        "/luces-5.jpg",
+        "/luces-6.jpg",
+      ]
     },
+
     "pantallas-visuales": {
-      title: "Pantallas / Visuales",
-      subtitle: "Pantallas LED profesionales",
-      description: "Proyección de alta calidad.",
+      title: "Pantallas & Visuales",
+      subtitle: "Proyección de alta calidad",
+      hero: "/pantallas-hero.jpg",
+      description: "Pantallas LED modulares y sistemas de proyección profesional para presentaciones, videos y contenido visual.",
+      
+      ledScreen: {
+        name: "Pantalla LED Modular",
+        image: "/pantalla-led.jpg",
+        recommended: {
+          size: "13' x 7'",
+          price: "Desde $1,000",
+          note: "Precio final según montaje y ubicación"
+        },
+        features: [
+          "Pantalla LED de alta resolución",
+          "Tamaño modular completamente ajustable",
+          "Tamaño recomendado: 13 pies x 7 pies",
+          "Cualquier tamaño disponible bajo pedido",
+          "Instalación y montaje profesional",
+          "Técnico dedicado para operación",
+          "Ideal para videos, presentaciones, livestreams",
+        ],
+        customSizes: "Configuraciones personalizadas disponibles según necesidades del evento"
+      },
+
+      projection: {
+        name: "Sistema de Proyección",
+        image: "/proyector.jpg",
+        price: "Por cotización",
+        features: [
+          "Pantalla de proyección profesional",
+          "Proyectores de alta luminosidad",
+          "Múltiples tamaños disponibles",
+          "Ideal para presentaciones corporativas",
+          "Montaje incluido",
+        ]
+      },
+
+      applications: [
+        "Bodas (videos, fotos, livestream)",
+        "Eventos corporativos (presentaciones)",
+        "Conciertos (visuales sincronizados)",
+        "Conferencias y seminarios",
+        "Fiestas (videos musicales, karaoke)",
+      ]
     },
+
     "animacion-coordinacion": {
       title: "Animación & Coordinación",
-      subtitle: "La energía del evento",
-      description: "MC, animadores, coordinadores.",
+      subtitle: "Profesionales para el éxito de tu evento",
+      hero: "/animacion-hero.jpg",
+      description: "Red de profesionales verificados para animar, coordinar y decorar tu evento. Servicios integrados en tu cotización de DJ EDY.",
+      
+      services: [
+        {
+          name: "Animador Profesional",
+          price: "Desde $450",
+          duration: "4 horas de servicio",
+          image: "/animador.jpg",
+          features: [
+            "Interacción constante con invitados",
+            "Dinamismo y energía durante el evento",
+            "Juegos y actividades grupales",
+            "Coordinación de sorpresas",
+            "Experiencia en todo tipo de eventos",
+            "Manejo de micrófono y público",
+          ]
+        },
+        {
+          name: "Coordinador de Eventos",
+          price: "Por cotización",
+          image: "/coordinador.jpg",
+          features: [
+            "Planificación y timeline del evento",
+            "Coordinación con todos los proveedores",
+            "Supervisión de montaje y desmontaje",
+            "Solución de problemas en tiempo real",
+            "Asegura que todo fluya según plan",
+            "Experiencia profesional verificada",
+          ]
+        },
+        {
+          name: "Decorador",
+          price: "Por cotización",
+          image: "/decorador.jpg",
+          features: [
+            "Diseño y concepto decorativo",
+            "Montaje de decoración completo",
+            "Coordinación con tema del evento",
+            "Múltiples estilos disponibles",
+            "Profesionales con portafolio verificado",
+          ]
+        },
+      ],
+
+      note: "Todos estos servicios se incluyen directamente en tu cotización de DJ EDY. Trabajamos con una red de profesionales de confianza con experiencia comprobada."
     },
   };
 
@@ -1241,41 +1635,450 @@ function IndividualServicePage({ slug }) {
     );
   }
 
+  // RENDER ESPECÍFICO POR TIPO DE SERVICIO
   return (
     <>
+      {/* Header con botón volver */}
       <section className="pt-28 pb-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <a
-            href="#home"
+          <a
+            href="#servicios"
             className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white mb-8"
           >
-            <ArrowLeft className="w-4 h-4" /> Volver
+            <ArrowLeft className="w-4 h-4" /> Volver a servicios
           </a>
         </div>
       </section>
 
+      {/* Hero Section */}
       <Section className="pt-0">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-            {service.title}
-          </h1>
-          <p className="text-2xl text-zinc-400 mb-6">{service.subtitle}</p>
-          <p className="text-lg text-zinc-300 leading-relaxed mb-12">
-            {service.description}
-          </p>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              {service.title}
+            </h1>
+            <p className="text-2xl text-zinc-400 mb-6">{service.subtitle}</p>
+            <p className="text-lg text-zinc-300 leading-relaxed max-w-3xl mx-auto">
+              {service.description}
+            </p>
+          </div>
 
+          {/* Imagen hero si existe */}
+          {service.hero && (
+            <div className="mb-16 rounded-2xl overflow-hidden">
+              <img src={service.hero} alt={service.title} className="w-full h-96 object-cover" />
+            </div>
+          )}
+
+          {/* PISTAS DE BAILE */}
+          {slug === "pistas-de-baile" && service.packages && (
+            <div className="space-y-12">
+              {service.packages.map((pkg, idx) => (
+                <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
+                  <h3 className="text-3xl font-bold text-white mb-6">{pkg.name}</h3>
+                  
+                  <div className="grid md:grid-cols-2 gap-8 mb-8">
+                    <img src={pkg.image} alt={pkg.name} className="rounded-xl w-full h-64 object-cover" />
+                    
+                    <div>
+                      <h4 className="text-xl font-semibold text-white mb-4">Incluye:</h4>
+                      <ul className="space-y-2">
+                        {pkg.features.map((feature, i) => (
+                          <li key={i} className="flex items-start gap-2 text-zinc-300">
+                            <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {pkg.sizes.map((s, i) => (
+                      <div key={i} className="p-4 rounded-xl bg-white/5 text-center">
+                        <p className="text-2xl font-bold text-white">{s.size}</p>
+                        <p className="text-xl text-zinc-400 mt-2">{s.price}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* FOTOGRAFÍA */}
+          {slug === "fotografia" && service.package && (
+            <div className={`p-8 rounded-2xl ${glass}`}>
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
+                <img src={service.package.image} alt={service.package.name} className="rounded-xl w-full h-80 object-cover" />
+                
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-2">{service.package.name}</h3>
+                  <p className="text-2xl text-zinc-400 mb-2">{service.package.price}</p>
+                  <p className="text-lg text-zinc-500 mb-6">{service.package.duration}</p>
+                  
+                  <ul className="space-y-2">
+                    {service.package.includes.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-zinc-300">
+                        <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* PHOTO BOOTHS */}
+          {slug === "photo-booths" && service.packages && (
+            <div className="space-y-8">
+              {service.packages.map((pkg, idx) => (
+                <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <img src={pkg.image} alt={pkg.name} className="rounded-xl w-full h-64 object-cover" />
+                    
+                    <div>
+                      <h3 className="text-3xl font-bold text-white mb-4">{pkg.name}</h3>
+                      
+                      <div className="mb-6">
+                        {pkg.prices.map((p, i) => (
+                          <div key={i} className="flex justify-between items-center mb-2">
+                            <span className="text-zinc-300">{p.duration}</span>
+                            <span className="text-2xl font-bold text-white">{p.price}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <ul className="space-y-2">
+                        {pkg.features.map((f, i) => (
+                          <li key={i} className="flex items-start gap-2 text-zinc-300">
+                            <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {service.optional && (
+                <div className={`p-8 rounded-2xl bg-white/5 border-2 border-white/10`}>
+                  <div className="text-center mb-6">
+                    <span className="text-sm font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
+                      OPCIONAL
+                    </span>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <img src={service.optional.image} alt={service.optional.name} className="rounded-xl w-full h-64 object-cover" />
+                    
+                    <div>
+                      <h3 className="text-3xl font-bold text-white mb-2">{service.optional.name}</h3>
+                      <p className="text-2xl text-zinc-400 mb-2">{service.optional.price}</p>
+                      <p className="text-lg text-zinc-500 mb-6">{service.optional.specs}</p>
+                      
+                      <ul className="space-y-2">
+                        {service.optional.features.map((f, i) => (
+                          <li key={i} className="flex items-start gap-2 text-zinc-300">
+                            <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* EFECTOS ESPECIALES */}
+          {slug === "efectos-especiales" && service.effects && (
+            <div className="grid md:grid-cols-2 gap-6">
+              {service.effects.map((effect, idx) => (
+                <div key={idx} className={`p-6 rounded-2xl ${glass}`}>
+                  <img src={effect.image} alt={effect.name} className="rounded-xl w-full h-48 object-cover mb-4" />
+                  
+                  <h3 className="text-2xl font-bold text-white mb-2">{effect.name}</h3>
+                  <p className="text-xl text-zinc-400 mb-1">{effect.price}</p>
+                  {effect.specs && <p className="text-sm text-zinc-500 mb-4">{effect.specs}</p>}
+                  
+                  <ul className="space-y-2">
+                    {effect.features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+                        <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* SONIDO PROFESIONAL */}
+          {slug === "sonido-profesional" && (
+            <div className="space-y-8">
+              <div className={`p-8 rounded-2xl ${glass}`}>
+                <h3 className="text-3xl font-bold text-white mb-2">{service.systemBase.name}</h3>
+                <p className="text-lg text-yellow-400 mb-6">{service.systemBase.note}</p>
+                
+                <div className="grid md:grid-cols-2 gap-8 mb-6">
+                  <img src={service.systemBase.image} alt={service.systemBase.name} className="rounded-xl w-full h-80 object-cover" />
+                  
+                  <div>
+                    <h4 className="text-xl font-semibold text-white mb-4">Sistema incluye:</h4>
+                    <ul className="space-y-2">
+                      {service.systemBase.includes.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+                          <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className={`p-8 rounded-2xl bg-white/5 border-2 border-white/10`}>
+                <h3 className="text-3xl font-bold text-white mb-2">{service.systemComplete.name}</h3>
+                <p className="text-lg text-yellow-400 mb-6">{service.systemComplete.note}</p>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-xl font-semibold text-white mb-4">Especificaciones:</h4>
+                    <ul className="space-y-2 mb-6">
+                      {service.systemComplete.specs.map((spec, i) => (
+                        <li key={i} className="flex items-start gap-2 text-zinc-300">
+                          <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                          <span>{spec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xl font-semibold text-white mb-4">Factores de cotización:</h4>
+                    <ul className="space-y-2">
+                      {service.systemComplete.quoteFactors.map((factor, i) => (
+                        <li key={i} className="flex items-start gap-2 text-zinc-300">
+                          <span className="text-white">•</span>
+                          <span>{factor}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {service.gallery && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6 text-center">Galería</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {service.gallery.map((img, i) => (
+                      <img key={i} src={img} alt={`Sonido ${i + 1}`} className="rounded-xl w-full h-48 object-cover" />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ILUMINACIÓN & TRUSSING */}
+          {slug === "iluminacion-trussing" && (
+            <div className="space-y-8">
+              <div className="text-center">
+                <p className="text-xl text-yellow-400 mb-8">{service.note}</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className={`p-6 rounded-2xl ${glass}`}>
+                  <h3 className="text-2xl font-bold text-white mb-4">{service.lighting.name}</h3>
+                  <ul className="space-y-2">
+                    {service.lighting.inventory.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-zinc-300">
+                        <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={`p-6 rounded-2xl ${glass}`}>
+                  <h3 className="text-2xl font-bold text-white mb-4">{service.trussing.name}</h3>
+                  <ul className="space-y-2">
+                    {service.trussing.options.map((opt, i) => (
+                      <li key={i} className="flex items-start gap-2 text-zinc-300">
+                        <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                        <span>{opt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {service.applications && (
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-6 text-center">Aplicaciones</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {service.applications.map((app, i) => (
+                      <div key={i} className={`p-6 rounded-2xl ${glass}`}>
+                        <img src={app.image} alt={app.name} className="rounded-xl w-full h-48 object-cover mb-4" />
+                        <h4 className="text-xl font-bold text-white mb-2">{app.name}</h4>
+                        <p className="text-zinc-400">{app.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {service.levels && (
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-6 text-center">Niveles de Setup</h3>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {service.levels.map((level, i) => (
+                      <div key={i} className={`p-6 rounded-2xl ${glass} text-center`}>
+                        <img src={level.image} alt={level.level} className="rounded-xl w-full h-48 object-cover mb-4" />
+                        <h4 className="text-2xl font-bold text-white mb-2">{level.level}</h4>
+                        <p className="text-zinc-400">{level.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {service.gallery && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6 text-center">Galería de Proyectos</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {service.gallery.map((img, i) => (
+                      <img key={i} src={img} alt={`Iluminación ${i + 1}`} className="rounded-xl w-full h-56 object-cover" />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* PANTALLAS & VISUALES */}
+          {slug === "pantallas-visuales" && (
+            <div className="space-y-8">
+              <div className={`p-8 rounded-2xl ${glass}`}>
+                <h3 className="text-3xl font-bold text-white mb-6">{service.ledScreen.name}</h3>
+                
+                <div className="grid md:grid-cols-2 gap-8 mb-6">
+                  <img src={service.ledScreen.image} alt={service.ledScreen.name} className="rounded-xl w-full h-80 object-cover" />
+                  
+                  <div>
+                    <div className="mb-6 p-4 rounded-xl bg-white/5">
+                      <p className="text-sm text-zinc-400">Tamaño recomendado</p>
+                      <p className="text-3xl font-bold text-white">{service.ledScreen.recommended.size}</p>
+                      <p className="text-xl text-zinc-400 mt-2">{service.ledScreen.recommended.price}</p>
+                      <p className="text-sm text-zinc-500 mt-2">{service.ledScreen.recommended.note}</p>
+                    </div>
+
+                    <ul className="space-y-2 mb-6">
+                      {service.ledScreen.features.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-zinc-300">
+                          <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <p className="text-sm text-zinc-400 italic">{service.ledScreen.customSizes}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={`p-8 rounded-2xl ${glass}`}>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <img src={service.projection.image} alt={service.projection.name} className="rounded-xl w-full h-64 object-cover" />
+                  
+                  <div>
+                    <h3 className="text-3xl font-bold text-white mb-2">{service.projection.name}</h3>
+                    <p className="text-xl text-yellow-400 mb-6">{service.projection.price}</p>
+                    
+                    <ul className="space-y-2">
+                      {service.projection.features.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-zinc-300">
+                          <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {service.applications && (
+                <div className={`p-6 rounded-2xl ${glass}`}>
+                  <h4 className="text-xl font-semibold text-white mb-4">Aplicaciones ideales:</h4>
+                  <ul className="grid md:grid-cols-2 gap-2">
+                    {service.applications.map((app, i) => (
+                      <li key={i} className="flex items-center gap-2 text-zinc-300">
+                        <Check className="w-5 h-5 text-white flex-shrink-0" />
+                        <span>{app}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ANIMACIÓN & COORDINACIÓN */}
+          {slug === "animacion-coordinacion" && service.services && (
+            <div className="space-y-8">
+              {service.services.map((svc, idx) => (
+                <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <img src={svc.image} alt={svc.name} className="rounded-xl w-full h-64 object-cover" />
+                    
+                    <div>
+                      <h3 className="text-3xl font-bold text-white mb-2">{svc.name}</h3>
+                      <p className="text-2xl text-zinc-400 mb-1">{svc.price}</p>
+                      {svc.duration && <p className="text-lg text-zinc-500 mb-6">{svc.duration}</p>}
+                      
+                      <ul className="space-y-2">
+                        {svc.features.map((f, i) => (
+                          <li key={i} className="flex items-start gap-2 text-zinc-300">
+                            <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <div className={`p-6 rounded-xl bg-blue-500/10 border border-blue-500/20`}>
+                <p className="text-zinc-300 text-center">
+                  <strong className="text-white">Nota:</strong> {service.note}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* CTA Final */}
+          <div className="mt-16 text-center">
+            <p className="text-zinc-400 mb-6 text-lg">¿Te interesa este servicio?</p>
             <a
-            href="#cotizar"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors"
-          >
-            Cotizar este servicio <ChevronRight className="w-5 h-5" />
-          </a>
+              href="#cotizar"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full text-lg font-semibold hover:bg-zinc-200 transition-colors"
+            >
+              Cotizar ahora <ChevronRight className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       </Section>
     </>
   );
 }
+
 
 /* SERVICIOS - Lista visual actualizada como home */
 function ServicesPage() {
