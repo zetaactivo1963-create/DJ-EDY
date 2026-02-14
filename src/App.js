@@ -1268,7 +1268,7 @@ function IndividualServicePage({ slug }) {
           
             href="#cotizar"
             className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors"
-          >
+          > 
             Cotizar este servicio <ChevronRight className="w-5 h-5" />
           </a>
         </div>
