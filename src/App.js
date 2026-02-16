@@ -986,7 +986,7 @@ function MontajesPage() {
       id: "sencillo",
       name: "Montaje Sencillo",
       price: "Desde $XXX",
-      image: "/montajeSencillo.jpg",
+      image: "/montaje-Sencillo.jpg",
       features: [
         "Pantalla TV 32\"",
         "Karaoke / Just Dance",
@@ -1020,7 +1020,7 @@ function MontajesPage() {
       id: "premium",
       name: "Montaje Premium",
       price: "Desde $XXX",
-      image: "/montajePremium.jpg",
+      image: "/montaje-Premium.jpg",
       features: [
         "2 pantallas TV 55\"",
         "Karaoke / Just Dance",
