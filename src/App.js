@@ -791,24 +791,24 @@ function ServiceCard({ href, image, title, subtitle, delay }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay }}
-      className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform block"
+      className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform block bg-zinc-900"
     >
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${image})` }}
+      <img 
+        src={image}
+        alt={title}
+        className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       
-      {/* Título CENTRADO ARRIBA */}
-      <div className="relative z-10 top-0 left-0 right-0 pt-8 px-6 text-center">
-        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg">
-          {title}
-        </h3>
-        <p className="text-base text-white/90 drop-shadow-lg">{subtitle}</p>
-      </div>
-      
-      <div className="relative z-10 h-full p-8 flex items-end justify-center">
-        <div className="flex items-center gap-2 text-white font-semibold drop-shadow-lg">
+      {/* Título */}
+      <div className="absolute inset-0 flex flex-col justify-between p-8 bg-black/40">
+        <div className="text-center">
+          <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-2xl">
+            {title}
+          </h3>
+          <p className="text-base text-white drop-shadow-2xl">{subtitle}</p>
+        </div>
+        
+        <div className="flex items-center justify-center gap-2 text-white font-semibold drop-shadow-2xl">
           Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
         </div>
       </div>
