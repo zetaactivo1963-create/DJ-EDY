@@ -763,8 +763,8 @@ function BestSellers() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <ServiceCard href="#servicio/pantallas-visuales" image="/pantallas-service.jpg" title="Pantallas / Visuales" subtitle="Pantallas LED · Proyección" delay={0.5} />
-        <ServiceCard href="#servicio/animacion-coordinacion" image="/animacion-service.jpg" title="Animación & Coordinación" subtitle="MC · Animador · Coordinador" delay={0.55} />
+        <ServiceCard href="#servicio/pantallas-visuales" image="/pantallas-service.png" title="Pantallas / Visuales" subtitle="Pantallas LED · Proyección" delay={0.5} />
+        <ServiceCard href="#servicio/animacion-coordinacion" image="/animacion-service.png" title="Animación & Coordinación" subtitle="MC · Animador · Coordinador" delay={0.55} />
       </div>
 
       {/* Explicación */}
@@ -1043,7 +1043,7 @@ const serviciosAdicionales = [
   { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
   { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
   { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
-  { name: "Animación & MC", image: "/animacion-service.jpg", href: "#servicio/animacion-coordinacion" },
+  { name: "Animación & MC", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion" },
 ];
 
   return (
@@ -2093,8 +2093,8 @@ function ServicesPage() {
     { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales", desc: "Chispas · Confeti · Humo" },
     { name: "Sonido", image: "/sonido-service.jpg", href: "#servicio/sonido-profesional", desc: "Line Array · Técnico dedicado" },
     { name: "Iluminación & Trussing", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing", desc: "Moving Heads · LED · Estructuras" },
-    { name: "Pantallas / Visuales", image: "/pantallas-service.jpg", href: "#servicio/pantallas-visuales", desc: "Pantallas LED · Proyección" },
-    { name: "Animación & Coordinación", image: "/animacion-service.jpg", href: "#servicio/animacion-coordinacion", desc: "MC · Animador · Coordinador" },
+    { name: "Pantallas / Visuales", image: "/pantallas-service.png", href: "#servicio/pantallas-visuales", desc: "Pantallas LED · Proyección" },
+    { name: "Animación & Coordinación", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion", desc: "MC · Animador · Coordinador" },
   ];
 
   return (
