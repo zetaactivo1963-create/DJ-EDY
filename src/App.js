@@ -749,7 +749,7 @@ function BestSellers() {
       {/* Grid 2x2 servicios */}
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <ServiceCard href="#servicio/pistas-de-baile" image="/pista-led-service.jpg" title="Pista de Baile" subtitle="LED iluminada · Diferentes tamaños" delay={0.2} />
-        <ServiceCard href="#servicio/fotografia" image="/fotografia-service.jpg" title="Fotografía" subtitle="Cobertura completa" delay={0.25} />
+        <ServiceCard href="#servicio/fotografia" image="/fotografia-service.png" title="Fotografía" subtitle="Cobertura completa" delay={0.25} />
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -1041,7 +1041,7 @@ const serviciosAdicionales = [
   { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
   { name: "Photo Booth 360°", image: "/photobooth-service.jpg", href: "#servicio/photo-booths" },
   { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
-  { name: "Fotografía", image: "/fotografia-service.jpg", href: "#servicio/fotografia" },
+  { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
   { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
   { name: "Animación & MC", image: "/animacion-service.jpg", href: "#servicio/animacion-coordinacion" },
 ];
@@ -2088,7 +2088,7 @@ function IndividualServicePage({ slug }) {
 function ServicesPage() {
   const serviciosConFotos = [
     { name: "Pista de Baile", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile", desc: "LED iluminada · Diferentes tamaños" },
-    { name: "Fotografía", image: "/fotografia-service.jpg", href: "#servicio/fotografia", desc: "Cobertura completa" },
+    { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia", desc: "Cobertura completa" },
     { name: "Photo Booths", image: "/photobooth-service.jpg", href: "#servicio/photo-booths", desc: "360° · Estático · Digital" },
     { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales", desc: "Chispas · Confeti · Humo" },
     { name: "Sonido", image: "/sonido-service.jpg", href: "#servicio/sonido-profesional", desc: "Line Array · Técnico dedicado" },
