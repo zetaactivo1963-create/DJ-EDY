@@ -328,7 +328,7 @@ const djSetups = [
     name: "Montaje Sencillo",
     emoji: "🎯",
     price: "Desde $XXX",
-    media: "/montajeSencillo.jpg",
+    media: "/montaje-Sencillo.jpg",
     features: [
       "Pantalla TV 32\"",
       "Karaoke / Just Dance",
@@ -364,7 +364,7 @@ const djSetups = [
     name: "Montaje Premium",
     emoji: "💎",
     price: "Desde $XXX",
-    media: "/montajePremium.jpg",
+    media: "/montaje-Premium.jpg",
     features: [
       "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
