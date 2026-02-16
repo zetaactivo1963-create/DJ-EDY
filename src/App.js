@@ -2168,7 +2168,7 @@ function ServiceCardLarge({ href, image, name, desc, delay }) {
       className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform block"
     >
       <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${image})` }} />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
       
       {/* Título centrado arriba */}
       <div className="absolute top-0 left-0 right-0 pt-8 px-6 text-center">
