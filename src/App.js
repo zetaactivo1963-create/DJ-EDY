@@ -797,18 +797,18 @@ function ServiceCard({ href, image, title, subtitle, delay }) {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${image})` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       
       {/* Título CENTRADO ARRIBA */}
-      <div className="absolute top-0 left-0 right-0 pt-8 px-6 text-center">
-        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
+      <div className="relative z-10 top-0 left-0 right-0 pt-8 px-6 text-center">
+        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg">
           {title}
         </h3>
-        <p className="text-base text-white/80">{subtitle}</p>
+        <p className="text-base text-white/90 drop-shadow-lg">{subtitle}</p>
       </div>
       
-      <div className="relative h-full p-8 flex items-end justify-center">
-        <div className="flex items-center gap-2 text-white font-semibold">
+      <div className="relative z-10 h-full p-8 flex items-end justify-center">
+        <div className="flex items-center gap-2 text-white font-semibold drop-shadow-lg">
           Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
         </div>
       </div>
