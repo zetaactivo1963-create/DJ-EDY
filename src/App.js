@@ -708,8 +708,8 @@ function BestSellers() {
         className="group relative overflow-hidden rounded-3xl min-h-[600px] mb-6 block hover:scale-[1.01] transition-transform"
       >
         <div className="absolute inset-0 w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url(/montajePremium.jpg)' }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
-        
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />      
+          
         <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
           <div className="pt-6 text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white">Paquetes Completos</h2>
