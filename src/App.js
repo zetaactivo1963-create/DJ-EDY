@@ -732,7 +732,7 @@ function BestSellers() {
         className="group relative overflow-hidden rounded-3xl min-h-[500px] mb-6 block hover:scale-[1.01] transition-transform"
       >
         <div className="absolute inset-0 w-full h-full bg-cover bg-center" style={{ backgroundImage: 'url(/montajeSencillo.jpg)' }} />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
         
         <div className="relative z-10 h-full p-8 md:p-16 flex flex-col">
           <div className="pt-6 text-center">
@@ -800,7 +800,7 @@ function ServiceCard({ href, image, title, subtitle, delay }) {
       />
       
       {/* Gradiente oscuro suave */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
       
       {/* Título centrado arriba */}
       <div className="absolute top-0 left-0 right-0 pt-8 px-6 text-center z-10">
