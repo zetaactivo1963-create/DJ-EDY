@@ -753,7 +753,7 @@ function BestSellers() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
-        <ServiceCard href="#servicio/photo-booths" image="/photobooth-service.jpg" title="Photo Booths" subtitle="360° · Estático · Digital" delay={0.3} />
+        <ServiceCard href="#servicio/photo-booths" image="/photobooth-service.png" title="Photo Booths" subtitle="360° · Estático · Digital" delay={0.3} />
         <ServiceCard href="#servicio/efectos-especiales" image="/efectos-service.jpg" title="Efectos Especiales" subtitle="Chispas · Confeti · Humo" delay={0.35} />
       </div>
 
@@ -1039,7 +1039,7 @@ function MontajesPage() {
 
 const serviciosAdicionales = [
   { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
-  { name: "Photo Booth 360°", image: "/photobooth-service.jpg", href: "#servicio/photo-booths" },
+  { name: "Photo Booth 360°", image: "/photobooth-service.png", href: "#servicio/photo-booths" },
   { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
   { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
   { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
@@ -2089,7 +2089,7 @@ function ServicesPage() {
   const serviciosConFotos = [
     { name: "Pista de Baile", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile", desc: "LED iluminada · Diferentes tamaños" },
     { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia", desc: "Cobertura completa" },
-    { name: "Photo Booths", image: "/photobooth-service.jpg", href: "#servicio/photo-booths", desc: "360° · Estático · Digital" },
+    { name: "Photo Booths", image: "/photobooth-service.png", href: "#servicio/photo-booths", desc: "360° · Estático · Digital" },
     { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales", desc: "Chispas · Confeti · Humo" },
     { name: "Sonido", image: "/sonido-service.jpg", href: "#servicio/sonido-profesional", desc: "Line Array · Técnico dedicado" },
     { name: "Iluminación & Trussing", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing", desc: "Moving Heads · LED · Estructuras" },
