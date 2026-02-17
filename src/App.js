@@ -1303,7 +1303,7 @@ function IndividualServicePage({ slug }) {
       optional: {
         name: "Cabina Inflable",
         price: "+$150",
-        image: "cabina-inflable.jpg",
+        image: "/cabina-inflable.jpg",
         specs: "10' x 10' x 8' (alto)",
         features: [
           "Cabina inflable completa",
@@ -1774,12 +1774,12 @@ function IndividualServicePage({ slug }) {
                       OPCIONAL
                     </span>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div
-                      className="rounded-xl w-full h-full min-h-[300px] bg-cover bg-center"
-                      style={{ backgroundImage: `url(${service.optional.image})` }}
+                  <div className="grid md:grid-cols-2 gap-8 items-stretch">
+                    <img
+                      src={service.optional.image}
+                      alt={service.optional.name}
+                      className="rounded-xl w-full object-cover min-h-[300px]"
                     />
-                      
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-2">{service.optional.name}</h3>
                       <p className="text-2xl text-zinc-400 mb-2">{service.optional.price}</p>
@@ -1796,8 +1796,6 @@ function IndividualServicePage({ slug }) {
                   </div>
                 </div>
               )}
-            </div>
-          )}
 
           {/* EFECTOS ESPECIALES */}
           {slug === "efectos-especiales" && service.effects && (
