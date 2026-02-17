@@ -1734,7 +1734,7 @@ function IndividualServicePage({ slug }) {
             </div>
           )}
 
-{/* PHOTO BOOTHS */}
+          {/* PHOTO BOOTHS */}
           {slug === "photo-booths" && service.packages && (
             <div className="space-y-8">
               {service.packages.map((pkg, idx) => (
@@ -1746,7 +1746,6 @@ function IndividualServicePage({ slug }) {
                     />
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-4">{pkg.name}</h3>
-                      
                       <div className="mb-6">
                         {pkg.prices.map((p, i) => (
                           <div key={i} className="flex justify-between items-center mb-2">
@@ -1768,7 +1767,7 @@ function IndividualServicePage({ slug }) {
                 </div>
               ))}
               {service.optional && (
-                <div className={`p-8 rounded-2xl bg-white/5 border-2 border-white/10`}>
+                <div className="p-8 rounded-2xl bg-white/5 border-2 border-white/10">
                   <div className="text-center mb-6">
                     <span className="text-sm font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
                       OPCIONAL
@@ -1796,6 +1795,8 @@ function IndividualServicePage({ slug }) {
                   </div>
                 </div>
               )}
+            </div>
+          )}
 
           {/* EFECTOS ESPECIALES */}
           {slug === "efectos-especiales" && service.effects && (
@@ -1803,11 +1804,9 @@ function IndividualServicePage({ slug }) {
               {service.effects.map((effect, idx) => (
                 <div key={idx} className={`p-6 rounded-2xl ${glass}`}>
                   <img src={effect.image} alt={effect.name} className="rounded-xl w-full h-48 object-cover mb-4" />
-                  
                   <h3 className="text-2xl font-bold text-white mb-2">{effect.name}</h3>
                   <p className="text-xl text-zinc-400 mb-1">{effect.price}</p>
                   {effect.specs && <p className="text-sm text-zinc-500 mb-4">{effect.specs}</p>}
-                  
                   <ul className="space-y-2">
                     {effect.features.map((f, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
@@ -1827,10 +1826,8 @@ function IndividualServicePage({ slug }) {
               <div className={`p-8 rounded-2xl ${glass}`}>
                 <h3 className="text-3xl font-bold text-white mb-2">{service.systemBase.name}</h3>
                 <p className="text-lg text-yellow-400 mb-6">{service.systemBase.note}</p>
-                
                 <div className="grid md:grid-cols-2 gap-8 mb-6">
                   <img src={service.systemBase.image} alt={service.systemBase.name} className="rounded-xl w-full h-80 object-cover" />
-                  
                   <div>
                     <h4 className="text-xl font-semibold text-white mb-4">Sistema incluye:</h4>
                     <ul className="space-y-2">
@@ -1845,10 +1842,9 @@ function IndividualServicePage({ slug }) {
                 </div>
               </div>
 
-              <div className={`p-8 rounded-2xl bg-white/5 border-2 border-white/10`}>
+              <div className="p-8 rounded-2xl bg-white/5 border-2 border-white/10">
                 <h3 className="text-3xl font-bold text-white mb-2">{service.systemComplete.name}</h3>
                 <p className="text-lg text-yellow-400 mb-6">{service.systemComplete.note}</p>
-                
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h4 className="text-xl font-semibold text-white mb-4">Especificaciones:</h4>
@@ -1861,7 +1857,6 @@ function IndividualServicePage({ slug }) {
                       ))}
                     </ul>
                   </div>
-
                   <div>
                     <h4 className="text-xl font-semibold text-white mb-4">Factores de cotización:</h4>
                     <ul className="space-y-2">
@@ -1895,7 +1890,6 @@ function IndividualServicePage({ slug }) {
               <div className="text-center">
                 <p className="text-xl text-yellow-400 mb-8">{service.note}</p>
               </div>
-
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div className={`p-6 rounded-2xl ${glass}`}>
                   <h3 className="text-2xl font-bold text-white mb-4">{service.lighting.name}</h3>
@@ -1908,7 +1902,6 @@ function IndividualServicePage({ slug }) {
                     ))}
                   </ul>
                 </div>
-
                 <div className={`p-6 rounded-2xl ${glass}`}>
                   <h3 className="text-2xl font-bold text-white mb-4">{service.trussing.name}</h3>
                   <ul className="space-y-2">
@@ -1970,10 +1963,8 @@ function IndividualServicePage({ slug }) {
             <div className="space-y-8">
               <div className={`p-8 rounded-2xl ${glass}`}>
                 <h3 className="text-3xl font-bold text-white mb-6">{service.ledScreen.name}</h3>
-                
                 <div className="grid md:grid-cols-2 gap-8 mb-6">
                   <img src={service.ledScreen.image} alt={service.ledScreen.name} className="rounded-xl w-full h-80 object-cover" />
-                  
                   <div>
                     <div className="mb-6 p-4 rounded-xl bg-white/5">
                       <p className="text-sm text-zinc-400">Tamaño recomendado</p>
@@ -1981,7 +1972,6 @@ function IndividualServicePage({ slug }) {
                       <p className="text-xl text-zinc-400 mt-2">{service.ledScreen.recommended.price}</p>
                       <p className="text-sm text-zinc-500 mt-2">{service.ledScreen.recommended.note}</p>
                     </div>
-
                     <ul className="space-y-2 mb-6">
                       {service.ledScreen.features.map((f, i) => (
                         <li key={i} className="flex items-start gap-2 text-zinc-300">
@@ -1990,7 +1980,6 @@ function IndividualServicePage({ slug }) {
                         </li>
                       ))}
                     </ul>
-
                     <p className="text-sm text-zinc-400 italic">{service.ledScreen.customSizes}</p>
                   </div>
                 </div>
@@ -1999,11 +1988,9 @@ function IndividualServicePage({ slug }) {
               <div className={`p-8 rounded-2xl ${glass}`}>
                 <div className="grid md:grid-cols-2 gap-8">
                   <img src={service.projection.image} alt={service.projection.name} className="rounded-xl w-full h-64 object-cover" />
-                  
                   <div>
                     <h3 className="text-3xl font-bold text-white mb-2">{service.projection.name}</h3>
                     <p className="text-xl text-yellow-400 mb-6">{service.projection.price}</p>
-                    
                     <ul className="space-y-2">
                       {service.projection.features.map((f, i) => (
                         <li key={i} className="flex items-start gap-2 text-zinc-300">
@@ -2039,12 +2026,10 @@ function IndividualServicePage({ slug }) {
                 <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
                   <div className="grid md:grid-cols-2 gap-8">
                     <img src={svc.image} alt={svc.name} className="rounded-xl w-full h-64 object-cover" />
-                    
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-2">{svc.name}</h3>
                       <p className="text-2xl text-zinc-400 mb-1">{svc.price}</p>
                       {svc.duration && <p className="text-lg text-zinc-500 mb-6">{svc.duration}</p>}
-                      
                       <ul className="space-y-2">
                         {svc.features.map((f, i) => (
                           <li key={i} className="flex items-start gap-2 text-zinc-300">
@@ -2057,11 +2042,11 @@ function IndividualServicePage({ slug }) {
                   </div>
                 </div>
               ))}
-
-             <div className="p-6 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <p className="text-zinc-300 text-center">
-                <strong className="text-white">Nota:</strong> {service.note}
-              </p>
+              <div className="p-6 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <p className="text-zinc-300 text-center">
+                  <strong className="text-white">Nota:</strong> {service.note}
+                </p>
+              </div>
             </div>
           )}
 
@@ -2074,11 +2059,13 @@ function IndividualServicePage({ slug }) {
             >
               Cotizar ahora <ChevronRight className="w-5 h-5" />
             </a>
+          </div>
         </div>
       </Section>
     </>
   );
 }
+
 
 
 /* SERVICIOS - Lista visual actualizada como home */
