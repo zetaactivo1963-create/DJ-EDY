@@ -1776,9 +1776,10 @@ function IndividualServicePage({ slug }) {
                   </div>
                   <div className="grid md:grid-cols-2 gap-8">
                     <div
-                      className="rounded-xl w-full h-64 bg-cover bg-center"
+                      className="rounded-xl w-full h-full min-h-[300px] bg-cover bg-center"
                       style={{ backgroundImage: `url(${service.optional.image})` }}
                     />
+                      
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-2">{service.optional.name}</h3>
                       <p className="text-2xl text-zinc-400 mb-2">{service.optional.price}</p>
