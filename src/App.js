@@ -2075,7 +2075,6 @@ function IndividualServicePage({ slug }) {
             >
               Cotizar ahora <ChevronRight className="w-5 h-5" />
             </a>
-          </div>
         </div>
       </Section>
     </>
