@@ -1740,8 +1740,11 @@ function IndividualServicePage({ slug }) {
               {service.packages.map((pkg, idx) => (
                 <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
                   <div className="grid md:grid-cols-2 gap-8">
-                    <img src={pkg.image} alt={pkg.name} className="rounded-xl w-full h-64 object-cover" />
-                    
+                    <div 
+                      className="rounded-xl w-full h-64 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${pkg.image})` }}
+                    />
+  
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-4">{pkg.name}</h3>
                       
