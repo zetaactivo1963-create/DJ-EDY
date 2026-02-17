@@ -2058,7 +2058,7 @@ function IndividualServicePage({ slug }) {
                 </div>
               ))}
 
-              <div className="p-6 rounded-xl bg-blue-500/10 border border-blue-500/20">
+             <div className="p-6 rounded-xl bg-blue-500/10 border border-blue-500/20">
               <p className="text-zinc-300 text-center">
                 <strong className="text-white">Nota:</strong> {service.note}
               </p>
