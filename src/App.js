@@ -1303,7 +1303,7 @@ function IndividualServicePage({ slug }) {
       optional: {
         name: "Cabina Inflable",
         price: "+$150",
-        image: "/cabina-inflable.jpg",
+        image: "cabina-inflable.jpg",
         specs: "10' x 10' x 8' (alto)",
         features: [
           "Cabina inflable completa",
