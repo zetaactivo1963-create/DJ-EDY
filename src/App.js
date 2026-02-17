@@ -1734,7 +1734,7 @@ function IndividualServicePage({ slug }) {
             </div>
           )}
 
-          {/* PHOTO BOOTHS */}
+{/* PHOTO BOOTHS */}
           {slug === "photo-booths" && service.packages && (
             <div className="space-y-8">
               {service.packages.map((pkg, idx) => (
@@ -1744,9 +1744,6 @@ function IndividualServicePage({ slug }) {
                       className="rounded-xl w-full h-80 bg-cover bg-center"
                       style={{ backgroundImage: `url(${pkg.image})` }}
                     />
-  
-                    </div>
-  
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-4">{pkg.name}</h3>
                       
@@ -1758,7 +1755,6 @@ function IndividualServicePage({ slug }) {
                           </div>
                         ))}
                       </div>
-
                       <ul className="space-y-2">
                         {pkg.features.map((f, i) => (
                           <li key={i} className="flex items-start gap-2 text-zinc-300">
@@ -1771,7 +1767,6 @@ function IndividualServicePage({ slug }) {
                   </div>
                 </div>
               ))}
-
               {service.optional && (
                 <div className={`p-8 rounded-2xl bg-white/5 border-2 border-white/10`}>
                   <div className="text-center mb-6">
@@ -1779,15 +1774,15 @@ function IndividualServicePage({ slug }) {
                       OPCIONAL
                     </span>
                   </div>
-                  
                   <div className="grid md:grid-cols-2 gap-8">
-                    <img src={service.optional.image} alt={service.optional.name} className="rounded-xl w-full h-64 object-cover" />
-                    
+                    <div
+                      className="rounded-xl w-full h-64 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${service.optional.image})` }}
+                    />
                     <div>
                       <h3 className="text-3xl font-bold text-white mb-2">{service.optional.name}</h3>
                       <p className="text-2xl text-zinc-400 mb-2">{service.optional.price}</p>
                       <p className="text-lg text-zinc-500 mb-6">{service.optional.specs}</p>
-                      
                       <ul className="space-y-2">
                         {service.optional.features.map((f, i) => (
                           <li key={i} className="flex items-start gap-2 text-zinc-300">
