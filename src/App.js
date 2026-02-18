@@ -2518,65 +2518,114 @@ Gracias.
 }
 
 /* ========
-   CONTACTO
+   CONTACTO - REDISEÑADO CON BOTONES GRANDES
    ======== */
 function Contact() {
   return (
     <Section id="contacto">
-      <div className="mb-10">
-        <h2 className="text-3xl md:text-4xl font-semibold text-white">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
           Hablemos de tu evento
         </h2>
+        <p className="text-lg text-zinc-400">
+          Elige tu forma favorita de contactarnos
+        </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className={`p-6 rounded-2xl ${glass}`}>
-          <div className="flex items-center gap-3 text-zinc-200">
-            <PhoneIcon className="w-5 h-5" />
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="underline">
-              (787) 356-8786
-            </a>
+      {/* BOTONES PRINCIPALES - WhatsApp y Llamar */}
+      <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-8">
+        <a
+          href={`https://wa.me/${WHATSAPP_NUMBER}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative overflow-hidden p-8 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-500/30 hover:border-green-500/50 transition-all hover:scale-105"
+        >
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <MessageCircle className="w-8 h-8 text-white" />
+            </div>
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-white mb-1">WhatsApp</h3>
+              <p className="text-green-400 font-medium">(787) 356-8786</p>
+              <p className="text-sm text-zinc-400 mt-2">Respuesta inmediata</p>
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-zinc-200 mt-3">
-            <Mail className="w-5 h-5" />
-            <a href={`mailto:${CONTACT_EMAIL}`} className="underline">
-              djedypr@gmail.com
-            </a>
-          </div>
-          <div className="flex items-center gap-3 text-zinc-200 mt-3">
-            <Instagram className="w-5 h-5" />{" "}
-            <a
-              href="https://instagram.com/dj_edy3"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              @dj_edy3
-            </a>
-          </div>
-          <div className="flex items-center gap-3 text-zinc-200 mt-3">
-            <Facebook className="w-5 h-5" />{" "}
-            <a
-              href="https://www.facebook.com/share/1CCCxKhjC8/?mibextid=wwXIfr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              Dj Edy
-            </a>
-          </div>
-          <div className="flex items-center gap-3 text-zinc-200 mt-3">
-            <MapPin className="w-5 h-5" /> <span>Todo Puerto Rico</span>
-          </div>
-        </div>
+        </a>
 
-        <div className={`p-6 rounded-2xl ${glass}`}>
-          <h3 className="text-lg font-medium text-white">Nota importante</h3>
-          <p className="mt-2 text-sm text-zinc-300">
-            La disponibilidad de efectos especiales (chispas frías, confeti, espuma, etc.) 
-            depende de los permisos del venue y regulaciones de seguridad. 
-            Siempre consultamos antes de confirmar.
-          </p>
+        <a
+          href={`tel:+1${WHATSAPP_NUMBER}`}
+          className="group relative overflow-hidden p-8 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 hover:border-blue-500/50 transition-all hover:scale-105"
+        >
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <PhoneIcon className="w-8 h-8 text-white" />
+            </div>
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-white mb-1">Llamar</h3>
+              <p className="text-blue-400 font-medium">(787) 356-8786</p>
+              <p className="text-sm text-zinc-400 mt-2">Habla directo con nosotros</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {/* REDES SOCIALES Y EMAIL */}
+      <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <a
+          href="https://instagram.com/dj_edy3"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all hover:scale-105 group`}
+        >
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Instagram className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-center">
+              <h4 className="text-lg font-semibold text-white">Instagram</h4>
+              <p className="text-sm text-zinc-400 mt-1">@dj_edy3</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="https://www.facebook.com/share/1CCCxKhjC8/?mibextid=wwXIfr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all hover:scale-105 group`}
+        >
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Facebook className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-center">
+              <h4 className="text-lg font-semibold text-white">Facebook</h4>
+              <p className="text-sm text-zinc-400 mt-1">Dj Edy</p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all hover:scale-105 group`}
+        >
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-zinc-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Mail className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-center">
+              <h4 className="text-lg font-semibold text-white">Email</h4>
+              <p className="text-sm text-zinc-400 mt-1">djedypr@gmail.com</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {/* UBICACIÓN */}
+      <div className="mt-10 text-center">
+        <div className="inline-flex items-center gap-2 text-zinc-300">
+          <MapPin className="w-5 h-5" />
+          <span className="text-lg">Servicio a todo Puerto Rico</span>
         </div>
       </div>
     </Section>
