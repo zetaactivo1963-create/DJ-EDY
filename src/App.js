@@ -322,21 +322,19 @@ const packagesByEvent = {
 /* =========================
    MONTAJES DE DJ (OPCIÓN BÁSICA)
    ========================= */
+
 const montajes = [
   {
     id: "sencillo",
     name: "Montaje Sencillo",
     price: "Desde $XXX",
-    images: [
-      "/montaje-Sencillo.jpg",
-      "/montaje-Sencillo-2.jpg"
-    ],
+    images: ["/montaje-Sencillo.jpg", "/montaje-Sencillo-2.jpg"],  // ← images plural
     features: [
-      "Pantalla TV 32\" (Opcional)",
+      "Pantalla TV 32\"",
       "Karaoke / Just Dance",
       "1 micrófono inalámbrico",
       "DJ Booth iluminado",
-      "2 luces Party LED",
+      "2 luces Party 5 en 1",
       "Mixeo de música en vivo",
       "4 horas",
     ],
@@ -346,13 +344,9 @@ const montajes = [
     id: "mediano",
     name: "Montaje Mediano",
     price: "Desde $XXX",
-    images: [
-      "/montajeMediano.jpg",
-      "/montajeMediano-2.PNG",
-      "/montajeMediano-3.jpg"
-    ],
+    images: ["/montajeMediano.jpg", "/montajeMediano-2.PNG", "/montajeMediano-3.jpg"],  // ← images plural
     features: [
-      "Pantalla gigante 100\" o TV 55\"",
+      "Pantalla gigante 100\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
@@ -368,21 +362,18 @@ const montajes = [
     id: "premium",
     name: "Montaje Premium",
     price: "Desde $XXX",
-    images: [
-      "/montaje-Premium.jpg",
-      "/montaje-Premium-2.PNG",
-      "/montaje-Premium-3.jpg"
-    ],
+    images: ["/montajePremium.jpg", "/montaje-Premium-2.PNG", "/montaje-Premium-3.jpg"],  // ← images plural
     features: [
       "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
       "2 trussing iluminados",
-      "4 luces Moving Heads",
+      "2 luces Moving Heads",
       "Máquina de humo o haze",
       "Mixeo de música en vivo",
-      "5 horas",
+      "Sonido para ceremonia",
+      "5 horas + 1 hr extra",
     ],
     ideal: "Eventos grandes (150+ personas)",
   },
