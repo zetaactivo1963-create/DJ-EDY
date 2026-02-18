@@ -322,15 +322,15 @@ const packagesByEvent = {
 /* =========================
    MONTAJES DE DJ (OPCIÓN BÁSICA)
    ========================= */
-const djSetups = [
+const montajes = [
   {
     id: "sencillo",
     name: "Montaje Sencillo",
     price: "Desde $XXX",
     images: [
-              "/montaje-Sencillo.jpg",
-              "/montaje-Sencillo-2.jpg"
-            ],
+      "/montaje-Sencillo.jpg",
+      "/montaje-Sencillo-2.jpg"
+    ],
     features: [
       "Pantalla TV 32\" (Opcional)",
       "Karaoke / Just Dance",
@@ -340,19 +340,19 @@ const djSetups = [
       "Mixeo de música en vivo",
       "4 horas",
     ],
+    ideal: "Eventos pequeños (30-50 personas)",
   },
   {
     id: "mediano",
     name: "Montaje Mediano",
     price: "Desde $XXX",
     images: [
-              "/montaje-Mediano.jpg",
-              "/montajeSencillo.jpg",
-              "/montaje-Mediano-2.PNG",
-              "/montaje-Mediano-3.jpg"
-            ],
+      "/montaje-Mediano.jpg",
+      "/montaje-Mediano-2.PNG",
+      "/montaje-Mediano-3.jpg"
+    ],
     features: [
-      "Pantalla gigante 100 o TV 55"\"",
+      "Pantalla gigante 100\" o TV 55\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
@@ -362,17 +362,17 @@ const djSetups = [
       "Mixeo de música en vivo",
       "5 horas",
     ],
+    ideal: "Eventos medianos (50-150 personas)",
   },
   {
     id: "premium",
     name: "Montaje Premium",
-    emoji: "💎",
     price: "Desde $XXX",
     images: [
-              "/montaje-Premium.jpg",
-              "/montaje-Premium-2.PNG",
-              "/montaje-Premium-3.jpg"
-            ],    
+      "/montaje-Premium.jpg",
+      "/montaje-Premium-2.PNG",
+      "/montaje-Premium-3.jpg"
+    ],
     features: [
       "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
@@ -382,8 +382,9 @@ const djSetups = [
       "4 luces Moving Heads",
       "Máquina de humo o haze",
       "Mixeo de música en vivo",
-      "5 horas ",
+      "5 horas",
     ],
+    ideal: "Eventos grandes (150+ personas)",
   },
 ];
 
