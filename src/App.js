@@ -822,7 +822,7 @@ function ServiceCard({ href, image, title, subtitle, delay }) {
 
 
 
-/* PAQUETES - Diseño visual mejorado sin modal */
+/* PAQUETES - Diseño corporativo profesional sin fotos */
 function PackagesPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -843,18 +843,48 @@ function PackagesPage() {
               Selecciona tu tipo de evento
             </h1>
             <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-              Cada evento tiene paquetes diseñados específicamente
+              Paquetes diseñados específicamente para cada ocasión
             </p>
           </div>
 
-          {/* Selector VISUAL con fotos */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Selector CORPORATIVO - Solo tipografía y color */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
-              { id: "bodas", name: "Bodas", image: "/evento-bodas.jpg", color: "from-pink-500 to-rose-500" },
-              { id: "quinceaneros", name: "Quinceañeros", image: "/evento-quinceaneros.jpg", color: "from-fuchsia-500 to-purple-500" },
-              { id: "proms", name: "Proms / Graduaciones", image: "/evento-proms.jpg", color: "from-blue-500 to-cyan-500" },
-              { id: "corporativos", name: "Eventos Corporativos", image: "/evento-corporativos.jpg", color: "from-slate-500 to-zinc-500" },
-              { id: "cumpleanos", name: "Cumpleaños / Sociales", image: "/evento-cumpleanos.jpg", color: "from-purple-500 to-pink-500" },
+              { 
+                id: "bodas", 
+                name: "Bodas", 
+                color: "from-pink-500/20 to-rose-500/20",
+                borderColor: "border-pink-500/30 hover:border-pink-500/60",
+                accentColor: "bg-pink-500"
+              },
+              { 
+                id: "quinceaneros", 
+                name: "Quinceañeros", 
+                color: "from-fuchsia-500/20 to-purple-500/20",
+                borderColor: "border-fuchsia-500/30 hover:border-fuchsia-500/60",
+                accentColor: "bg-fuchsia-500"
+              },
+              { 
+                id: "proms", 
+                name: "Proms / Graduaciones", 
+                color: "from-blue-500/20 to-cyan-500/20",
+                borderColor: "border-blue-500/30 hover:border-blue-500/60",
+                accentColor: "bg-blue-500"
+              },
+              { 
+                id: "corporativos", 
+                name: "Eventos Corporativos", 
+                color: "from-slate-500/20 to-zinc-500/20",
+                borderColor: "border-slate-500/30 hover:border-slate-500/60",
+                accentColor: "bg-slate-500"
+              },
+              { 
+                id: "cumpleanos", 
+                name: "Cumpleaños / Sociales", 
+                color: "from-purple-500/20 to-pink-500/20",
+                borderColor: "border-purple-500/30 hover:border-purple-500/60",
+                accentColor: "bg-purple-500"
+              },
             ].map((event, idx) => (
               <motion.button
                 key={event.id}
@@ -862,20 +892,22 @@ function PackagesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
                 onClick={() => setSelectedEvent(event.id)}
-                className={`group relative overflow-hidden rounded-2xl min-h-[280px] hover:scale-105 transition-all ${glass}`}
+                className={`group relative overflow-hidden rounded-2xl p-8 min-h-[200px] 
+                  bg-gradient-to-br ${event.color} 
+                  border-2 ${event.borderColor}
+                  backdrop-blur-sm transition-all hover:scale-105`}
               >
-                {/* Foto de fondo */}
-                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${event.image})` }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+                {/* Barra de acento */}
+                <div className={`absolute top-0 left-0 right-0 h-1 ${event.accentColor}`} />
                 
-                {/* Barra de color arriba */}
-                <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${event.color}`} />
-                
-                {/* Contenido */}
-                <div className="relative h-full flex flex-col justify-end p-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{event.name}</h3>
-                  <div className="flex items-center text-white group-hover:translate-x-2 transition-transform">
-                    Ver paquetes <ChevronRight className="w-5 h-5 ml-1" />
+                {/* Contenido centrado */}
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                    {event.name}
+                  </h3>
+                  <div className="flex items-center gap-2 text-zinc-300 group-hover:text-white transition-colors">
+                    <span className="text-sm font-medium">Ver paquetes</span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </motion.button>
@@ -885,6 +917,96 @@ function PackagesPage() {
       </>
     );
   }
+
+  // Mostrar paquetes - SIN MODAL, todo comparable
+  const eventName = ["Bodas", "Quinceañeros", "Proms / Graduaciones", "Eventos Corporativos", "Cumpleaños / Sociales"][
+    ["bodas", "quinceaneros", "proms", "corporativos", "cumpleanos"].indexOf(selectedEvent)
+  ];
+  const packages = packagesByEvent[selectedEvent] || [];
+
+  return (
+    <>
+      <section className="pt-28 pb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <button
+            onClick={() => setSelectedEvent(null)}
+            className="inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white"
+          >
+            <ArrowLeft className="w-4 h-4" /> Cambiar tipo de evento
+          </button>
+        </div>
+      </section>
+
+      <Section className="pt-0">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Paquetes para {eventName}
+          </h1>
+        </div>
+
+        {/* Paquetes lado a lado - COMPARABLES */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {packages.map((pkg, idx) => (
+            <motion.div
+              key={pkg.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.2 }}
+              className={`p-8 rounded-2xl ${glass} hover:bg-white/10 transition-all ${
+                pkg.featured ? "ring-2 ring-white/20 scale-105" : ""
+              }`}
+            >
+              {pkg.featured && (
+                <div className="mb-4">
+                  <span className="text-xs font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
+                    MÁS POPULAR
+                  </span>
+                </div>
+              )}
+              <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
+              <p className="text-zinc-400 mb-2">{pkg.tagline}</p>
+              <p className="text-2xl font-bold text-white mb-6">{pkg.price}</p>
+              
+              <div className="mb-6">
+                <p className="text-sm text-zinc-500 mb-3">Incluye:</p>
+                <ul className="space-y-2">
+                  {pkg.includes.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-6 p-4 rounded-lg bg-white/5">
+                <p className="text-xs text-zinc-400 mb-1">Ideal para:</p>
+                <p className="text-sm text-white">{pkg.ideal}</p>
+              </div>
+
+              <a
+                href="#cotizar"
+                className="block w-full text-center px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors"
+              >
+                Cotizar
+              </a>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <p className="text-zinc-400 mb-4">
+            ¿Prefieres solo montaje DJ?
+          </p>
+          <a href="#montajes" className="px-6 py-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-colors inline-block">
+            Ver montajes (opción económica)
+          </a>
+        </div>
+      </Section>
+    </>
+  );
+}
+
 
   // Mostrar paquetes - SIN MODAL, todo comparable
   const eventName = ["Bodas", "Quinceañeros", "Proms / Graduaciones", "Eventos Corporativos", "Cumpleaños / Sociales"][
