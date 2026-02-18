@@ -1175,10 +1175,10 @@ function ImageCarousel({ images, alt }) {
   );
 }
 
-
-/* MONTAJES - Sin precios, con modal de cotización */
+/* MONTAJES - Sin precios, con flujo de extras visual */
 function MontajesPage() {
-  const [showPriceModal, setShowPriceModal] = useState(false);
+  const [showPriceFlow, setShowPriceFlow] = useState(false);
+  const [step, setStep] = useState(1); // 1=extras, 2=formulario
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [formData, setFormData] = useState({
     fecha: "",
@@ -1187,14 +1187,16 @@ function MontajesPage() {
     nombre: "",
     whatsapp: ""
   });
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const extrasDisponibles = [
-    { id: "pista", name: "Pista de Baile LED", price: "$850-$1,100" },
-    { id: "photobooth", name: "Photo Booth 360°", price: "$450-$550" },
-    { id: "efectos", name: "Efectos Especiales", price: "Desde $250" },
-    { id: "fotografia", name: "Fotografía Profesional", price: "Desde $350" },
-    { id: "iluminacion", name: "Iluminación Extra", price: "Por cotización" },
-    { id: "animacion", name: "Animación & MC", price: "Desde $450" },
+  const serviciosAdicionales = [
+    { id: "pista", name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
+    { id: "photobooth", name: "Photo Booth 360°", image: "/photobooth-service.png", href: "#servicio/photo-booths" },
+    { id: "efectos", name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
+    { id: "fotografia", name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
+    { id: "iluminacion", name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
+    { id: "animacion", name: "Animación & MC", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion" },
   ];
 
   const toggleExtra = (id) => {
@@ -1203,29 +1205,40 @@ function MontajesPage() {
     );
   };
 
+  const continuarAFormulario = () => {
+    setStep(2);
+  };
+
   const enviarWhatsApp = () => {
-    if (!formData.nombre || !formData.whatsapp) {
-      alert("Por favor completa tu nombre y WhatsApp");
+    // Validación
+    if (!formData.nombre.trim()) {
+      setErrorMessage("Por favor escribe tu nombre");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
+    if (!formData.whatsapp.trim()) {
+      setErrorMessage("Por favor escribe tu número de WhatsApp");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
 
-    const extrasTexto = selectedExtras.length > 0
-      ? `\n\n🎉 SERVICIOS ADICIONALES:\n${selectedExtras.map(id => {
-          const extra = extrasDisponibles.find(e => e.id === id);
-          return `• ${extra.name}: ${extra.price}`;
-        }).join('\n')}`
+    const extrasSeleccionados = serviciosAdicionales.filter(s => selectedExtras.includes(s.id));
+    const extrasTexto = extrasSeleccionados.length > 0
+      ? `\n\nSERVICIOS ADICIONALES CONSULTADOS:\n${extrasSeleccionados.map(e => `• ${e.name}`).join('\n')}`
       : "";
 
-    const mensaje = `Hola ${formData.nombre}! 👋
+    const mensaje = `Hola ${formData.nombre}!
 
 Aquí están los precios para tu evento:
 
-🎧 MONTAJES DJ:
-• Sencillo: $550 (4 hrs)
-• Mediano: $750 (5 hrs) ⭐ Más popular
-• Premium: $850 (5 hrs)${extrasTexto}
+MONTAJES DJ:
+• Sencillo: $XXX (4 hrs)
+• Mediano: $XXX (5 hrs) - Más popular
+• Premium: $XXX (6 hrs)${extrasTexto}
 
-📋 Info de tu evento:
+Info de tu evento:
 • Fecha: ${formData.fecha || "Por definir"}
 • Personas: ${formData.personas || "Por definir"}
 • Lugar: ${formData.lugar || "Por definir"}
@@ -1234,7 +1247,12 @@ Aquí están los precios para tu evento:
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
-    setShowPriceModal(false);
+    
+    // Reset
+    setShowPriceFlow(false);
+    setStep(1);
+    setSelectedExtras([]);
+    setFormData({ fecha: "", personas: "", lugar: "", nombre: "", whatsapp: "" });
   };
 
   return (
@@ -1247,207 +1265,269 @@ Aquí están los precios para tu evento:
         </div>
       </section>
 
-      <Section className="pt-0">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Montajes de DJ
-          </h1>
-          <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-            Solo DJ + Sonido + Luces básicas
-          </p>
-        </div>
+      {!showPriceFlow ? (
+        <Section className="pt-0">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Montajes de DJ
+            </h1>
+            <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+              Solo DJ + Sonido + Luces básicas
+            </p>
+          </div>
 
-        {/* Montajes sin precios ni botones */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {montajes.map((setup, idx) => (
-            <motion.div
-              key={setup.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.2 }}
-              className={`rounded-2xl ${glass} overflow-hidden ${
-                setup.id === "mediano" ? "ring-2 ring-white/20" : ""
-              }`}
-            >
-              {/* Badge MÁS POPULAR */}
-              {setup.id === "mediano" && (
+          {/* Montajes sin precios ni botones */}
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {montajes.map((setup, idx) => (
+              <motion.div
+                key={setup.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.2 }}
+                className={`rounded-2xl ${glass} overflow-hidden ${
+                  setup.id === "mediano" ? "ring-2 ring-white/20" : ""
+                }`}
+              >
+                {/* Badge MÁS POPULAR */}
+                {setup.id === "mediano" && (
+                  <div className="p-4 pb-0">
+                    <span className="inline-block text-xs font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
+                      MÁS POPULAR
+                    </span>
+                  </div>
+                )}
+
+                {/* CARRUSEL DE FOTOS */}
                 <div className="p-4 pb-0">
-                  <span className="inline-block text-xs font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
-                    🏆 MÁS POPULAR
-                  </span>
+                  <ImageCarousel images={setup.images} alt={setup.name} />
                 </div>
-              )}
 
-              {/* CARRUSEL DE FOTOS */}
-              <div className="p-4 pb-0">
-                <ImageCarousel images={setup.images} alt={setup.name} />
-              </div>
+                {/* Info */}
+                <div className="p-8 pt-6">
+                  <h3 className="text-2xl font-bold text-white mb-6">{setup.name}</h3>
+                  
+                  <ul className="space-y-2">
+                    {setup.features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
+                        <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
-              {/* Info */}
-              <div className="p-8 pt-6">
-                <h3 className="text-2xl font-bold text-white mb-6">{setup.name}</h3>
-                
-                <ul className="space-y-2">
-                  {setup.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* BOTÓN GRANDE PARA VER PRECIOS */}
-        <div className="text-center mb-16">
-          <button
-            onClick={() => setShowPriceModal(true)}
-            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black rounded-full text-xl font-bold hover:bg-zinc-200 transition-all hover:scale-105 shadow-2xl"
-          >
-            💰 Ver Precios de Montajes <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Link a paquetes completos */}
-        <div className="text-center">
-          <p className="text-zinc-400 mb-4">
-            ¿Buscas algo más completo?
-          </p>
-          <a href="#paquetes" className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors">
-            Ver paquetes completos <ChevronRight className="w-5 h-5" />
-          </a>
-        </div>
-      </Section>
-
-      {/* MODAL DE COTIZACIÓN */}
-      <AnimatePresence>
-        {showPriceModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowPriceModal(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-zinc-900 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/10"
+          {/* BOTÓN GRANDE PARA VER PRECIOS */}
+          <div className="text-center mb-16">
+            <button
+              onClick={() => setShowPriceFlow(true)}
+              className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black rounded-full text-xl font-bold hover:bg-zinc-200 transition-all hover:scale-105 shadow-2xl"
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-bold text-white">Recibe los precios al instante</h2>
-                <button
-                  onClick={() => setShowPriceModal(false)}
-                  className="text-zinc-400 hover:text-white"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
+              Ver Precios de Montajes <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
 
-              {/* Checkboxes de extras */}
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold text-white mb-4">
-                  ¿Te interesan servicios adicionales? (opcional)
-                </h3>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {extrasDisponibles.map((extra) => (
-                    <label
-                      key={extra.id}
-                      className={`flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all ${
-                        selectedExtras.includes(extra.id)
-                          ? "bg-white/10 border-2 border-white/30"
-                          : "bg-white/5 border-2 border-transparent hover:bg-white/10"
+          {/* Link a paquetes completos */}
+          <div className="text-center">
+            <p className="text-zinc-400 mb-4">
+              ¿Buscas algo más completo?
+            </p>
+            <a href="#paquetes" className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors">
+              Ver paquetes completos <ChevronRight className="w-5 h-5" />
+            </a>
+          </div>
+        </Section>
+      ) : (
+        <>
+          {/* STEP 1: SELECCIÓN DE EXTRAS */}
+          {step === 1 && (
+            <Section className="pt-0">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    ¿Te interesan servicios adicionales?
+                  </h2>
+                  <p className="text-lg text-zinc-400">
+                    Selecciona los que quieras cotizar (opcional)
+                  </p>
+                </div>
+
+                {/* Grid de servicios con fotos */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+                  {serviciosAdicionales.map((servicio, idx) => (
+                    <motion.button
+                      key={servicio.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: idx * 0.1 }}
+                      onClick={() => toggleExtra(servicio.id)}
+                      className={`group relative overflow-hidden rounded-2xl aspect-square transition-all ${
+                        selectedExtras.includes(servicio.id)
+                          ? "ring-4 ring-white/50 scale-95"
+                          : "hover:scale-105"
                       }`}
                     >
-                      <input
-                        type="checkbox"
-                        checked={selectedExtras.includes(extra.id)}
-                        onChange={() => toggleExtra(extra.id)}
-                        className="w-5 h-5"
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{ backgroundImage: `url(${servicio.image})` }}
                       />
-                      <span className="text-sm text-white font-medium">{extra.name}</span>
-                    </label>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                      
+                      {/* Checkmark si está seleccionado */}
+                      {selectedExtras.includes(servicio.id) && (
+                        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                          <Check className="w-5 h-5 text-black" />
+                        </div>
+                      )}
+
+                      <div className="relative h-full p-4 flex flex-col justify-end">
+                        <p className="text-sm md:text-base font-semibold text-white text-center">
+                          {servicio.name}
+                        </p>
+                      </div>
+                    </motion.button>
                   ))}
                 </div>
+
+                {/* Botones de navegación */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <button
+                    onClick={() => setShowPriceFlow(false)}
+                    className="px-6 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={continuarAFormulario}
+                    className="px-10 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-zinc-200 transition-colors"
+                  >
+                    Continuar
+                  </button>
+                </div>
+
+                {selectedExtras.length > 0 && (
+                  <p className="text-center text-sm text-zinc-400 mt-6">
+                    {selectedExtras.length} servicio{selectedExtras.length > 1 ? 's' : ''} seleccionado{selectedExtras.length > 1 ? 's' : ''}
+                  </p>
+                )}
               </div>
+            </Section>
+          )}
 
-              {/* Formulario */}
-              <div className="space-y-4 mb-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm text-zinc-400 mb-2 block">📅 ¿Cuándo es tu evento?</label>
-                    <input
-                      type="date"
-                      value={formData.fecha}
-                      onChange={(e) => setFormData({...formData, fecha: e.target.value})}
-                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm text-zinc-400 mb-2 block">👥 ¿Cuántas personas?</label>
-                    <input
-                      type="number"
-                      placeholder="100"
-                      value={formData.personas}
-                      onChange={(e) => setFormData({...formData, personas: e.target.value})}
-                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
-                    />
-                  </div>
+          {/* STEP 2: FORMULARIO */}
+          {step === 2 && (
+            <Section className="pt-0">
+              <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    Recibe los precios al instante
+                  </h2>
+                  <p className="text-lg text-zinc-400">
+                    Completa tu información
+                  </p>
                 </div>
 
-                <div>
-                  <label className="text-sm text-zinc-400 mb-2 block">📍 ¿Dónde será?</label>
-                  <input
-                    placeholder="Nombre del salón o lugar"
-                    value={formData.lugar}
-                    onChange={(e) => setFormData({...formData, lugar: e.target.value})}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
-                  />
-                </div>
-
-                <div className="border-t border-white/10 pt-6 mt-6">
+                <div className={`p-8 rounded-2xl ${glass} space-y-6`}>
+                  {/* Info del evento */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm text-zinc-400 mb-2 block">Tu nombre *</label>
+                      <label className="text-sm text-zinc-400 mb-2 block">¿Cuándo es tu evento?</label>
                       <input
-                        placeholder="Juan Pérez"
-                        value={formData.nombre}
-                        onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                        type="date"
+                        value={formData.fecha}
+                        onChange={(e) => setFormData({...formData, fecha: e.target.value})}
                         className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
-                        required
                       />
                     </div>
                     <div>
-                      <label className="text-sm text-zinc-400 mb-2 block">WhatsApp *</label>
+                      <label className="text-sm text-zinc-400 mb-2 block">¿Cuántas personas?</label>
                       <input
-                        placeholder="787-XXX-XXXX"
-                        value={formData.whatsapp}
-                        onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
+                        type="number"
+                        placeholder="100"
+                        value={formData.personas}
+                        onChange={(e) => setFormData({...formData, personas: e.target.value})}
                         className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
-                        required
                       />
                     </div>
                   </div>
+
+                  <div>
+                    <label className="text-sm text-zinc-400 mb-2 block">¿Dónde será?</label>
+                    <input
+                      placeholder="Nombre del salón o lugar"
+                      value={formData.lugar}
+                      onChange={(e) => setFormData({...formData, lugar: e.target.value})}
+                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                    />
+                  </div>
+
+                  <div className="border-t border-white/10 pt-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm text-zinc-400 mb-2 block">Tu nombre *</label>
+                        <input
+                          placeholder="Juan Pérez"
+                          value={formData.nombre}
+                          onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                          className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm text-zinc-400 mb-2 block">WhatsApp *</label>
+                        <input
+                          placeholder="787-XXX-XXXX"
+                          value={formData.whatsapp}
+                          onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
+                          className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Botones */}
+                  <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                    <button
+                      onClick={() => setStep(1)}
+                      className="flex-1 px-6 py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors"
+                    >
+                      Atrás
+                    </button>
+                    <button
+                      onClick={enviarWhatsApp}
+                      className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-lg font-bold transition-colors"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      Enviar y recibir precios
+                    </button>
+                  </div>
+
+                  <p className="text-xs text-zinc-500 text-center">
+                    * Campos requeridos
+                  </p>
                 </div>
               </div>
+            </Section>
+          )}
+        </>
+      )}
 
-              {/* Botón enviar */}
-              <button
-                onClick={enviarWhatsApp}
-                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-lg font-bold transition-colors"
-              >
-                <MessageCircle className="w-6 h-6" />
-                Enviar y recibir precios
-              </button>
-
-              <p className="text-xs text-zinc-500 text-center mt-4">
-                * Campos requeridos. Recibirás los precios al instante por WhatsApp.
-              </p>
-            </motion.div>
+      {/* NOTIFICACIÓN DE ERROR CUSTOM */}
+      <AnimatePresence>
+        {showError && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-50"
+          >
+            <div className="bg-red-500 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                <X className="w-4 h-4" />
+              </div>
+              <p className="font-medium">{errorMessage}</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
