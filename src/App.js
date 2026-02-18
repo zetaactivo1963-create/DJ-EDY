@@ -818,7 +818,10 @@ function BestSellers() {
 /* Helper Component para Event Cards */
 function EventCard({ event, idx, onClick }) {
   return (
-    <button
+    <motion.button
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: idx * 0.1 }}
       onClick={onClick}
       className={`group relative overflow-hidden rounded-2xl p-8 min-h-[200px] 
         bg-gradient-to-br ${event.color} 
@@ -835,7 +838,7 @@ function EventCard({ event, idx, onClick }) {
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
-    </button>
+    </motion.button>
   );
 }
 
@@ -844,11 +847,11 @@ function PackagesPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const events = [
-    { id: "bodas", name: "Bodas", color: "from-pink-500/20 to-rose-500/20", borderColor: "border-pink-500/30 hover:border-pink-500/60", accentColor: "bg-pink-500" },
-    { id: "quinceaneros", name: "Quinceañeros", color: "from-fuchsia-500/20 to-purple-500/20", borderColor: "border-fuchsia-500/30 hover:border-fuchsia-500/60", accentColor: "bg-fuchsia-500" },
-    { id: "proms", name: "Proms / Graduaciones", color: "from-blue-500/20 to-cyan-500/20", borderColor: "border-blue-500/30 hover:border-blue-500/60", accentColor: "bg-blue-500" },
-    { id: "corporativos", name: "Eventos Corporativos", color: "from-slate-500/20 to-zinc-500/20", borderColor: "border-slate-500/30 hover:border-slate-500/60", accentColor: "bg-slate-500" },
-    { id: "cumpleanos", name: "Cumpleaños / Sociales", color: "from-purple-500/20 to-pink-500/20", borderColor: "border-purple-500/30 hover:border-purple-500/60", accentColor: "bg-purple-500" },
+    { id: "bodas", name: "Bodas", color: "from-slate-600/20 to-slate-700/20", borderColor: "border-slate-500/30 hover:border-slate-400/60", accentColor: "bg-slate-400" },
+    { id: "quinceaneros", name: "Quinceañeros", color: "from-zinc-600/20 to-zinc-700/20", borderColor: "border-zinc-500/30 hover:border-zinc-400/60", accentColor: "bg-zinc-400" },
+    { id: "proms", name: "Proms / Graduaciones", color: "from-gray-600/20 to-gray-700/20", borderColor: "border-gray-500/30 hover:border-gray-400/60", accentColor: "bg-gray-400" },
+    { id: "corporativos", name: "Eventos Corporativos", color: "from-neutral-600/20 to-neutral-700/20", borderColor: "border-neutral-500/30 hover:border-neutral-400/60", accentColor: "bg-neutral-400" },
+    { id: "cumpleanos", name: "Cumpleaños / Sociales", color: "from-stone-600/20 to-stone-700/20", borderColor: "border-stone-500/30 hover:border-stone-400/60", accentColor: "bg-stone-400" },
   ];
 
   if (!selectedEvent) {
@@ -903,7 +906,7 @@ function PackagesPage() {
   }
 
   // Mostrar paquetes
-  const eventName = ["Bodas", "Quinceañeros", "Proms / Graduaciones", "Eventos Corporativos", "Cumpleaños / Sociales"][
+  const eventName = ["Bodas", "Quinceañeros", "Proms", "Eventos Corporativos", "Cumpleaños / Sociales"][
     ["bodas", "quinceaneros", "proms", "corporativos", "cumpleanos"].indexOf(selectedEvent)
   ];
   const packages = packagesByEvent[selectedEvent] || [];
@@ -989,6 +992,7 @@ function PackagesPage() {
     </>
   );
 }
+
 
 
 
