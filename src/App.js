@@ -1005,7 +1005,11 @@ function PackagesPage() {
    CARRUSEL + LIGHTBOX COMPONENT
    =========================== */
 
-function ImageCarousel({ images, alt }) {
+function ImageCarousel({ images = [], alt }) {
+  if (!images || images.length === 0) {
+    return <div className="h-48 bg-zinc-900 rounded-xl" />;
+  }
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
