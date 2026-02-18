@@ -326,28 +326,33 @@ const djSetups = [
   {
     id: "sencillo",
     name: "Montaje Sencillo",
-    emoji: "🎯",
     price: "Desde $XXX",
-    media: "/montaje-Sencillo.jpg",
+    images: [
+              "/montaje-Sencillo.jpg",
+              "/montaje-Sencillo-2.jpg"
+            ],
     features: [
-      "Pantalla TV 32\"",
+      "Pantalla TV 32\" (Opcional)",
       "Karaoke / Just Dance",
       "1 micrófono inalámbrico",
       "DJ Booth iluminado",
-      "2 luces Party 5 en 1",
+      "2 luces Party LED",
       "Mixeo de música en vivo",
       "4 horas",
     ],
-    ideal: "Eventos pequeños o presupuesto ajustado",
   },
   {
     id: "mediano",
     name: "Montaje Mediano",
-    emoji: "🚀",
     price: "Desde $XXX",
-    media: "/montajeMediano.jpg",
+    images: [
+              "/montaje-Mediano.jpg",
+              "/montajeSencillo.jpg",
+              "/montaje-Mediano-2.PNG",
+              "/montaje-Mediano-3.jpg"
+            ],
     features: [
-      "Pantalla gigante 100\"",
+      "Pantalla gigante 100 o TV 55"\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
@@ -357,27 +362,28 @@ const djSetups = [
       "Mixeo de música en vivo",
       "5 horas",
     ],
-    ideal: "Eventos medianos, mejor relación precio-calidad",
   },
   {
     id: "premium",
     name: "Montaje Premium",
     emoji: "💎",
     price: "Desde $XXX",
-    media: "/montaje-Premium.jpg",
+    images: [
+              "/montaje-Premium.jpg",
+              "/montaje-Premium-2.PNG",
+              "/montaje-Premium-3.jpg"
+            ],    
     features: [
       "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
       "2 micrófonos inalámbricos",
       "DJ Booth iluminado",
       "2 trussing iluminados",
-      "2 luces Moving Heads",
+      "4 luces Moving Heads",
       "Máquina de humo o haze",
       "Mixeo de música en vivo",
-      "Sonido para ceremonia o cóctel",
-      "5 horas + 1 hr de ceremonia o cóctel",
+      "5 horas ",
     ],
-    ideal: "Eventos elegantes o formales",
   },
 ];
 
