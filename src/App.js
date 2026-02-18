@@ -1176,19 +1176,66 @@ function ImageCarousel({ images, alt }) {
 }
 
 
-/* MONTAJES - Con fotos y opción de añadir servicios */
+/* MONTAJES - Sin precios, con modal de cotización */
 function MontajesPage() {
-  const [selectedMontaje, setSelectedMontaje] = useState(null);
+  const [showPriceModal, setShowPriceModal] = useState(false);
+  const [selectedExtras, setSelectedExtras] = useState([]);
+  const [formData, setFormData] = useState({
+    fecha: "",
+    personas: "",
+    lugar: "",
+    nombre: "",
+    whatsapp: ""
+  });
 
-
-  const serviciosAdicionales = [
-    { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
-    { name: "Photo Booth 360°", image: "/photobooth-service.png", href: "#servicio/photo-booths" },
-    { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
-    { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
-    { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
-    { name: "Animación & MC", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion" },
+  const extrasDisponibles = [
+    { id: "pista", name: "Pista de Baile LED", price: "$850-$1,100" },
+    { id: "photobooth", name: "Photo Booth 360°", price: "$450-$550" },
+    { id: "efectos", name: "Efectos Especiales", price: "Desde $250" },
+    { id: "fotografia", name: "Fotografía Profesional", price: "Desde $350" },
+    { id: "iluminacion", name: "Iluminación Extra", price: "Por cotización" },
+    { id: "animacion", name: "Animación & MC", price: "Desde $450" },
   ];
+
+  const toggleExtra = (id) => {
+    setSelectedExtras(prev => 
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
+  };
+
+  const enviarWhatsApp = () => {
+    if (!formData.nombre || !formData.whatsapp) {
+      alert("Por favor completa tu nombre y WhatsApp");
+      return;
+    }
+
+    const extrasTexto = selectedExtras.length > 0
+      ? `\n\n🎉 SERVICIOS ADICIONALES:\n${selectedExtras.map(id => {
+          const extra = extrasDisponibles.find(e => e.id === id);
+          return `• ${extra.name}: ${extra.price}`;
+        }).join('\n')}`
+      : "";
+
+    const mensaje = `Hola ${formData.nombre}! 👋
+
+Aquí están los precios para tu evento:
+
+🎧 MONTAJES DJ:
+• Sencillo: $550 (4 hrs)
+• Mediano: $750 (5 hrs) ⭐ Más popular
+• Premium: $850 (5 hrs)${extrasTexto}
+
+📋 Info de tu evento:
+• Fecha: ${formData.fecha || "Por definir"}
+• Personas: ${formData.personas || "Por definir"}
+• Lugar: ${formData.lugar || "Por definir"}
+
+¿Te interesa alguno? Responde y coordinamos!`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+    setShowPriceModal(false);
+  };
 
   return (
     <>
@@ -1210,27 +1257,37 @@ function MontajesPage() {
           </p>
         </div>
 
-        {/* Montajes comparables lado a lado */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Montajes sin precios ni botones */}
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           {montajes.map((setup, idx) => (
             <motion.div
               key={setup.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.2 }}
-              className={`rounded-2xl ${glass} hover:bg-white/10 transition-all overflow-hidden ${
-                selectedMontaje === setup.id ? "ring-2 ring-white/30" : ""
+              className={`rounded-2xl ${glass} overflow-hidden ${
+                setup.id === "mediano" ? "ring-2 ring-white/20" : ""
               }`}
             >
+              {/* Badge MÁS POPULAR */}
+              {setup.id === "mediano" && (
+                <div className="p-4 pb-0">
+                  <span className="inline-block text-xs font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
+                    🏆 MÁS POPULAR
+                  </span>
+                </div>
+              )}
+
               {/* CARRUSEL DE FOTOS */}
-              <ImageCarousel images={setup.images} alt={setup.name} />
+              <div className="p-4 pb-0">
+                <ImageCarousel images={setup.images} alt={setup.name} />
+              </div>
 
               {/* Info */}
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">{setup.name}</h3>
-                <p className="text-2xl font-bold text-white mb-6">{setup.price}</p>
+              <div className="p-8 pt-6">
+                <h3 className="text-2xl font-bold text-white mb-6">{setup.name}</h3>
                 
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2">
                   {setup.features.map((f, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
                       <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
@@ -1238,85 +1295,162 @@ function MontajesPage() {
                     </li>
                   ))}
                 </ul>
-
-                <div className="mb-6 p-4 rounded-lg bg-white/5">
-                  <p className="text-xs text-zinc-400 mb-1">Ideal para:</p>
-                  <p className="text-sm text-white">{setup.ideal}</p>
-                </div>
-
-                <button
-                  onClick={() => setSelectedMontaje(setup.id)}
-                  className="block w-full text-center px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors mb-3"
-                >
-                  Seleccionar
-                </button>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* SECCIÓN: ¿Quieres añadir servicios? */}
-        {selectedMontaje && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-16"
+        {/* BOTÓN GRANDE PARA VER PRECIOS */}
+        <div className="text-center mb-16">
+          <button
+            onClick={() => setShowPriceModal(true)}
+            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black rounded-full text-xl font-bold hover:bg-zinc-200 transition-all hover:scale-105 shadow-2xl"
           >
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-white mb-4">
-                ¿Quieres añadir servicios adicionales?
-              </h2>
-              <p className="text-zinc-400">
-                Complementa tu montaje con estos servicios
-              </p>
-            </div>
+            💰 Ver Precios de Montajes <ChevronRight className="w-6 h-6" />
+          </button>
+        </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {serviciosAdicionales.map((servicio, idx) => (
-                <motion.a
-                  key={idx}
-                  href={servicio.href}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+        {/* Link a paquetes completos */}
+        <div className="text-center">
+          <p className="text-zinc-400 mb-4">
+            ¿Buscas algo más completo?
+          </p>
+          <a href="#paquetes" className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors">
+            Ver paquetes completos <ChevronRight className="w-5 h-5" />
+          </a>
+        </div>
+      </Section>
+
+      {/* MODAL DE COTIZACIÓN */}
+      <AnimatePresence>
+        {showPriceModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowPriceModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-zinc-900 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/10"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-white">Recibe los precios al instante</h2>
+                <button
+                  onClick={() => setShowPriceModal(false)}
+                  className="text-zinc-400 hover:text-white"
                 >
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${servicio.image})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-                  <div className="relative h-full p-4 flex flex-col justify-end">
-                    <p className="text-sm md:text-base font-semibold text-white text-center">
-                      {servicio.name}
-                    </p>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
 
-            <div className="text-center mt-8">
-              <a
-                href="#cotizar"
-                className="inline-block px-8 py-4 bg-white text-black rounded-full text-lg font-semibold hover:bg-zinc-200 transition-colors"
+              {/* Checkboxes de extras */}
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  ¿Te interesan servicios adicionales? (opcional)
+                </h3>
+                <div className="grid md:grid-cols-2 gap-3">
+                  {extrasDisponibles.map((extra) => (
+                    <label
+                      key={extra.id}
+                      className={`flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all ${
+                        selectedExtras.includes(extra.id)
+                          ? "bg-white/10 border-2 border-white/30"
+                          : "bg-white/5 border-2 border-transparent hover:bg-white/10"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedExtras.includes(extra.id)}
+                        onChange={() => toggleExtra(extra.id)}
+                        className="w-5 h-5"
+                      />
+                      <span className="text-sm text-white font-medium">{extra.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Formulario */}
+              <div className="space-y-4 mb-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm text-zinc-400 mb-2 block">📅 ¿Cuándo es tu evento?</label>
+                    <input
+                      type="date"
+                      value={formData.fecha}
+                      onChange={(e) => setFormData({...formData, fecha: e.target.value})}
+                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm text-zinc-400 mb-2 block">👥 ¿Cuántas personas?</label>
+                    <input
+                      type="number"
+                      placeholder="100"
+                      value={formData.personas}
+                      onChange={(e) => setFormData({...formData, personas: e.target.value})}
+                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">📍 ¿Dónde será?</label>
+                  <input
+                    placeholder="Nombre del salón o lugar"
+                    value={formData.lugar}
+                    onChange={(e) => setFormData({...formData, lugar: e.target.value})}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                  />
+                </div>
+
+                <div className="border-t border-white/10 pt-6 mt-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm text-zinc-400 mb-2 block">Tu nombre *</label>
+                      <input
+                        placeholder="Juan Pérez"
+                        value={formData.nombre}
+                        onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-zinc-400 mb-2 block">WhatsApp *</label>
+                      <input
+                        placeholder="787-XXX-XXXX"
+                        value={formData.whatsapp}
+                        onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
+                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botón enviar */}
+              <button
+                onClick={enviarWhatsApp}
+                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-lg font-bold transition-colors"
               >
-                Cotizar mi montaje
-              </a>
-            </div>
+                <MessageCircle className="w-6 h-6" />
+                Enviar y recibir precios
+              </button>
+
+              <p className="text-xs text-zinc-500 text-center mt-4">
+                * Campos requeridos. Recibirás los precios al instante por WhatsApp.
+              </p>
+            </motion.div>
           </motion.div>
         )}
-
-        {!selectedMontaje && (
-          <div className="mt-16 text-center">
-            <p className="text-zinc-400 mb-4">
-              ¿Buscas algo más completo?
-            </p>
-            <a href="#paquetes" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-zinc-200 transition-colors">
-              Ver paquetes completos <ChevronRight className="w-5 h-5" />
-            </a>
-          </div>
-        )}
-      </Section>
+      </AnimatePresence>
     </>
   );
 }
