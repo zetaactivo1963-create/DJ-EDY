@@ -494,6 +494,39 @@ function Section({ id, children, className = "" }) {
   );
 }
 
+/* Helper Component */
+function ServiceCard({ href, image, title, subtitle, delay }) {
+  return (
+    <motion.a
+      href={href}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay }}
+      className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform block"
+    >
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${image})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      
+      <div className="absolute top-0 left-0 right-0 pt-8 px-6 text-center z-10">
+        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg">
+          {title}
+        </h3>
+        <p className="text-base text-white/90 drop-shadow-lg">{subtitle}</p>
+      </div>
+      
+      <div className="relative h-full p-8 flex items-end justify-center z-10">
+        <div className="flex items-center gap-2 text-white font-semibold drop-shadow-lg">
+          Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
 /* ======
    NAVBAR
    ====== */
