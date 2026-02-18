@@ -1185,7 +1185,7 @@ function MontajesPage() {
       id: "sencillo",
       name: "Montaje Sencillo",
       price: "Desde $XXX",
-      image: "/montaje-Sencillo.jpg",
+      images: ["/montaje-Sencillo.jpg", "/montaje-Sencillo-2.jpg"],  // ← PLURAL con array
       features: [
         "Pantalla TV 32\"",
         "Karaoke / Just Dance",
@@ -1201,7 +1201,7 @@ function MontajesPage() {
       id: "mediano",
       name: "Montaje Mediano",
       price: "Desde $XXX",
-      image: "/montajeMediano.jpg",
+      images: "/montajeMediano.jpg",
       features: [
         "Pantalla gigante 100\"",
         "Karaoke / Just Dance",
@@ -1219,7 +1219,7 @@ function MontajesPage() {
       id: "premium",
       name: "Montaje Premium",
       price: "Desde $XXX",
-      image: "/montaje-Premium.jpg",
+      images: "/montaje-Premium.jpg",
       features: [
         "2 pantallas TV 55\"",
         "Karaoke / Just Dance",
