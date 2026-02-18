@@ -802,7 +802,7 @@ function EventCard({ event, idx, onClick }) {
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
-    </motion.button>
+    </button>
   );
 }
 
