@@ -344,7 +344,7 @@ const montajes = [
     id: "mediano",
     name: "Montaje Mediano",
     price: "Desde $XXX",
-    images: ["/montajeMediano.jpg", "/montajeMediano-2.PNG", "/montajeMediano-3.jpg"],  // ← images plural
+    images: ["/montajeMediano.jpg", "/montajeMediano-2.PNG", "/montajeMediano-3.heic"],  // ← images plural
     features: [
       "Pantalla gigante 100\"",
       "Karaoke / Just Dance",
@@ -362,7 +362,7 @@ const montajes = [
     id: "premium",
     name: "Montaje Premium",
     price: "Desde $XXX",
-    images: ["/montajePremium.jpg", "/montaje-Premium-2.PNG", "/montaje-Premium-3.jpg"],  // ← images plural
+    images: ["/montaje-Premium.jpg", "/montaje-Premium-2.PNG", "/montaje-Premium-3.heic"],  // ← images plural
     features: [
       "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
