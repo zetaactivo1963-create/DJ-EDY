@@ -1282,14 +1282,8 @@ const serviciosAdicionales = [
                 selectedMontaje === setup.id ? "ring-2 ring-white/30" : ""
               }`}
             >
-              {/* Foto */}
-              <div className="relative h-48 overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${setup.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              </div>
+              {/* CARRUSEL DE FOTOS */}
+              <ImageCarousel images={setup.images} alt={setup.name} />
 
               {/* Info */}
               <div className="p-8">
