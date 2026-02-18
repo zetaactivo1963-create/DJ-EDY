@@ -782,49 +782,44 @@ function BestSellers() {
   );
 }
 
-/* Helper Component */
-function ServiceCard({ href, image, title, subtitle, delay }) {
+/* Helper Component para Event Cards */
+function EventCard({ event, idx, onClick }) {
   return (
-    <motion.a
-      href={href}
+    <motion.button
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay }}
-      className="group relative overflow-hidden rounded-3xl min-h-[400px] hover:scale-[1.01] transition-transform block"
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: idx * 0.1 }}
+      onClick={onClick}
+      className={`group relative overflow-hidden rounded-2xl p-8 min-h-[200px] 
+        bg-gradient-to-br ${event.color} 
+        border-2 ${event.borderColor}
+        backdrop-blur-sm transition-all hover:scale-105`}
     >
-      {/* Imagen de fondo */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${image})` }}
-      />
-      
-      {/* Gradiente oscuro suave */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-      
-      {/* Título centrado arriba */}
-      <div className="absolute top-0 left-0 right-0 pt-8 px-6 text-center z-10">
-        <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg">
-          {title}
+      <div className={`absolute top-0 left-0 right-0 h-1 ${event.accentColor}`} />
+      <div className="flex flex-col items-center justify-center h-full text-center">
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+          {event.name}
         </h3>
-        <p className="text-base text-white/90 drop-shadow-lg">{subtitle}</p>
-      </div>
-      
-      {/* Botón "Ver más" abajo */}
-      <div className="relative h-full p-8 flex items-end justify-center z-10">
-        <div className="flex items-center gap-2 text-white font-semibold drop-shadow-lg">
-          Ver más <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+        <div className="flex items-center gap-2 text-zinc-300 group-hover:text-white transition-colors">
+          <span className="text-sm font-medium">Ver paquetes</span>
+          <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
-    </motion.a>
+    </motion.button>
   );
 }
 
-
-
-/* PAQUETES - Diseño corporativo profesional sin fotos */
+/* PAQUETES - Diseño corporativo profesional */
 function PackagesPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const events = [
+    { id: "bodas", name: "Bodas", color: "from-pink-500/20 to-rose-500/20", borderColor: "border-pink-500/30 hover:border-pink-500/60", accentColor: "bg-pink-500" },
+    { id: "quinceaneros", name: "Quinceañeros", color: "from-fuchsia-500/20 to-purple-500/20", borderColor: "border-fuchsia-500/30 hover:border-fuchsia-500/60", accentColor: "bg-fuchsia-500" },
+    { id: "proms", name: "Proms / Graduaciones", color: "from-blue-500/20 to-cyan-500/20", borderColor: "border-blue-500/30 hover:border-blue-500/60", accentColor: "bg-blue-500" },
+    { id: "corporativos", name: "Eventos Corporativos", color: "from-slate-500/20 to-zinc-500/20", borderColor: "border-slate-500/30 hover:border-slate-500/60", accentColor: "bg-slate-500" },
+    { id: "cumpleanos", name: "Cumpleaños / Sociales", color: "from-purple-500/20 to-pink-500/20", borderColor: "border-purple-500/30 hover:border-purple-500/60", accentColor: "bg-purple-500" },
+  ];
 
   if (!selectedEvent) {
     return (
@@ -847,78 +842,37 @@ function PackagesPage() {
             </p>
           </div>
 
-          {/* Selector CORPORATIVO - Solo tipografía y color */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {[
-              { 
-                id: "bodas", 
-                name: "Bodas", 
-                color: "from-pink-500/20 to-rose-500/20",
-                borderColor: "border-pink-500/30 hover:border-pink-500/60",
-                accentColor: "bg-pink-500"
-              },
-              { 
-                id: "quinceaneros", 
-                name: "Quinceañeros", 
-                color: "from-fuchsia-500/20 to-purple-500/20",
-                borderColor: "border-fuchsia-500/30 hover:border-fuchsia-500/60",
-                accentColor: "bg-fuchsia-500"
-              },
-              { 
-                id: "proms", 
-                name: "Proms / Graduaciones", 
-                color: "from-blue-500/20 to-cyan-500/20",
-                borderColor: "border-blue-500/30 hover:border-blue-500/60",
-                accentColor: "bg-blue-500"
-              },
-              { 
-                id: "corporativos", 
-                name: "Eventos Corporativos", 
-                color: "from-slate-500/20 to-zinc-500/20",
-                borderColor: "border-slate-500/30 hover:border-slate-500/60",
-                accentColor: "bg-slate-500"
-              },
-              { 
-                id: "cumpleanos", 
-                name: "Cumpleaños / Sociales", 
-                color: "from-purple-500/20 to-pink-500/20",
-                borderColor: "border-purple-500/30 hover:border-purple-500/60",
-                accentColor: "bg-purple-500"
-              },
-            ].map((event, idx) => (
-              <motion.button
-                key={event.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                onClick={() => setSelectedEvent(event.id)}
-                className={`group relative overflow-hidden rounded-2xl p-8 min-h-[200px] 
-                  bg-gradient-to-br ${event.color} 
-                  border-2 ${event.borderColor}
-                  backdrop-blur-sm transition-all hover:scale-105`}
-              >
-                {/* Barra de acento */}
-                <div className={`absolute top-0 left-0 right-0 h-1 ${event.accentColor}`} />
-                
-                {/* Contenido centrado */}
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                    {event.name}
-                  </h3>
-                  <div className="flex items-center gap-2 text-zinc-300 group-hover:text-white transition-colors">
-                    <span className="text-sm font-medium">Ver paquetes</span>
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </motion.button>
-            ))}
+          <div className="max-w-7xl mx-auto">
+            {/* Móvil: Stack vertical */}
+            <div className="grid grid-cols-1 md:hidden gap-6">
+              {events.map((event, idx) => (
+                <EventCard key={event.id} event={event} idx={idx} onClick={() => setSelectedEvent(event.id)} />
+              ))}
+            </div>
+
+            {/* Desktop: 3 arriba + 2 abajo centradas */}
+            <div className="hidden md:block space-y-6">
+              {/* Fila 1: 3 cards */}
+              <div className="grid grid-cols-3 gap-6">
+                {events.slice(0, 3).map((event, idx) => (
+                  <EventCard key={event.id} event={event} idx={idx} onClick={() => setSelectedEvent(event.id)} />
+                ))}
+              </div>
+              
+              {/* Fila 2: 2 cards centradas */}
+              <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto">
+                {events.slice(3, 5).map((event, idx) => (
+                  <EventCard key={event.id} event={event} idx={idx + 3} onClick={() => setSelectedEvent(event.id)} />
+                ))}
+              </div>
+            </div>
           </div>
         </Section>
       </>
     );
   }
 
-  // Mostrar paquetes - SIN MODAL, todo comparable
+  // Mostrar paquetes
   const eventName = ["Bodas", "Quinceañeros", "Proms / Graduaciones", "Eventos Corporativos", "Cumpleaños / Sociales"][
     ["bodas", "quinceaneros", "proms", "corporativos", "cumpleanos"].indexOf(selectedEvent)
   ];
@@ -944,7 +898,6 @@ function PackagesPage() {
           </h1>
         </div>
 
-        {/* Paquetes lado a lado - COMPARABLES */}
         <div className="grid md:grid-cols-3 gap-8">
           {packages.map((pkg, idx) => (
             <motion.div
@@ -1006,6 +959,7 @@ function PackagesPage() {
     </>
   );
 }
+
 
 
 /* MONTAJES - Con fotos y opción de añadir servicios */
