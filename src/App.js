@@ -785,10 +785,7 @@ function BestSellers() {
 /* Helper Component para Event Cards */
 function EventCard({ event, idx, onClick }) {
   return (
-    <motion.button
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: idx * 0.1 }}
+    <button
       onClick={onClick}
       className={`group relative overflow-hidden rounded-2xl p-8 min-h-[200px] 
         bg-gradient-to-br ${event.color} 
