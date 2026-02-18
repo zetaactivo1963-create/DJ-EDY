@@ -347,9 +347,9 @@ const montajes = [
     name: "Montaje Mediano",
     price: "Desde $XXX",
     images: [
-      "/montaje-Mediano.jpg",
-      "/montaje-Mediano-2.PNG",
-      "/montaje-Mediano-3.jpg"
+      "/montajeMediano.jpg",
+      "/montajeMediano-2.PNG",
+      "/montajeMediano-3.jpg"
     ],
     features: [
       "Pantalla gigante 100\" o TV 55\"",
