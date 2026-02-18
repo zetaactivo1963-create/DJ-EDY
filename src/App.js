@@ -1180,70 +1180,15 @@ function ImageCarousel({ images, alt }) {
 function MontajesPage() {
   const [selectedMontaje, setSelectedMontaje] = useState(null);
 
-  const montajes = [
-    {
-      id: "sencillo",
-      name: "Montaje Sencillo",
-      price: "Desde $XXX",
-      images: ["/montaje-Sencillo.jpg", "/montaje-Sencillo-2.jpg"],  // ← PLURAL con array
-      features: [
-        "Pantalla TV 32\"",
-        "Karaoke / Just Dance",
-        "1 micrófono inalámbrico",
-        "DJ Booth iluminado",
-        "2 luces Party 5 en 1",
-        "Mixeo de música en vivo",
-        "4 horas",
-      ],
-      ideal: "Eventos pequeños (30-50 personas)",
-    },
-    {
-      id: "mediano",
-      name: "Montaje Mediano",
-      price: "Desde $XXX",
-      images: "/montajeMediano.jpg",
-      features: [
-        "Pantalla gigante 100\"",
-        "Karaoke / Just Dance",
-        "2 micrófonos inalámbricos",
-        "DJ Booth iluminado",
-        "2 trussing iluminados",
-        "2 luces Moving Heads",
-        "Máquina de humo o haze",
-        "Mixeo de música en vivo",
-        "5 horas",
-      ],
-      ideal: "Eventos medianos (50-150 personas)",
-    },
-    {
-      id: "premium",
-      name: "Montaje Premium",
-      price: "Desde $XXX",
-      images: "/montaje-Premium.jpg",
-      features: [
-        "2 pantallas TV 55\"",
-        "Karaoke / Just Dance",
-        "2 micrófonos inalámbricos",
-        "DJ Booth iluminado",
-        "2 trussing iluminados",
-        "2 luces Moving Heads",
-        "Máquina de humo o haze",
-        "Mixeo de música en vivo",
-        "Sonido para ceremonia",
-        "5 horas + 1 hr extra",
-      ],
-      ideal: "Eventos grandes (150+ personas)",
-    },
-  ];
 
-const serviciosAdicionales = [
-  { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
-  { name: "Photo Booth 360°", image: "/photobooth-service.png", href: "#servicio/photo-booths" },
-  { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
-  { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
-  { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
-  { name: "Animación & MC", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion" },
-];
+  const serviciosAdicionales = [
+    { name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
+    { name: "Photo Booth 360°", image: "/photobooth-service.png", href: "#servicio/photo-booths" },
+    { name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
+    { name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
+    { name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
+    { name: "Animación & MC", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion" },
+  ];
 
   return (
     <>
@@ -1375,6 +1320,7 @@ const serviciosAdicionales = [
     </>
   );
 }
+
 
 /* ===========================
    INDIVIDUAL SERVICE PAGES - VERSIÓN COMPLETA
