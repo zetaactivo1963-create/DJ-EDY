@@ -1219,12 +1219,18 @@ function MontajesPage() {
       setTimeout(() => setShowError(false), 3000);
       return;
     }
-    if (!formData.whatsapp.trim()) {
-      setErrorMessage("Por favor escribe tu número de WhatsApp");
-      setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
-      return;
-    }
+      if (!formData.whatsapp.trim()) {
+        setErrorMessage("Por favor escribe tu número de WhatsApp");
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+        return;
+      }
+      if (formData.whatsapp.length !== 10) {
+        setErrorMessage("El WhatsApp debe tener 10 dígitos");
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+        return;
+      }
 
     setSending(true);
 
@@ -1494,11 +1500,20 @@ function MontajesPage() {
                       <div>
                         <label className="text-sm text-zinc-400 mb-2 block">WhatsApp *</label>
                         <input
-                          placeholder="787-XXX-XXXX"
+                          type="tel"
+                          placeholder="7871234567"
                           value={formData.whatsapp}
-                          onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
+                          onChange={(e) => {
+                            // Solo permite números y máximo 10 dígitos
+                            const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                            setFormData({...formData, whatsapp: value});
+                          }}
+                          maxLength={10}
                           className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
                         />
+                        {formData.whatsapp && formData.whatsapp.length < 10 && (
+                          <p className="text-xs text-red-400 mt-1">Debe tener 10 dígitos</p>
+                        )}
                       </div>
                       <div>
                         <label className="text-sm text-zinc-400 mb-2 block">Email (opcional)</label>
