@@ -1175,28 +1175,29 @@ function ImageCarousel({ images, alt }) {
   );
 }
 
-/* MONTAJES - Sin precios, con flujo de extras visual */
+/* MONTAJES - Con email a ti, luego tú respondes por WhatsApp */
 function MontajesPage() {
   const [showPriceFlow, setShowPriceFlow] = useState(false);
-  const [step, setStep] = useState(1); // 1=extras, 2=formulario
+  const [step, setStep] = useState(1); // 1=extras, 2=formulario, 3=confirmación
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [formData, setFormData] = useState({
     fecha: "",
     personas: "",
     lugar: "",
     nombre: "",
-    whatsapp: ""
+    whatsapp: "",
+    email: ""
   });
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const serviciosAdicionales = [
-    { id: "pista", name: "Pista de Baile LED", image: "/pista-led-service.jpg", href: "#servicio/pistas-de-baile" },
-    { id: "photobooth", name: "Photo Booth 360°", image: "/photobooth-service.png", href: "#servicio/photo-booths" },
-    { id: "efectos", name: "Efectos Especiales", image: "/efectos-service.jpg", href: "#servicio/efectos-especiales" },
-    { id: "fotografia", name: "Fotografía", image: "/fotografia-service.png", href: "#servicio/fotografia" },
-    { id: "iluminacion", name: "Iluminación Extra", image: "/iluminacion-service.jpg", href: "#servicio/iluminacion-trussing" },
-    { id: "animacion", name: "Animación & MC", image: "/animacion-service.png", href: "#servicio/animacion-coordinacion" },
+    { id: "pista", name: "Pista de Baile LED", image: "/pista-led-service.jpg" },
+    { id: "photobooth", name: "Photo Booth 360°", image: "/photobooth-service.png" },
+    { id: "efectos", name: "Efectos Especiales", image: "/efectos-service.jpg" },
+    { id: "fotografia", name: "Fotografía", image: "/fotografia-service.png" },
+    { id: "iluminacion", name: "Iluminación Extra", image: "/iluminacion-service.jpg" },
+    { id: "animacion", name: "Animación & MC", image: "/animacion-service.png" },
   ];
 
   const toggleExtra = (id) => {
@@ -1209,7 +1210,7 @@ function MontajesPage() {
     setStep(2);
   };
 
-  const enviarWhatsApp = () => {
+  const enviarSolicitud = () => {
     // Validación
     if (!formData.nombre.trim()) {
       setErrorMessage("Por favor escribe tu nombre");
@@ -1224,35 +1225,51 @@ function MontajesPage() {
       return;
     }
 
+    // Preparar email
     const extrasSeleccionados = serviciosAdicionales.filter(s => selectedExtras.includes(s.id));
     const extrasTexto = extrasSeleccionados.length > 0
-      ? `\n\nSERVICIOS ADICIONALES CONSULTADOS:\n${extrasSeleccionados.map(e => `• ${e.name}`).join('\n')}`
-      : "";
+      ? extrasSeleccionados.map(e => `- ${e.name}`).join('\n')
+      : "Ninguno";
 
-    const mensaje = `Hola ${formData.nombre}!
+    const subject = `Cotización Montajes - ${formData.nombre}`;
+    const body = `NUEVA SOLICITUD DE COTIZACIÓN - MONTAJES DJ
 
-Aquí están los precios para tu evento:
+DATOS DEL CLIENTE:
+Nombre: ${formData.nombre}
+WhatsApp: ${formData.whatsapp}
+Email: ${formData.email || "No proporcionó"}
 
-MONTAJES DJ:
-• Sencillo: $XXX (4 hrs)
-• Mediano: $XXX (5 hrs) - Más popular
-• Premium: $XXX (6 hrs)${extrasTexto}
+INFORMACIÓN DEL EVENTO:
+Fecha: ${formData.fecha || "Por definir"}
+Personas: ${formData.personas || "Por definir"}
+Lugar: ${formData.lugar || "Por definir"}
 
-Info de tu evento:
-• Fecha: ${formData.fecha || "Por definir"}
-• Personas: ${formData.personas || "Por definir"}
-• Lugar: ${formData.lugar || "Por definir"}
+SERVICIOS ADICIONALES CONSULTADOS:
+${extrasTexto}
 
-¿Te interesa alguno? Responde y coordinamos!`;
+---
+ACCIÓN: Envíale los precios por WhatsApp a ${formData.whatsapp}
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank");
+PRECIOS A ENVIAR:
+• Montaje Sencillo: $XXX (4 hrs)
+• Montaje Mediano: $XXX (5 hrs) - Más popular
+• Montaje Premium: $XXX (6 hrs)
+
+${extrasSeleccionados.length > 0 ? '+ Precios de extras seleccionados' : ''}
+`;
+
+    // Enviar email
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    // Reset
+    // Mostrar confirmación
+    setStep(3);
+  };
+
+  const resetFlow = () => {
     setShowPriceFlow(false);
     setStep(1);
     setSelectedExtras([]);
-    setFormData({ fecha: "", personas: "", lugar: "", nombre: "", whatsapp: "" });
+    setFormData({ fecha: "", personas: "", lugar: "", nombre: "", whatsapp: "", email: "" });
   };
 
   return (
@@ -1288,7 +1305,6 @@ Info de tu evento:
                   setup.id === "mediano" ? "ring-2 ring-white/20" : ""
                 }`}
               >
-                {/* Badge MÁS POPULAR */}
                 {setup.id === "mediano" && (
                   <div className="p-4 pb-0">
                     <span className="inline-block text-xs font-semibold text-white bg-white/10 px-3 py-1 rounded-full">
@@ -1297,12 +1313,10 @@ Info de tu evento:
                   </div>
                 )}
 
-                {/* CARRUSEL DE FOTOS */}
                 <div className="p-4 pb-0">
                   <ImageCarousel images={setup.images} alt={setup.name} />
                 </div>
 
-                {/* Info */}
                 <div className="p-8 pt-6">
                   <h3 className="text-2xl font-bold text-white mb-6">{setup.name}</h3>
                   
@@ -1319,7 +1333,6 @@ Info de tu evento:
             ))}
           </div>
 
-          {/* BOTÓN GRANDE PARA VER PRECIOS */}
           <div className="text-center mb-16">
             <button
               onClick={() => setShowPriceFlow(true)}
@@ -1329,7 +1342,6 @@ Info de tu evento:
             </button>
           </div>
 
-          {/* Link a paquetes completos */}
           <div className="text-center">
             <p className="text-zinc-400 mb-4">
               ¿Buscas algo más completo?
@@ -1354,7 +1366,6 @@ Info de tu evento:
                   </p>
                 </div>
 
-                {/* Grid de servicios con fotos */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
                   {serviciosAdicionales.map((servicio, idx) => (
                     <motion.button
@@ -1375,7 +1386,6 @@ Info de tu evento:
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
                       
-                      {/* Checkmark si está seleccionado */}
                       {selectedExtras.includes(servicio.id) && (
                         <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
                           <Check className="w-5 h-5 text-black" />
@@ -1391,7 +1401,6 @@ Info de tu evento:
                   ))}
                 </div>
 
-                {/* Botones de navegación */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <button
                     onClick={() => setShowPriceFlow(false)}
@@ -1422,15 +1431,14 @@ Info de tu evento:
               <div className="max-w-2xl mx-auto">
                 <div className="text-center mb-8">
                   <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                    Recibe los precios al instante
+                    Completa tu información
                   </h2>
                   <p className="text-lg text-zinc-400">
-                    Completa tu información
+                    Te enviaremos los precios por WhatsApp
                   </p>
                 </div>
 
                 <div className={`p-8 rounded-2xl ${glass} space-y-6`}>
-                  {/* Info del evento */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm text-zinc-400 mb-2 block">¿Cuándo es tu evento?</label>
@@ -1464,7 +1472,7 @@ Info de tu evento:
                   </div>
 
                   <div className="border-t border-white/10 pt-6">
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-4">
                       <div>
                         <label className="text-sm text-zinc-400 mb-2 block">Tu nombre *</label>
                         <input
@@ -1483,10 +1491,19 @@ Info de tu evento:
                           className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
                         />
                       </div>
+                      <div>
+                        <label className="text-sm text-zinc-400 mb-2 block">Email (opcional)</label>
+                        <input
+                          type="email"
+                          placeholder="tu@email.com"
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Botones */}
                   <div className="flex flex-col sm:flex-row gap-3 pt-4">
                     <button
                       onClick={() => setStep(1)}
@@ -1495,11 +1512,10 @@ Info de tu evento:
                       Atrás
                     </button>
                     <button
-                      onClick={enviarWhatsApp}
-                      className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl text-lg font-bold transition-colors"
+                      onClick={enviarSolicitud}
+                      className="flex-1 px-6 py-4 bg-white text-black rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors"
                     >
-                      <MessageCircle className="w-5 h-5" />
-                      Enviar y recibir precios
+                      Solicitar Precios
                     </button>
                   </div>
 
@@ -1510,10 +1526,50 @@ Info de tu evento:
               </div>
             </Section>
           )}
+
+          {/* STEP 3: CONFIRMACIÓN */}
+          {step === 3 && (
+            <Section className="pt-0">
+              <div className="max-w-2xl mx-auto text-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className={`p-12 rounded-2xl ${glass}`}
+                >
+                  <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
+                    <Check className="w-10 h-10 text-green-500" />
+                  </div>
+                  
+                  <h2 className="text-3xl font-bold text-white mb-4">
+                    ¡Solicitud enviada!
+                  </h2>
+                  
+                  <p className="text-lg text-zinc-300 mb-8">
+                    Te enviaremos los precios por WhatsApp al <strong>{formData.whatsapp}</strong> en breve.
+                  </p>
+
+                  <div className="space-y-3">
+                    <button
+                      onClick={resetFlow}
+                      className="w-full px-6 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-200 transition-colors"
+                    >
+                      Volver a Montajes
+                    </button>
+                    <a
+                      href="#home"
+                      className="block w-full px-6 py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors"
+                    >
+                      Ir al Inicio
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
+            </Section>
+          )}
         </>
       )}
 
-      {/* NOTIFICACIÓN DE ERROR CUSTOM */}
+      {/* NOTIFICACIÓN DE ERROR */}
       <AnimatePresence>
         {showError && (
           <motion.div
