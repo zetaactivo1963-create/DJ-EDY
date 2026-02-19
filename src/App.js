@@ -1175,7 +1175,7 @@ function ImageCarousel({ images, alt }) {
   );
 }
 
-/* MONTAJES - Con email a ti, luego tú respondes por WhatsApp */
+/* MONTAJES - Con EmailJS para envío automático de emails */
 function MontajesPage() {
   const [showPriceFlow, setShowPriceFlow] = useState(false);
   const [step, setStep] = useState(1); // 1=extras, 2=formulario, 3=confirmación
@@ -1190,6 +1190,7 @@ function MontajesPage() {
   });
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [sending, setSending] = useState(false);
 
   const serviciosAdicionales = [
     { id: "pista", name: "Pista de Baile LED", image: "/pista-led-service.jpg" },
@@ -1210,7 +1211,7 @@ function MontajesPage() {
     setStep(2);
   };
 
-  const enviarSolicitud = () => {
+  const enviarSolicitud = async () => {
     // Validación
     if (!formData.nombre.trim()) {
       setErrorMessage("Por favor escribe tu nombre");
@@ -1225,44 +1226,52 @@ function MontajesPage() {
       return;
     }
 
-    // Preparar email
-    const extrasSeleccionados = serviciosAdicionales.filter(s => selectedExtras.includes(s.id));
-    const extrasTexto = extrasSeleccionados.length > 0
-      ? extrasSeleccionados.map(e => `- ${e.name}`).join('\n')
-      : "Ninguno";
+    setSending(true);
 
-    const subject = `Cotización Montajes - ${formData.nombre}`;
-    const body = `NUEVA SOLICITUD DE COTIZACIÓN - MONTAJES DJ
+    try {
+      // Preparar datos para EmailJS
+      const extrasSeleccionados = serviciosAdicionales.filter(s => selectedExtras.includes(s.id));
+      const extrasTexto = extrasSeleccionados.length > 0
+        ? extrasSeleccionados.map(e => `- ${e.name}`).join('\n')
+        : "Ninguno";
 
-DATOS DEL CLIENTE:
-Nombre: ${formData.nombre}
-WhatsApp: ${formData.whatsapp}
-Email: ${formData.email || "No proporcionó"}
+      const templateParams = {
+        nombre: formData.nombre,
+        whatsapp: formData.whatsapp,
+        email: formData.email || "No proporcionó",
+        fecha: formData.fecha || "Por definir",
+        personas: formData.personas || "Por definir",
+        lugar: formData.lugar || "Por definir",
+        extras: extrasTexto
+      };
 
-INFORMACIÓN DEL EVENTO:
-Fecha: ${formData.fecha || "Por definir"}
-Personas: ${formData.personas || "Por definir"}
-Lugar: ${formData.lugar || "Por definir"}
+      // Enviar email con EmailJS
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: 'service_hik8xkn',
+          template_id: 'template_ievzd9a',
+          user_id: 'rITQraGRa7eL9gr9P',
+          template_params: templateParams
+        })
+      });
 
-SERVICIOS ADICIONALES CONSULTADOS:
-${extrasTexto}
-
----
-ACCIÓN: Envíale los precios por WhatsApp a ${formData.whatsapp}
-
-PRECIOS A ENVIAR:
-• Montaje Sencillo: $XXX (4 hrs)
-• Montaje Mediano: $XXX (5 hrs) - Más popular
-• Montaje Premium: $XXX (6 hrs)
-
-${extrasSeleccionados.length > 0 ? '+ Precios de extras seleccionados' : ''}
-`;
-
-    // Enviar email
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Mostrar confirmación
-    setStep(3);
+      if (response.ok) {
+        // Éxito - mostrar confirmación
+        setStep(3);
+      } else {
+        throw new Error('Error al enviar');
+      }
+    } catch (error) {
+      setErrorMessage("Error al enviar. Intenta de nuevo.");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+    } finally {
+      setSending(false);
+    }
   };
 
   const resetFlow = () => {
@@ -1507,15 +1516,17 @@ ${extrasSeleccionados.length > 0 ? '+ Precios de extras seleccionados' : ''}
                   <div className="flex flex-col sm:flex-row gap-3 pt-4">
                     <button
                       onClick={() => setStep(1)}
-                      className="flex-1 px-6 py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors"
+                      disabled={sending}
+                      className="flex-1 px-6 py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
                     >
                       Atrás
                     </button>
                     <button
                       onClick={enviarSolicitud}
-                      className="flex-1 px-6 py-4 bg-white text-black rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors"
+                      disabled={sending}
+                      className="flex-1 px-6 py-4 bg-white text-black rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Solicitar Precios
+                      {sending ? "Enviando..." : "Solicitar Precios"}
                     </button>
                   </div>
 
