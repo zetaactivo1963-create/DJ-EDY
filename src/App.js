@@ -1554,19 +1554,10 @@ function MontajesPage() {
                   <h2 className="text-3xl font-bold text-white mb-4">
                     ¡Solicitud enviada!
                   </h2>
-                  
+                                    
                   <p className="text-lg text-zinc-300 mb-8">
-                  Te enviaremos los precios por WhatsApp al{' '}
-                  <a 
-                    href={`https://wa.me/1${formData.whatsapp.replace(/\D/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-bold text-green-400 hover:text-green-300 underline"
-                  >
-                    {formData.whatsapp}
-                  </a>
-                  {' '}en breve.
-                </p>
+                    Te enviaremos los precios por WhatsApp al <strong>{formData.whatsapp}</strong> en breve.
+                  </p>
 
                   <div className="space-y-3">
                     <button
