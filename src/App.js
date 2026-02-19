@@ -1177,10 +1177,10 @@ function ImageCarousel({ images, alt }) {
   );
 }
 
-/* MONTAJES - Con EmailJS para envío automático de emails */
+/* MONTAJES - Layout 3+4 con servicios actualizados */
 function MontajesPage() {
   const [showPriceFlow, setShowPriceFlow] = useState(false);
-  const [step, setStep] = useState(1); // 1=extras, 2=formulario, 3=confirmación
+  const [step, setStep] = useState(1);
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [formData, setFormData] = useState({
     fecha: "",
@@ -1195,12 +1195,16 @@ function MontajesPage() {
   const [sending, setSending] = useState(false);
 
   const serviciosAdicionales = [
-    { id: "pista", name: "Pista de Baile LED", image: "/pista-led-service.jpg" },
-    { id: "photobooth", name: "Photo Booth 360°", image: "/photobooth-service.png" },
-    { id: "efectos", name: "Efectos Especiales", image: "/efectos-service.jpg" },
-    { id: "fotografia", name: "Fotografía", image: "/fotografia-service.png" },
-    { id: "iluminacion", name: "Iluminación Extra", image: "/iluminacion-service.jpg" },
-    { id: "animacion", name: "Animación & MC", image: "/animacion-service.png" },
+    // FILA 1 - 3 GRANDES
+    { id: "pista", name: "Pista de Baile LED", image: "/pista-led-service.jpg", size: "large" },
+    { id: "luces", name: "Luces de Ambientación", image: "/luces-ambiente-service.jpg", size: "large" },
+    { id: "sonido", name: "Sonido Ceremonias o Cocteles", image: "/sonido-ceremonia-service.jpg", size: "large" },
+    
+    // FILA 2 - 4 PEQUEÑAS
+    { id: "fotografia", name: "Fotografía", image: "/fotografia-service.png", size: "small" },
+    { id: "photobooth", name: "Photo Booth 360°", image: "/photobooth-service.png", size: "small" },
+    { id: "chispas", name: "Chispas Frías", image: "/chispas-frias-service.jpg", size: "small" },
+    { id: "animacion", name: "Animación & MC", image: "/animacion-service.png", size: "small" },
   ];
 
   const toggleExtra = (id) => {
@@ -1221,23 +1225,22 @@ function MontajesPage() {
       setTimeout(() => setShowError(false), 3000);
       return;
     }
-      if (!formData.whatsapp.trim()) {
-        setErrorMessage("Por favor escribe tu número de WhatsApp");
-        setShowError(true);
-        setTimeout(() => setShowError(false), 3000);
-        return;
-      }
-      if (formData.whatsapp.length !== 10) {
-        setErrorMessage("El WhatsApp debe tener 10 dígitos");
-        setShowError(true);
-        setTimeout(() => setShowError(false), 3000);
-        return;
-      }
+    if (!formData.whatsapp.trim()) {
+      setErrorMessage("Por favor escribe tu número de WhatsApp");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
+    if (formData.whatsapp.length !== 10) {
+      setErrorMessage("El WhatsApp debe tener 10 dígitos");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
 
     setSending(true);
 
     try {
-      // Preparar datos para EmailJS
       const extrasSeleccionados = serviciosAdicionales.filter(s => selectedExtras.includes(s.id));
       const extrasTexto = extrasSeleccionados.length > 0
         ? extrasSeleccionados.map(e => `- ${e.name}`).join('\n')
@@ -1253,7 +1256,6 @@ function MontajesPage() {
         extras: extrasTexto
       };
 
-      // Enviar email con EmailJS
       const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: {
@@ -1268,7 +1270,6 @@ function MontajesPage() {
       });
 
       if (response.ok) {
-        // Éxito - mostrar confirmación
         setStep(3);
       } else {
         throw new Error('Error al enviar');
@@ -1288,6 +1289,9 @@ function MontajesPage() {
     setSelectedExtras([]);
     setFormData({ fecha: "", personas: "", lugar: "", nombre: "", whatsapp: "", email: "" });
   };
+
+  const largeServices = serviciosAdicionales.filter(s => s.size === "large");
+  const smallServices = serviciosAdicionales.filter(s => s.size === "small");
 
   return (
     <>
@@ -1310,7 +1314,6 @@ function MontajesPage() {
             </p>
           </div>
 
-          {/* Montajes sin precios ni botones */}
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {montajes.map((setup, idx) => (
               <motion.div
@@ -1370,7 +1373,7 @@ function MontajesPage() {
         </Section>
       ) : (
         <>
-          {/* STEP 1: SELECCIÓN DE EXTRAS */}
+          {/* STEP 1: SELECCIÓN DE EXTRAS CON LAYOUT 3+4 */}
           {step === 1 && (
             <Section className="pt-0">
               <div className="max-w-6xl mx-auto">
@@ -1383,39 +1386,148 @@ function MontajesPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
-                  {serviciosAdicionales.map((servicio, idx) => (
-                    <motion.button
-                      key={servicio.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: idx * 0.1 }}
-                      onClick={() => toggleExtra(servicio.id)}
-                      className={`group relative overflow-hidden rounded-2xl aspect-square transition-all ${
-                        selectedExtras.includes(servicio.id)
-                          ? "ring-4 ring-white/50 scale-95"
-                          : "hover:scale-105"
-                      }`}
-                    >
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${servicio.image})` }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-                      
-                      {selectedExtras.includes(servicio.id) && (
-                        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                          <Check className="w-5 h-5 text-black" />
-                        </div>
-                      )}
-
-                      <div className="relative h-full p-4 flex flex-col justify-end">
-                        <p className="text-sm md:text-base font-semibold text-white text-center">
-                          {servicio.name}
-                        </p>
+                {/* MOBILE: Primera tarjeta grande + resto en grid 2 columnas */}
+                <div className="md:hidden space-y-6 mb-12">
+                  {/* Primera tarjeta destacada */}
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    onClick={() => toggleExtra(serviciosAdicionales[0].id)}
+                    className={`w-full relative overflow-hidden rounded-2xl aspect-[16/9] transition-all ${
+                      selectedExtras.includes(serviciosAdicionales[0].id)
+                        ? "ring-4 ring-white/50 scale-95"
+                        : "hover:scale-105"
+                    }`}
+                  >
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${serviciosAdicionales[0].image})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                    
+                    {selectedExtras.includes(serviciosAdicionales[0].id) && (
+                      <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                        <Check className="w-5 h-5 text-black" />
                       </div>
-                    </motion.button>
-                  ))}
+                    )}
+
+                    <div className="relative h-full p-4 flex flex-col justify-end">
+                      <p className="text-lg font-semibold text-white text-center">
+                        {serviciosAdicionales[0].name}
+                      </p>
+                    </div>
+                  </motion.button>
+
+                  {/* Resto en grid 2 columnas */}
+                  <div className="grid grid-cols-2 gap-4">
+                    {serviciosAdicionales.slice(1).map((servicio, idx) => (
+                      <motion.button
+                        key={servicio.id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: (idx + 1) * 0.1 }}
+                        onClick={() => toggleExtra(servicio.id)}
+                        className={`relative overflow-hidden rounded-2xl aspect-square transition-all ${
+                          selectedExtras.includes(servicio.id)
+                            ? "ring-4 ring-white/50 scale-95"
+                            : "hover:scale-105"
+                        }`}
+                      >
+                        <div 
+                          className="absolute inset-0 bg-cover bg-center"
+                          style={{ backgroundImage: `url(${servicio.image})` }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                        
+                        {selectedExtras.includes(servicio.id) && (
+                          <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                            <Check className="w-5 h-5 text-black" />
+                          </div>
+                        )}
+
+                        <div className="relative h-full p-4 flex flex-col justify-end">
+                          <p className="text-sm font-semibold text-white text-center">
+                            {servicio.name}
+                          </p>
+                        </div>
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* DESKTOP: Layout 3 grandes + 4 pequeñas */}
+                <div className="hidden md:block space-y-6 mb-12">
+                  {/* Fila 1: 3 grandes */}
+                  <div className="grid grid-cols-3 gap-6">
+                    {largeServices.map((servicio, idx) => (
+                      <motion.button
+                        key={servicio.id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.1 }}
+                        onClick={() => toggleExtra(servicio.id)}
+                        className={`relative overflow-hidden rounded-2xl aspect-[4/3] transition-all ${
+                          selectedExtras.includes(servicio.id)
+                            ? "ring-4 ring-white/50 scale-95"
+                            : "hover:scale-105"
+                        }`}
+                      >
+                        <div 
+                          className="absolute inset-0 bg-cover bg-center"
+                          style={{ backgroundImage: `url(${servicio.image})` }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                        
+                        {selectedExtras.includes(servicio.id) && (
+                          <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                            <Check className="w-5 h-5 text-black" />
+                          </div>
+                        )}
+
+                        <div className="relative h-full p-4 flex flex-col justify-end">
+                          <p className="text-base font-semibold text-white text-center">
+                            {servicio.name}
+                          </p>
+                        </div>
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  {/* Fila 2: 4 pequeñas */}
+                  <div className="grid grid-cols-4 gap-6">
+                    {smallServices.map((servicio, idx) => (
+                      <motion.button
+                        key={servicio.id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: (idx + 3) * 0.1 }}
+                        onClick={() => toggleExtra(servicio.id)}
+                        className={`relative overflow-hidden rounded-2xl aspect-square transition-all ${
+                          selectedExtras.includes(servicio.id)
+                            ? "ring-4 ring-white/50 scale-95"
+                            : "hover:scale-105"
+                        }`}
+                      >
+                        <div 
+                          className="absolute inset-0 bg-cover bg-center"
+                          style={{ backgroundImage: `url(${servicio.image})` }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                        
+                        {selectedExtras.includes(servicio.id) && (
+                          <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                            <Check className="w-5 h-5 text-black" />
+                          </div>
+                        )}
+
+                        <div className="relative h-full p-4 flex flex-col justify-end">
+                          <p className="text-sm font-semibold text-white text-center">
+                            {servicio.name}
+                          </p>
+                        </div>
+                      </motion.button>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -1506,7 +1618,6 @@ function MontajesPage() {
                           placeholder="7871234567"
                           value={formData.whatsapp}
                           onChange={(e) => {
-                            // Solo permite números y máximo 10 dígitos
                             const value = e.target.value.replace(/\D/g, '').slice(0, 10);
                             setFormData({...formData, whatsapp: value});
                           }}
@@ -1571,9 +1682,18 @@ function MontajesPage() {
                   <h2 className="text-3xl font-bold text-white mb-4">
                     ¡Solicitud enviada!
                   </h2>
-                                    
+                  
                   <p className="text-lg text-zinc-300 mb-8">
-                    Te enviaremos los precios por WhatsApp al <strong>{formData.whatsapp}</strong> en breve.
+                    Te enviaremos los precios por WhatsApp al{' '}
+                    <a 
+                      href={`https://wa.me/1${formData.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-bold text-green-400 hover:text-green-300 underline"
+                    >
+                      {formData.whatsapp}
+                    </a>
+                    {' '}en breve.
                   </p>
 
                   <div className="space-y-3">
