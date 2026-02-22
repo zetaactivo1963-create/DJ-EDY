@@ -1803,51 +1803,6 @@ function IndividualServicePage({ slug }) {
     ]
   },
   
-  // ... resto de servicios
-};
-
-// TAMBIÉN ACTUALIZA EL RENDER EN IndividualServicePage
-// BUSCA esta sección en tu código:
-
-// PISTAS DE BAILE
-{slug === "pistas-de-baile" && service.packages && (
-  <div className="space-y-12">
-    {service.packages.map((pkg, idx) => (
-      <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
-        <h3 className="text-3xl font-bold text-white mb-6">{pkg.name}</h3>
-        
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          {/* CAMBIA ESTO: */}
-          {/* <img src={pkg.image} alt={pkg.name} className="rounded-xl w-full h-64 object-cover" /> */}
-          
-          {/* POR ESTO: */}
-          <ImageCarousel images={pkg.images} alt={pkg.name} />
-          
-          <div>
-            <h4 className="text-xl font-semibold text-white mb-4">Incluye:</h4>
-            <ul className="space-y-2">
-              {pkg.features.map((feature, i) => (
-                <li key={i} className="flex items-start gap-2 text-zinc-300">
-                  <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {pkg.sizes.map((s, i) => (
-            <div key={i} className="p-4 rounded-xl bg-white/5 text-center">
-              <p className="text-2xl font-bold text-white">{s.size}</p>
-              <p className="text-xl text-zinc-400 mt-2">{s.price}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    ))}
-  </div>
-)}
 
     "fotografia": {
       title: "Fotografía Profesional",
@@ -2298,7 +2253,7 @@ function IndividualServicePage({ slug }) {
                   <h3 className="text-3xl font-bold text-white mb-6">{pkg.name}</h3>
                   
                   <div className="grid md:grid-cols-2 gap-8 mb-8">
-                    <img src={pkg.image} alt={pkg.name} className="rounded-xl w-full h-64 object-cover" />
+                    <ImageCarousel images={pkg.images} alt={pkg.name} />
                     
                     <div>
                       <h4 className="text-xl font-semibold text-white mb-4">Incluye:</h4>
@@ -2312,7 +2267,7 @@ function IndividualServicePage({ slug }) {
                       </ul>
                     </div>
                   </div>
-
+          
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {pkg.sizes.map((s, i) => (
                       <div key={i} className="p-4 rounded-xl bg-white/5 text-center">
