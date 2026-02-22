@@ -1761,7 +1761,7 @@ function IndividualServicePage({ slug }) {
         name: "Pista 3D, Mirror & Frost",
         // Carrusel de fotos en vez de una sola imagen
         images: [
-          "/pista-3d-1.jpeg"
+          "/pista-3d-1.jpg"
         ],
         sizes: [
           { size: "10x10"},
@@ -2236,13 +2236,6 @@ function IndividualServicePage({ slug }) {
               {service.description}
             </p>
           </div>
-
-          {/* Imagen hero si existe */}
-          {service.hero && (
-            <div className="mb-16 rounded-2xl overflow-hidden">
-              <img src={service.hero} alt={service.title} className="w-full h-96 object-cover" />
-            </div>
-          )}
 
             {/* PISTAS DE BAILE */}
             {slug === "pistas-de-baile" && service.packages && (
