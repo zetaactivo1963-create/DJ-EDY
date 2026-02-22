@@ -363,7 +363,7 @@ const montajes = [
     id: "premium",
     name: "Montaje Premium",
     price: "Desde $XXX",
-    images: ["/montaje-Premium.jpg", "/montaje-Premium-2.PNG", "/montaje-Premium-3.jpg"],  // ← images plural
+    images: ["/montaje-Premium.jpg", "/montaje-Premium-2.PNG", "/montajeSencillo.jpg", "/montaje-Premium-3.jpg"],  // ← images plural
     features: [
       "2 pantallas TV 55\"",
       "Karaoke / Just Dance",
