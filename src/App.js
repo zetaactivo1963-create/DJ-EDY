@@ -1746,49 +1746,108 @@ function MontajesPage() {
 
 function IndividualServicePage({ slug }) {
   const serviceData = {
-    "pistas-de-baile": {
-      title: "Pistas de Baile LED",
-      subtitle: "Iluminación interactiva para tu evento",
-      hero: "/pista-hero.jpg",
-      description: "Transforma tu pista de baile con tecnología LED de última generación. Dos modelos disponibles con instalación profesional incluida.",
-      
-      packages: [
-        {
-          name: "Pista 3D, Mirror & Frost",
-          image: "/pista-3d.jpg",
-          sizes: [
-            { size: "10x10", price: "$850" },
-            { size: "12x12", price: "$950" },
-            { size: "14x14", price: "$1,050" },
-            { size: "16x16", price: "$1,100" },
-          ],
-          features: [
-            "Efectos 3D interactivos",
-            "Acabado espejo",
-            "Efecto frost (escarcha)",
-            "Instalación profesional",
-            "Técnico dedicado",
-          ]
-        },
-        {
-          name: "Pista Blanca con Puntos LED",
-          image: "/pista-blanca.jpg",
-          sizes: [
-            { size: "10x10", price: "$750" },
-            { size: "12x12", price: "$850" },
-            { size: "14x14", price: "$950" },
-            { size: "16x16", price: "$1,000" },
-          ],
-          features: [
-            "Puntos LED programables",
-            "Base blanca elegante",
-            "Múltiples patrones",
-            "Instalación profesional",
-            "Técnico dedicado",
-          ]
-        }
-      ]
-    },
+  "pistas-de-baile": {
+    title: "Pistas de Baile LED",
+    subtitle: "Iluminación interactiva para tu evento",
+    hero: "/pista-hero.jpg",
+    description: "Transforma tu pista de baile con tecnología LED de última generación. Dos modelos disponibles con instalación profesional incluida.",
+    
+    // Video recap (opcional - si quieres mostrarlo arriba)
+    videoRecap: "/pista-recap.mp4",
+    
+    packages: [
+      {
+        name: "Pista 3D, Mirror & Frost",
+        // Carrusel de fotos en vez de una sola imagen
+        images: [
+          "/pista-3d-1.jpg",
+          "/pista-3d-2.jpg", 
+          "/pista-3d-3.jpg"
+        ],
+        sizes: [
+          { size: "10x10", price: "$850" },
+          { size: "12x12", price: "$950" },
+          { size: "14x14", price: "$1,050" },
+          { size: "16x16", price: "$1,100" },
+        ],
+        features: [
+          "Efectos 3D interactivos",
+          "Acabado espejo",
+          "Efecto frost (escarcha)",
+          "Instalación profesional",
+          "Técnico dedicado",
+        ]
+      },
+      {
+        name: "Pista Blanca con Puntos LED",
+        // Carrusel de fotos
+        images: [
+          "/pista-blanca-1.jpg",
+          "/pista-blanca-2.jpg",
+          "/pista-blanca-3.jpg"
+        ],
+        sizes: [
+          { size: "10x10", price: "$750" },
+          { size: "12x12", price: "$850" },
+          { size: "14x14", price: "$950" },
+          { size: "16x16", price: "$1,000" },
+        ],
+        features: [
+          "Puntos LED programables",
+          "Base blanca elegante",
+          "Múltiples patrones",
+          "Instalación profesional",
+          "Técnico dedicado",
+        ]
+      }
+    ]
+  },
+  
+  // ... resto de servicios
+};
+
+// TAMBIÉN ACTUALIZA EL RENDER EN IndividualServicePage
+// BUSCA esta sección en tu código:
+
+// PISTAS DE BAILE
+{slug === "pistas-de-baile" && service.packages && (
+  <div className="space-y-12">
+    {service.packages.map((pkg, idx) => (
+      <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
+        <h3 className="text-3xl font-bold text-white mb-6">{pkg.name}</h3>
+        
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {/* CAMBIA ESTO: */}
+          {/* <img src={pkg.image} alt={pkg.name} className="rounded-xl w-full h-64 object-cover" /> */}
+          
+          {/* POR ESTO: */}
+          <ImageCarousel images={pkg.images} alt={pkg.name} />
+          
+          <div>
+            <h4 className="text-xl font-semibold text-white mb-4">Incluye:</h4>
+            <ul className="space-y-2">
+              {pkg.features.map((feature, i) => (
+                <li key={i} className="flex items-start gap-2 text-zinc-300">
+                  <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {pkg.sizes.map((s, i) => (
+            <div key={i} className="p-4 rounded-xl bg-white/5 text-center">
+              <p className="text-2xl font-bold text-white">{s.size}</p>
+              <p className="text-xl text-zinc-400 mt-2">{s.price}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
 
     "fotografia": {
       title: "Fotografía Profesional",
