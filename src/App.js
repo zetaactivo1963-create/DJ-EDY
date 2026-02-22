@@ -1781,8 +1781,8 @@ function IndividualServicePage({ slug }) {
         // Carrusel de fotos
         images: [
           "/pista-blanca-1.jpg",
-          "/pista-blanca-2.jpg",
-          "/pista-blanca-3.jpg"
+          "/pista-blanca-2.JPG",
+          "/pista-blanca-3.JPG"
         ],
         sizes: [
           { size: "10x10"},
