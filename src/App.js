@@ -2636,7 +2636,7 @@ function IndividualServicePage({ slug }) {
           <div className="mt-16 text-center">
             <p className="text-zinc-400 mb-6 text-lg">¿Te interesa este servicio?</p>
             
-              href="#cotizar"
+           <a href="#cotizar"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full text-lg font-semibold hover:bg-zinc-200 transition-colors"
             >
               Cotizar ahora <ChevronRight className="w-5 h-5" />
