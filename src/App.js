@@ -1760,15 +1760,13 @@ function IndividualServicePage({ slug }) {
         name: "Pista 3D, Mirror & Frost",
         // Carrusel de fotos en vez de una sola imagen
         images: [
-          "/pista-3d-1.jpg",
-          "/pista-3d-2.jpg", 
-          "/pista-3d-3.jpg"
+          "/pista-3d-1.jpg"
         ],
         sizes: [
-          { size: "10x10", price: "$850" },
-          { size: "12x12", price: "$950" },
-          { size: "14x14", price: "$1,050" },
-          { size: "16x16", price: "$1,100" },
+          { size: "10x10"},
+          { size: "12x12"},
+          { size: "14x14"},
+          { size: "16x16"},
         ],
         features: [
           "Efectos 3D interactivos",
@@ -1787,10 +1785,10 @@ function IndividualServicePage({ slug }) {
           "/pista-blanca-3.jpg"
         ],
         sizes: [
-          { size: "10x10", price: "$750" },
-          { size: "12x12", price: "$850" },
-          { size: "14x14", price: "$950" },
-          { size: "16x16", price: "$1,000" },
+          { size: "10x10"},
+          { size: "12x12"},
+          { size: "14x14"},
+          { size: "16x16"},
         ],
         features: [
           "Puntos LED programables",
