@@ -1750,6 +1750,7 @@ function IndividualServicePage({ slug }) {
     title: "Pistas de Baile LED",
     subtitle: "Iluminación interactiva para tu evento",
     hero: "/pista-hero.jpg",
+    videoRecap: "/pista-recap.mp4",  
     description: "Transforma tu pista de baile con tecnología LED de última generación. Dos modelos disponibles con instalación profesional incluida.",
     
     // Video recap (opcional - si quieres mostrarlo arriba)
@@ -1760,7 +1761,7 @@ function IndividualServicePage({ slug }) {
         name: "Pista 3D, Mirror & Frost",
         // Carrusel de fotos en vez de una sola imagen
         images: [
-          "/pista-3d-1.jpg"
+          "/pista-3d-1.jpeg"
         ],
         sizes: [
           { size: "10x10"},
@@ -2243,10 +2244,26 @@ function IndividualServicePage({ slug }) {
             </div>
           )}
 
-          {/* PISTAS DE BAILE */}
-          {slug === "pistas-de-baile" && service.packages && (
-            <div className="space-y-12">
-              {service.packages.map((pkg, idx) => (
+            {/* PISTAS DE BAILE */}
+            {slug === "pistas-de-baile" && service.packages && (
+              <div className="space-y-12">
+                
+                {/* Video Recap */}
+                {service.videoRecap && (
+                  <div className="mb-12 rounded-2xl overflow-hidden">
+                    <video 
+                      autoPlay 
+                      muted 
+                      loop 
+                      playsInline
+                      className="w-full max-h-[500px] object-cover"
+                    >
+                      <source src={service.videoRecap} type="video/mp4" />
+                    </video>
+                  </div>
+                )}
+            
+                {service.packages.map((pkg, idx) => (
                 <div key={idx} className={`p-8 rounded-2xl ${glass}`}>
                   <h3 className="text-3xl font-bold text-white mb-6">{pkg.name}</h3>
                   
