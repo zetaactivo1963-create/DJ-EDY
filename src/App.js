@@ -3215,6 +3215,8 @@ DJ EDY`;
         total: totalTexto,
         mensaje_whatsapp: mensajeWhatsApp
       };
+      
+    console.log("DATOS A ENVIAR:", templateParams);
 
       const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
