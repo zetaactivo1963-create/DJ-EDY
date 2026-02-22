@@ -1263,7 +1263,7 @@ function MontajesPage() {
         },
         body: JSON.stringify({
           service_id: 'service_hik8xkn',
-          template_id: 'template_ievzd9a',
+          template_id: 'template_ryl1vtc',
           user_id: 'rITQraGRa7eL9gr9P',
           template_params: templateParams
         })
@@ -3235,6 +3235,598 @@ function Footer() {
     </footer>
   );
 }
+
+/* ==========================================
+   SISTEMA DE COTIZACIÓN UNIVERSAL
+   ========================================== */
+
+// PRECIOS CENTRALIZADOS
+const PRECIOS = {
+  montajes: {
+    sencillo: { nombre: "Montaje Sencillo", precio: 550, descripcion: "4 horas" },
+    mediano: { nombre: "Montaje Mediano", precio: 750, descripcion: "5 horas" },
+    premium: { nombre: "Montaje Premium", precio: 850, descripcion: "6 horas" }
+  },
+  
+  pistas: {
+    "3d-10x10": { nombre: "Pista 3D 10x10", precio: 850, tipo: "3D Mirror" },
+    "3d-12x12": { nombre: "Pista 3D 12x12", precio: 950, tipo: "3D Mirror" },
+    "3d-14x14": { nombre: "Pista 3D 14x14", precio: 1050, tipo: "3D Mirror" },
+    "3d-16x16": { nombre: "Pista 3D 16x16", precio: 1100, tipo: "3D Mirror" },
+    "blanca-10x10": { nombre: "Pista Blanca 10x10", precio: 750, tipo: "Blanca LED" },
+    "blanca-12x12": { nombre: "Pista Blanca 12x12", precio: 850, tipo: "Blanca LED" },
+    "blanca-14x14": { nombre: "Pista Blanca 14x14", precio: 950, tipo: "Blanca LED" },
+    "blanca-16x16": { nombre: "Pista Blanca 16x16", precio: 1000, tipo: "Blanca LED" }
+  },
+  
+  photobooth: {
+    "360-2h": { nombre: "Photo Booth 360° - 2 horas", precio: 450 },
+    "360-3h": { nombre: "Photo Booth 360° - 3 horas", precio: 550 },
+    "estatico-2h": { nombre: "Photo Booth Estático - 2 horas", precio: 350 },
+    "estatico-3h": { nombre: "Photo Booth Estático - 3 horas", precio: 450 }
+  },
+  
+  efectos: {
+    "chispas": { nombre: "Chispas Frías", precio: 350, descripcion: "3 tiros de 15s" },
+    "humo-vertical": { nombre: "Humo Vertical", precio: 250, descripcion: "2 máquinas, 4hrs" },
+    "confeti": { nombre: "Confeti", precio: 250 },
+    "espuma": { nombre: "Espuma", precio: 550, descripcion: "Desde" },
+    "humo-bajo": { nombre: "Humo Bajo (Baile en Nubes)", precio: null, descripcion: "Por cotización" }
+  },
+  
+  fotografia: {
+    "4h": { nombre: "Fotografía 4 horas", precio: 350 },
+    "adicional": { nombre: "Hora adicional", precio: 50, descripcion: "Por hora" }
+  },
+  
+  pantallas: {
+    "led": { nombre: "Pantalla LED 13x7", precio: 1000, descripcion: "Desde (varía según montaje)" },
+    "proyeccion": { nombre: "Proyección 100\"", precio: 200, descripcion: "Desde" }
+  },
+  
+  sonido: {
+    "line-array": { nombre: "Sonido Line Array", precio: null, descripcion: "Por cotización" }
+  },
+  
+  luces: {
+    "paquete": { nombre: "Iluminación & Trussing", precio: null, descripcion: "Por cotización" }
+  },
+  
+  animacion: {
+    "animador": { nombre: "Animador 4 horas", precio: 350, descripcion: "Desde" },
+    "mc": { nombre: "Maestro de Ceremonias", precio: 250, descripcion: "Desde" },
+    "batucada": { nombre: "Batucada", precio: 550, descripcion: "Desde" },
+    "coordinador": { nombre: "Coordinador", precio: null, descripcion: "Por cotización" }
+  }
+};
+
+// COMPONENTE PRINCIPAL DE COTIZACIÓN
+function QuoteFlow() {
+  const [step, setStep] = useState("category"); // category, options, addMore, form, confirmation
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [formData, setFormData] = useState({
+    fecha: "",
+    personas: "",
+    lugar: "",
+    nombre: "",
+    whatsapp: "",
+    email: ""
+  });
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [sending, setSending] = useState(false);
+
+  // Categorías con fotos
+  const categorias = [
+    { id: "montajes", nombre: "Montajes DJ", imagen: "/montajeSencillo.jpg" },
+    { id: "pistas", nombre: "Pista de Baile", imagen: "/pista-led-service.jpg" },
+    { id: "photobooth", nombre: "Photo Booth", imagen: "/photobooth-service.png" },
+    { id: "efectos", nombre: "Efectos Especiales", imagen: "/chispas-frias-service.jpg" },
+    { id: "fotografia", nombre: "Fotografía", imagen: "/fotografia-service.png" },
+    { id: "pantallas", nombre: "Pantallas", imagen: "/pantallas-service.png" },
+    { id: "sonido", nombre: "Sonido", imagen: "/sonido-service.jpg" },
+    { id: "luces", nombre: "Iluminación", imagen: "/iluminacion-service.jpg" },
+    { id: "animacion", nombre: "Animación", imagen: "/animacion-service.png" }
+  ];
+
+  const selectCategory = (catId) => {
+    setCurrentCategory(catId);
+    setStep("options");
+  };
+
+  const addItem = (categoryId, itemId) => {
+    const item = PRECIOS[categoryId][itemId];
+    if (item) {
+      setSelectedItems([...selectedItems, { 
+        categoryId, 
+        itemId, 
+        nombre: item.nombre, 
+        precio: item.precio,
+        descripcion: item.descripcion 
+      }]);
+    }
+    setStep("addMore");
+  };
+
+  const removeItem = (index) => {
+    setSelectedItems(selectedItems.filter((_, i) => i !== index));
+  };
+
+  const calcularTotal = () => {
+    return selectedItems.reduce((sum, item) => {
+      return sum + (item.precio || 0);
+    }, 0);
+  };
+
+  const enviarCotizacion = async () => {
+    // Validación
+    if (!formData.nombre.trim()) {
+      setErrorMessage("Por favor escribe tu nombre");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
+    if (!formData.whatsapp.trim() || formData.whatsapp.length !== 10) {
+      setErrorMessage("El WhatsApp debe tener 10 dígitos");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
+
+    setSending(true);
+
+    try {
+      // Preparar lista de servicios
+      const serviciosTexto = selectedItems.map(item => {
+        const precioTexto = item.precio ? `$${item.precio}` : "Por cotización";
+        const desc = item.descripcion ? ` (${item.descripcion})` : "";
+        return `- ${item.nombre}: ${precioTexto}${desc}`;
+      }).join('\n');
+
+      const total = calcularTotal();
+      const totalTexto = total > 0 ? `\n\nTOTAL ESTIMADO: $${total}` : "";
+
+      // Mensaje para WhatsApp (que tú enviarás)
+      const mensajeWhatsApp = `Hola ${formData.nombre}!
+
+Aquí está tu cotización:
+
+${serviciosTexto}${totalTexto}
+
+¿Te interesa? Cuéntame más de tu evento!
+
+DJ EDY`;
+
+      const templateParams = {
+        nombre: formData.nombre,
+        whatsapp: formData.whatsapp,
+        email: formData.email || "No proporcionó",
+        fecha: formData.fecha || "Por definir",
+        personas: formData.personas || "Por definir",
+        lugar: formData.lugar || "Por definir",
+        servicios: serviciosTexto,
+        total: total > 0 ? `$${total}` : "Incluye servicios por cotización",
+        mensaje_whatsapp: mensajeWhatsApp
+      };
+
+      // Enviar email con EmailJS
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          service_id: 'service_hik8xkn',
+          template_id: 'template_ievzd9a', // Necesitarás crear nueva template
+          user_id: 'rITQraGRa7eL9gr9P',
+          template_params: templateParams
+        })
+      });
+
+      if (response.ok) {
+        setStep("confirmation");
+      } else {
+        throw new Error('Error al enviar');
+      }
+    } catch (error) {
+      setErrorMessage("Error al enviar. Intenta de nuevo.");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  // RENDER DE OPCIONES POR CATEGORÍA
+  const renderOptions = () => {
+    const opciones = PRECIOS[currentCategory];
+    
+    // MONTAJES
+    if (currentCategory === "montajes") {
+      return (
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
+            ¿Qué montaje te interesa?
+          </h2>
+          <div className="grid gap-6">
+            {Object.entries(opciones).map(([key, item]) => (
+              <button
+                key={key}
+                onClick={() => addItem("montajes", key)}
+                className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all text-left`}
+              >
+                <h3 className="text-2xl font-bold text-white mb-2">{item.nombre}</h3>
+                <p className="text-zinc-400">{item.descripcion}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // PISTAS
+    if (currentCategory === "pistas") {
+      const pistas3D = Object.entries(opciones).filter(([_, item]) => item.tipo === "3D Mirror");
+      const pistasBlancas = Object.entries(opciones).filter(([_, item]) => item.tipo === "Blanca LED");
+      
+      return (
+        <div className="space-y-8">
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
+            ¿Qué pista te interesa?
+          </h2>
+          
+          {/* Pista 3D */}
+          <div className={`p-6 rounded-2xl ${glass}`}>
+            <h3 className="text-2xl font-bold text-white mb-4">Pista 3D Mirror & Frost</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {pistas3D.map(([key, item]) => (
+                <button
+                  key={key}
+                  onClick={() => addItem("pistas", key)}
+                  className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center"
+                >
+                  <p className="text-xl font-bold text-white">{item.nombre.split(" ").pop()}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Pista Blanca */}
+          <div className={`p-6 rounded-2xl ${glass}`}>
+            <h3 className="text-2xl font-bold text-white mb-4">Pista Blanca con Puntos LED</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {pistasBlancas.map(([key, item]) => (
+                <button
+                  key={key}
+                  onClick={() => addItem("pistas", key)}
+                  className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center"
+                >
+                  <p className="text-xl font-bold text-white">{item.nombre.split(" ").pop()}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // OTRAS CATEGORÍAS (genérico)
+    return (
+      <div className="space-y-6">
+        <h2 className="text-3xl font-bold text-white text-center mb-8">
+          Selecciona una opción
+        </h2>
+        <div className="grid gap-4">
+          {Object.entries(opciones).map(([key, item]) => (
+            <button
+              key={key}
+              onClick={() => addItem(currentCategory, key)}
+              className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all text-left`}
+            >
+              <h3 className="text-xl font-bold text-white">{item.nombre}</h3>
+              {item.descripcion && (
+                <p className="text-sm text-zinc-400 mt-1">{item.descripcion}</p>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <Section className="min-h-screen">
+      <div className="max-w-4xl mx-auto">
+        
+        {/* STEP 1: CATEGORÍA */}
+        {step === "category" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
+              ¿Qué te interesa cotizar?
+            </h1>
+            <p className="text-zinc-400 text-center mb-12">
+              Selecciona una categoría para empezar
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {categorias.map((cat, idx) => (
+                <motion.button
+                  key={cat.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: idx * 0.1 }}
+                  onClick={() => selectCategory(cat.id)}
+                  className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+                >
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${cat.imagen})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                  <div className="relative h-full p-4 flex flex-col justify-end">
+                    <p className="text-lg font-semibold text-white text-center">
+                      {cat.nombre}
+                    </p>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* STEP 2: OPCIONES */}
+        {step === "options" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            {renderOptions()}
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => setStep("category")}
+                className="px-6 py-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-colors"
+              >
+                Atrás
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* STEP 3: ¿ALGO MÁS? */}
+        {step === "addMore" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            {/* Resumen de lo seleccionado */}
+            <div className={`p-6 rounded-2xl ${glass} mb-8`}>
+              <h3 className="text-xl font-bold text-white mb-4">Tu cotización:</h3>
+              {selectedItems.map((item, idx) => (
+                <div key={idx} className="flex items-center justify-between py-2 border-b border-white/10">
+                  <span className="text-zinc-300">{item.nombre}</span>
+                  <button
+                    onClick={() => removeItem(idx)}
+                    className="text-red-400 hover:text-red-300"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <h2 className="text-3xl font-bold text-white text-center mb-8">
+              ¿Quieres añadir algo más?
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+              {categorias
+                .filter(cat => !selectedItems.some(item => item.categoryId === cat.id))
+                .map((cat, idx) => (
+                  <motion.button
+                    key={cat.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    onClick={() => selectCategory(cat.id)}
+                    className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
+                  >
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${cat.imagen})` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                    <div className="relative h-full p-4 flex flex-col justify-end">
+                      <p className="text-sm md:text-base font-semibold text-white text-center">
+                        {cat.nombre}
+                      </p>
+                    </div>
+                  </motion.button>
+                ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => setStep("form")}
+                className="px-10 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-zinc-200 transition-colors"
+              >
+                No, enviar cotización
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* STEP 4: FORMULARIO */}
+        {step === "form" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <h2 className="text-3xl font-bold text-white text-center mb-8">
+              Completa tu información
+            </h2>
+
+            <div className={`p-8 rounded-2xl ${glass} space-y-6`}>
+              {/* Resumen */}
+              <div className="pb-6 border-b border-white/10">
+                <h3 className="text-lg font-semibold text-white mb-3">Servicios solicitados:</h3>
+                {selectedItems.map((item, idx) => (
+                  <p key={idx} className="text-zinc-300 text-sm">
+                    • {item.nombre}
+                  </p>
+                ))}
+              </div>
+
+              {/* Form campos */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">¿Cuándo es tu evento?</label>
+                  <input
+                    type="date"
+                    value={formData.fecha}
+                    onChange={(e) => setFormData({...formData, fecha: e.target.value})}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm text-zinc-400 mb-2 block">¿Cuántas personas?</label>
+                  <input
+                    type="number"
+                    placeholder="100"
+                    value={formData.personas}
+                    onChange={(e) => setFormData({...formData, personas: e.target.value})}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm text-zinc-400 mb-2 block">¿Dónde será?</label>
+                <input
+                  placeholder="Nombre del salón o lugar"
+                  value={formData.lugar}
+                  onChange={(e) => setFormData({...formData, lugar: e.target.value})}
+                  className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                />
+              </div>
+
+              <div className="border-t border-white/10 pt-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm text-zinc-400 mb-2 block">Tu nombre *</label>
+                    <input
+                      placeholder="Juan Pérez"
+                      value={formData.nombre}
+                      onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm text-zinc-400 mb-2 block">WhatsApp *</label>
+                    <input
+                      type="tel"
+                      placeholder="7871234567"
+                      value={formData.whatsapp}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setFormData({...formData, whatsapp: value});
+                      }}
+                      maxLength={10}
+                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                    />
+                    {formData.whatsapp && formData.whatsapp.length < 10 && (
+                      <p className="text-xs text-red-400 mt-1">Debe tener 10 dígitos</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="text-sm text-zinc-400 mb-2 block">Email (opcional)</label>
+                    <input
+                      type="email"
+                      placeholder="tu@email.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <button
+                  onClick={() => setStep("addMore")}
+                  disabled={sending}
+                  className="flex-1 px-6 py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors"
+                >
+                  Atrás
+                </button>
+                <button
+                  onClick={enviarCotizacion}
+                  disabled={sending}
+                  className="flex-1 px-6 py-4 bg-white text-black rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors disabled:opacity-50"
+                >
+                  {sending ? "Enviando..." : "Enviar Solicitud"}
+                </button>
+              </div>
+
+              <p className="text-xs text-zinc-500 text-center">* Campos requeridos</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* STEP 5: CONFIRMACIÓN */}
+        {step === "confirmation" && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`p-12 rounded-2xl ${glass} text-center`}
+          >
+            <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-10 h-10 text-green-500" />
+            </div>
+            
+            <h2 className="text-3xl font-bold text-white mb-4">
+              ¡Solicitud enviada!
+            </h2>
+            
+            <p className="text-lg text-zinc-300 mb-8">
+              Te enviaremos los precios por WhatsApp al{' '}
+              <a 
+                href={`https://wa.me/1${formData.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-green-400 hover:text-green-300 underline"
+              >
+                {formData.whatsapp}
+              </a>
+              {' '}en breve.
+            </p>
+
+            <div className="space-y-3">
+              <a
+                href="#home"
+                className="block w-full px-6 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-200 transition-colors"
+              >
+                Volver al Inicio
+              </a>
+            </div>
+          </motion.div>
+        )}
+
+      </div>
+
+      {/* NOTIFICACIÓN DE ERROR */}
+      <AnimatePresence>
+        {showError && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-8 left-1/2 -translate-x-1/2 z-50"
+          >
+            <div className="bg-red-500 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                <X className="w-4 h-4" />
+              </div>
+              <p className="font-medium">{errorMessage}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Section>
+  );
+}
+
 
 /* =========================
    APP (control de "pantallas")
