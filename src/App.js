@@ -3003,7 +3003,8 @@ function Footer() {
 }
 
 /* ==========================================
-   SISTEMA DE COTIZACIÓN UNIVERSAL
+   SISTEMA DE COTIZACIÓN UNIVERSAL V2
+   Con opción de categoría completa o específica
    ========================================== */
 
 // PRECIOS CENTRALIZADOS
@@ -3066,9 +3067,22 @@ const PRECIOS = {
   }
 };
 
-// COMPONENTE PRINCIPAL DE COTIZACIÓN
+// Nombres display de categorías
+const CATEGORIA_NOMBRES = {
+  montajes: "Montajes DJ",
+  pistas: "Pista de Baile LED",
+  photobooth: "Photo Booth",
+  efectos: "Efectos Especiales",
+  fotografia: "Fotografía",
+  pantallas: "Pantallas",
+  sonido: "Sonido",
+  luces: "Iluminación & Trussing",
+  animacion: "Animación & Coordinación"
+};
+
+// COMPONENTE PRINCIPAL
 function QuoteFlow() {
-  const [step, setStep] = useState("category"); // category, options, addMore, form, confirmation
+  const [step, setStep] = useState("category");
   const [currentCategory, setCurrentCategory] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [formData, setFormData] = useState({
@@ -3083,7 +3097,6 @@ function QuoteFlow() {
   const [errorMessage, setErrorMessage] = useState("");
   const [sending, setSending] = useState(false);
 
-  // Categorías con fotos
   const categorias = [
     { id: "montajes", nombre: "Montajes DJ", imagen: "/montajeSencillo.jpg" },
     { id: "pistas", nombre: "Pista de Baile", imagen: "/pista-led-service.jpg" },
@@ -3091,8 +3104,8 @@ function QuoteFlow() {
     { id: "efectos", nombre: "Efectos Especiales", imagen: "/chispas-frias-service.jpg" },
     { id: "fotografia", nombre: "Fotografía", imagen: "/fotografia-service.png" },
     { id: "pantallas", nombre: "Pantallas", imagen: "/pantallas-service.png" },
-    { id: "sonido", nombre: "Sonido", imagen: "/sonido-service.jpg" },
-    { id: "luces", nombre: "Iluminación", imagen: "/iluminacion-service.jpg" },
+    { id: "sonido", nombre: "Sonido", imagen: "/sonido-ceremonia-service.jpg" },
+    { id: "luces", nombre: "Iluminación", imagen: "/luces-ambiente-service.jpg" },
     { id: "animacion", nombre: "Animación", imagen: "/animacion-service.png" }
   ];
 
@@ -3101,6 +3114,17 @@ function QuoteFlow() {
     setStep("options");
   };
 
+  // COTIZAR CATEGORÍA COMPLETA
+  const addCategoryComplete = (categoryId) => {
+    setSelectedItems([...selectedItems, { 
+      categoryId, 
+      nombre: `${CATEGORIA_NOMBRES[categoryId]} (todas las opciones)`,
+      isComplete: true
+    }]);
+    setStep("addMore");
+  };
+
+  // AÑADIR ITEM ESPECÍFICO
   const addItem = (categoryId, itemId) => {
     const item = PRECIOS[categoryId][itemId];
     if (item) {
@@ -3109,7 +3133,8 @@ function QuoteFlow() {
         itemId, 
         nombre: item.nombre, 
         precio: item.precio,
-        descripcion: item.descripcion 
+        descripcion: item.descripcion,
+        isComplete: false
       }]);
     }
     setStep("addMore");
@@ -3126,7 +3151,6 @@ function QuoteFlow() {
   };
 
   const enviarCotizacion = async () => {
-    // Validación
     if (!formData.nombre.trim()) {
       setErrorMessage("Por favor escribe tu nombre");
       setShowError(true);
@@ -3143,26 +3167,42 @@ function QuoteFlow() {
     setSending(true);
 
     try {
-      // Preparar lista de servicios
-      const serviciosTexto = selectedItems.map(item => {
-        const precioTexto = item.precio ? `$${item.precio}` : "Por cotización";
-        const desc = item.descripcion ? ` (${item.descripcion})` : "";
-        return `- ${item.nombre}: ${precioTexto}${desc}`;
-      }).join('\n');
+      // Generar lista de servicios para email
+      const serviciosParaEmail = selectedItems.map(item => {
+        if (item.isComplete) {
+          // Categoría completa - listar todos los precios
+          const opciones = PRECIOS[item.categoryId];
+          const listado = Object.entries(opciones).map(([key, opt]) => {
+            const precioTxt = opt.precio ? `$${opt.precio}` : "Por cotización";
+            const desc = opt.descripcion ? ` (${opt.descripcion})` : "";
+            return `  • ${opt.nombre}: ${precioTxt}${desc}`;
+          }).join('\n');
+          return `${CATEGORIA_NOMBRES[item.categoryId]}:\n${listado}`;
+        } else {
+          // Item específico
+          const precioTexto = item.precio ? `$${item.precio}` : "Por cotización";
+          const desc = item.descripcion ? ` (${item.descripcion})` : "";
+          return `• ${item.nombre}: ${precioTexto}${desc}`;
+        }
+      }).join('\n\n');
 
-      const total = calcularTotal();
-      const totalTexto = total > 0 ? `\n\nTOTAL ESTIMADO: $${total}` : "";
-
-      // Mensaje para WhatsApp (que tú enviarás)
+      // Mensaje para WhatsApp
       const mensajeWhatsApp = `Hola ${formData.nombre}!
 
 Aquí está tu cotización:
 
-${serviciosTexto}${totalTexto}
+${serviciosParaEmail}
 
-¿Te interesa? Cuéntame más de tu evento!
+¿Te interesa alguno? Cuéntame más de tu evento!
 
 DJ EDY`;
+
+      const total = calcularTotal();
+      const totalTexto = total > 0 
+        ? `$${total}` 
+        : selectedItems.some(i => i.isComplete) 
+          ? "Incluye categorías completas - enviaremos todos los precios"
+          : "Incluye servicios por cotización";
 
       const templateParams = {
         nombre: formData.nombre,
@@ -3171,12 +3211,11 @@ DJ EDY`;
         fecha: formData.fecha || "Por definir",
         personas: formData.personas || "Por definir",
         lugar: formData.lugar || "Por definir",
-        servicios: serviciosTexto,
-        total: total > 0 ? `$${total}` : "Incluye servicios por cotización",
+        servicios: serviciosParaEmail,
+        total: totalTexto,
         mensaje_whatsapp: mensajeWhatsApp
       };
 
-      // Enviar email con EmailJS
       const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: {
@@ -3184,7 +3223,7 @@ DJ EDY`;
         },
         body: JSON.stringify({
           service_id: 'service_hik8xkn',
-          template_id: 'template_ievzd9a', // Necesitarás crear nueva template
+          template_id: 'template_ryl1vtc',
           user_id: 'rITQraGRa7eL9gr9P',
           template_params: templateParams
         })
@@ -3204,26 +3243,44 @@ DJ EDY`;
     }
   };
 
-  // RENDER DE OPCIONES POR CATEGORÍA
+  // RENDER DE OPCIONES
   const renderOptions = () => {
     const opciones = PRECIOS[currentCategory];
+    const nombreCategoria = CATEGORIA_NOMBRES[currentCategory];
     
     // MONTAJES
     if (currentCategory === "montajes") {
       return (
-        <div className="space-y-6">
-          <h2 className="text-3xl font-bold text-white text-center mb-8">
-            ¿Qué montaje te interesa?
+        <div className="space-y-8">
+          <h2 className="text-3xl font-bold text-white text-center">
+            {nombreCategoria}
           </h2>
-          <div className="grid gap-6">
+
+          {/* Botón categoría completa */}
+          <button
+            onClick={() => addCategoryComplete("montajes")}
+            className={`w-full p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all border-2 border-white/20`}
+          >
+            <p className="text-xl font-bold text-white mb-2">
+              Cotizar todas las opciones de Montajes DJ
+            </p>
+            <p className="text-sm text-zinc-400">
+              Recibirás precios de Sencillo, Mediano y Premium
+            </p>
+          </button>
+
+          <div className="text-center text-zinc-400 text-sm">O selecciona uno específico:</div>
+
+          {/* Opciones individuales */}
+          <div className="grid gap-4">
             {Object.entries(opciones).map(([key, item]) => (
               <button
                 key={key}
                 onClick={() => addItem("montajes", key)}
                 className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all text-left`}
               >
-                <h3 className="text-2xl font-bold text-white mb-2">{item.nombre}</h3>
-                <p className="text-zinc-400">{item.descripcion}</p>
+                <h3 className="text-xl font-bold text-white mb-1">{item.nombre}</h3>
+                <p className="text-sm text-zinc-400">{item.descripcion}</p>
               </button>
             ))}
           </div>
@@ -3238,21 +3295,36 @@ DJ EDY`;
       
       return (
         <div className="space-y-8">
-          <h2 className="text-3xl font-bold text-white text-center mb-8">
-            ¿Qué pista te interesa?
+          <h2 className="text-3xl font-bold text-white text-center">
+            {nombreCategoria}
           </h2>
-          
+
+          {/* Botón categoría completa */}
+          <button
+            onClick={() => addCategoryComplete("pistas")}
+            className={`w-full p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all border-2 border-white/20`}
+          >
+            <p className="text-xl font-bold text-white mb-2">
+              Cotizar todas las opciones de Pista de Baile
+            </p>
+            <p className="text-sm text-zinc-400">
+              Recibirás precios de todas las pistas 3D y Blancas (todos los tamaños)
+            </p>
+          </button>
+
+          <div className="text-center text-zinc-400 text-sm">O selecciona una específica:</div>
+
           {/* Pista 3D */}
           <div className={`p-6 rounded-2xl ${glass}`}>
-            <h3 className="text-2xl font-bold text-white mb-4">Pista 3D Mirror & Frost</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <h3 className="text-xl font-bold text-white mb-4">Pista 3D Mirror & Frost</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {pistas3D.map(([key, item]) => (
                 <button
                   key={key}
                   onClick={() => addItem("pistas", key)}
                   className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center"
                 >
-                  <p className="text-xl font-bold text-white">{item.nombre.split(" ").pop()}</p>
+                  <p className="text-lg font-bold text-white">{item.nombre.split(" ").pop()}</p>
                 </button>
               ))}
             </div>
@@ -3260,15 +3332,15 @@ DJ EDY`;
 
           {/* Pista Blanca */}
           <div className={`p-6 rounded-2xl ${glass}`}>
-            <h3 className="text-2xl font-bold text-white mb-4">Pista Blanca con Puntos LED</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <h3 className="text-xl font-bold text-white mb-4">Pista Blanca con Puntos LED</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {pistasBlancas.map(([key, item]) => (
                 <button
                   key={key}
                   onClick={() => addItem("pistas", key)}
                   className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center"
                 >
-                  <p className="text-xl font-bold text-white">{item.nombre.split(" ").pop()}</p>
+                  <p className="text-lg font-bold text-white">{item.nombre.split(" ").pop()}</p>
                 </button>
               ))}
             </div>
@@ -3279,10 +3351,27 @@ DJ EDY`;
 
     // OTRAS CATEGORÍAS (genérico)
     return (
-      <div className="space-y-6">
-        <h2 className="text-3xl font-bold text-white text-center mb-8">
-          Selecciona una opción
+      <div className="space-y-8">
+        <h2 className="text-3xl font-bold text-white text-center">
+          {nombreCategoria}
         </h2>
+
+        {/* Botón categoría completa */}
+        <button
+          onClick={() => addCategoryComplete(currentCategory)}
+          className={`w-full p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all border-2 border-white/20`}
+        >
+          <p className="text-xl font-bold text-white mb-2">
+            Cotizar todas las opciones de {nombreCategoria}
+          </p>
+          <p className="text-sm text-zinc-400">
+            Recibirás precios de todas las opciones disponibles
+          </p>
+        </button>
+
+        <div className="text-center text-zinc-400 text-sm">O selecciona una específica:</div>
+
+        {/* Opciones individuales */}
         <div className="grid gap-4">
           {Object.entries(opciones).map(([key, item]) => (
             <button
@@ -3290,7 +3379,7 @@ DJ EDY`;
               onClick={() => addItem(currentCategory, key)}
               className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all text-left`}
             >
-              <h3 className="text-xl font-bold text-white">{item.nombre}</h3>
+              <h3 className="text-lg font-bold text-white">{item.nombre}</h3>
               {item.descripcion && (
                 <p className="text-sm text-zinc-400 mt-1">{item.descripcion}</p>
               )}
@@ -3359,12 +3448,11 @@ DJ EDY`;
         {/* STEP 3: ¿ALGO MÁS? */}
         {step === "addMore" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            {/* Resumen de lo seleccionado */}
             <div className={`p-6 rounded-2xl ${glass} mb-8`}>
               <h3 className="text-xl font-bold text-white mb-4">Tu cotización:</h3>
               {selectedItems.map((item, idx) => (
                 <div key={idx} className="flex items-center justify-between py-2 border-b border-white/10">
-                  <span className="text-zinc-300">{item.nombre}</span>
+                  <span className="text-zinc-300 text-sm">{item.nombre}</span>
                   <button
                     onClick={() => removeItem(idx)}
                     className="text-red-400 hover:text-red-300"
@@ -3381,7 +3469,9 @@ DJ EDY`;
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
               {categorias
-                .filter(cat => !selectedItems.some(item => item.categoryId === cat.id))
+                .filter(cat => !selectedItems.some(item => 
+                  item.categoryId === cat.id && item.isComplete
+                ))
                 .map((cat, idx) => (
                   <motion.button
                     key={cat.id}
@@ -3424,7 +3514,6 @@ DJ EDY`;
             </h2>
 
             <div className={`p-8 rounded-2xl ${glass} space-y-6`}>
-              {/* Resumen */}
               <div className="pb-6 border-b border-white/10">
                 <h3 className="text-lg font-semibold text-white mb-3">Servicios solicitados:</h3>
                 {selectedItems.map((item, idx) => (
@@ -3434,7 +3523,6 @@ DJ EDY`;
                 ))}
               </div>
 
-              {/* Form campos */}
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm text-zinc-400 mb-2 block">¿Cuándo es tu evento?</label>
