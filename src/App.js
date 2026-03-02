@@ -1263,7 +1263,7 @@ function MontajesPage() {
         },
         body: JSON.stringify({
           service_id: 'service_hik8xkn',
-          template_id: 'template_ryl1vtc',
+          template_id: 'template_eiagx3a',
           user_id: 'rITQraGRa7eL9gr9P',
           template_params: templateParams
         })
@@ -3225,7 +3225,7 @@ DJ EDY`;
         },
         body: JSON.stringify({
           service_id: 'service_hik8xkn',
-          template_id: 'template_ryl1vtc',
+          template_id: 'template_eiagx3a',
           user_id: 'rITQraGRa7eL9gr9P',
           template_params: templateParams
         })
