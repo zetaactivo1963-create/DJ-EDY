@@ -1,15 +1,10 @@
 // api/generate-quote-pdf.js
-// Vercel Serverless Function para generar PDF con Puppeteer
-
-import chromium from '@sparticuz/chromium';
-import puppeteer from 'puppeteer-core';
+// Vercel Serverless Function usando PDFShift
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
-  let browser = null;
 
   try {
     const {
@@ -22,16 +17,6 @@ export default async function handler(req, res) {
       servicios,
       total
     } = req.body;
-
-    // Launch browser
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-    });
-
-    const page = await browser.newPage();
 
     // Parse services for table
     const serviciosArray = servicios.split('\n').filter(s => s.trim());
@@ -59,7 +44,6 @@ export default async function handler(req, res) {
           return `<tr><td colspan="2" class="category-header">${name}</td></tr>`;
         }
       } else {
-        // Simple line
         return `<tr><td colspan="2" class="service-item">${line}</td></tr>`;
       }
     }).join('');
@@ -70,6 +54,8 @@ export default async function handler(req, res) {
       day: 'numeric' 
     });
 
+    const quoteNumber = Date.now().toString().slice(-6);
+
     // HTML template
     const html = `
       <!DOCTYPE html>
@@ -79,7 +65,7 @@ export default async function handler(req, res) {
         <style>
           @page {
             size: letter;
-            margin: 0;
+            margin: 0.5in 0.6in;
           }
           
           * {
@@ -94,13 +80,6 @@ export default async function handler(req, res) {
             line-height: 1.6;
           }
           
-          .page {
-            width: 8.5in;
-            min-height: 11in;
-            padding: 0.5in 0.6in;
-            background: white;
-          }
-          
           .header {
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             padding: 30px;
@@ -110,7 +89,7 @@ export default async function handler(req, res) {
           }
           
           .logo {
-            max-width: 280px;
+            max-width: 300px;
             height: auto;
             margin: 0 auto;
             display: block;
@@ -126,16 +105,26 @@ export default async function handler(req, res) {
           }
           
           .title {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
             color: #000;
             letter-spacing: 1px;
           }
           
+          .date-section {
+            text-align: right;
+          }
+          
+          .quote-number {
+            font-weight: 600;
+            font-size: 16px;
+            color: #000;
+            margin-bottom: 4px;
+          }
+          
           .date {
             font-size: 12px;
             color: #666;
-            text-align: right;
           }
           
           .client-info {
@@ -161,7 +150,7 @@ export default async function handler(req, res) {
           }
           
           .info-item {
-            font-size: 11px;
+            font-size: 12px;
           }
           
           .info-label {
@@ -183,8 +172,8 @@ export default async function handler(req, res) {
           .services-header {
             background: #2c2c2c;
             color: white;
-            padding: 12px 15px;
-            font-size: 14px;
+            padding: 14px 16px;
+            font-size: 15px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -203,15 +192,15 @@ export default async function handler(req, res) {
           }
           
           .services-table td {
-            padding: 12px 15px;
-            font-size: 11px;
+            padding: 14px 16px;
+            font-size: 12px;
             border-bottom: 1px solid #e0e0e0;
           }
           
           .category-header {
             background: #f0f0f0 !important;
             font-weight: bold;
-            font-size: 12px !important;
+            font-size: 13px !important;
             color: #000;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -226,26 +215,26 @@ export default async function handler(req, res) {
             text-align: right;
             font-weight: bold;
             color: #000;
-            font-size: 12px;
+            font-size: 13px;
             white-space: nowrap;
           }
           
           .service-desc {
             color: #666;
-            font-size: 10px;
+            font-size: 11px;
             padding-top: 4px !important;
-            padding-bottom: 8px !important;
+            padding-bottom: 10px !important;
             font-style: italic;
           }
           
           .service-item {
             color: #555;
-            font-size: 11px;
+            font-size: 12px;
           }
           
           .total-section {
             background: linear-gradient(135deg, #000000 0%, #2c2c2c 100%);
-            padding: 20px 25px;
+            padding: 22px 28px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
@@ -255,7 +244,7 @@ export default async function handler(req, res) {
           
           .total-label {
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -263,7 +252,7 @@ export default async function handler(req, res) {
           
           .total-amount {
             color: white;
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
           }
           
@@ -273,123 +262,124 @@ export default async function handler(req, res) {
             border-top: 2px solid #e0e0e0;
             text-align: center;
             color: #666;
-            font-size: 10px;
+            font-size: 11px;
           }
           
           .footer-contact {
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 12px;
           }
           
           .footer-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
           }
           
-          .footer-links a {
+          .footer-links span {
             color: #666;
-            text-decoration: none;
-          }
-          
-          @media print {
-            .page {
-              page-break-after: always;
-            }
           }
         </style>
       </head>
       <body>
-        <div class="page">
-          <!-- Header with Logo -->
-          <div class="header">
-            <img src="https://djedypr.com/4toDisenoLogo.png" alt="DJ EDY" class="logo" />
+        <!-- Header with Logo -->
+        <div class="header">
+          <img src="https://djedypr.com/logo.png" alt="DJ EDY" class="logo" />
+        </div>
+        
+        <!-- Title Section -->
+        <div class="title-section">
+          <div class="title">COTIZACIÓN</div>
+          <div class="date-section">
+            <div class="quote-number">Cotización #${quoteNumber}</div>
+            <div class="date">${today}</div>
           </div>
-          
-          <!-- Title Section -->
-          <div class="title-section">
-            <div class="title">COTIZACIÓN</div>
-            <div class="date">
-              <div style="font-weight: 600; font-size: 14px; color: #000;">Cotización #${Date.now().toString().slice(-6)}</div>
-              <div style="margin-top: 4px;">${today}</div>
+        </div>
+        
+        <!-- Client Info -->
+        <div class="client-info">
+          <h3>Información del Cliente</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Cliente:</span>
+              <span class="info-value">${nombre}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">WhatsApp:</span>
+              <span class="info-value">${whatsapp}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email:</span>
+              <span class="info-value">${email}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Fecha:</span>
+              <span class="info-value">${fecha}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Personas:</span>
+              <span class="info-value">${personas}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Lugar:</span>
+              <span class="info-value">${lugar}</span>
             </div>
           </div>
-          
-          <!-- Client Info -->
-          <div class="client-info">
-            <h3>Información del Cliente</h3>
-            <div class="info-grid">
-              <div class="info-item">
-                <span class="info-label">Cliente:</span>
-                <span class="info-value">${nombre}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">WhatsApp:</span>
-                <span class="info-value">${whatsapp}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Email:</span>
-                <span class="info-value">${email}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Fecha:</span>
-                <span class="info-value">${fecha}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Personas:</span>
-                <span class="info-value">${personas}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Lugar:</span>
-                <span class="info-value">${lugar}</span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Services -->
-          <div class="services-section">
-            <div class="services-header">Servicios Solicitados</div>
-            <table class="services-table">
-              ${tableRows}
-            </table>
-          </div>
-          
-          <!-- Total -->
-          <div class="total-section">
-            <div class="total-label">Total Estimado</div>
-            <div class="total-amount">${total}</div>
-          </div>
-          
-          <!-- Footer -->
-          <div class="footer">
-            <div class="footer-contact">DJ EDY - Servicios Profesionales de DJ y Entretenimiento</div>
-            <div class="footer-links">
-              <span>📱 787-356-8786</span>
-              <span>✉️ djedypr@gmail.com</span>
-              <span>🌐 www.djedypr.com</span>
-            </div>
+        </div>
+        
+        <!-- Services -->
+        <div class="services-section">
+          <div class="services-header">Servicios Solicitados</div>
+          <table class="services-table">
+            ${tableRows}
+          </table>
+        </div>
+        
+        <!-- Total -->
+        <div class="total-section">
+          <div class="total-label">Total Estimado</div>
+          <div class="total-amount">${total}</div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+          <div class="footer-contact">DJ EDY - Servicios Profesionales de DJ y Entretenimiento</div>
+          <div class="footer-links">
+            <span>📱 787-356-8786</span>
+            <span>✉️ djedypr@gmail.com</span>
+            <span>🌐 www.djedypr.com</span>
           </div>
         </div>
       </body>
       </html>
     `;
 
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    // Generate PDF with PDFShift
+    const pdfshiftApiKey = process.env.PDFSHIFT_API_KEY;
+    const auth = Buffer.from(`api:${pdfshiftApiKey}`).toString('base64');
 
-    // Generate PDF
-    const pdfBuffer = await page.pdf({
-      format: 'letter',
-      printBackground: true,
-      margin: {
-        top: '0',
-        right: '0',
-        bottom: '0',
-        left: '0'
-      }
+    const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${auth}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        source: html,
+        landscape: false,
+        use_print: false,
+        format: 'Letter'
+      })
     });
 
-    await browser.close();
+    if (!pdfResponse.ok) {
+      const errorData = await pdfResponse.text();
+      throw new Error(`PDFShift error: ${errorData}`);
+    }
+
+    const pdfBuffer = await pdfResponse.arrayBuffer();
 
     // Send email with PDF using Resend
     const emailResponse = await fetch('https://api.resend.com/emails', {
@@ -401,20 +391,21 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: 'DJ EDY <quotes@djedypr.com>',
         to: ['djedypr@gmail.com'],
-        subject: `Nueva Cotización - ${nombre}`,
+        subject: `Nueva Cotización #${quoteNumber} - ${nombre}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #000;">Nueva Cotización Generada</h2>
             <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <p><strong>Cotización:</strong> #${quoteNumber}</p>
               <p><strong>Cliente:</strong> ${nombre}</p>
               <p><strong>WhatsApp:</strong> ${whatsapp}</p>
               <p><strong>Email:</strong> ${email}</p>
               <p><strong>Fecha evento:</strong> ${fecha}</p>
               <p><strong>Total:</strong> ${total}</p>
             </div>
-            <p>El PDF de cotización está adjunto. Descárgalo y envíalo al cliente por WhatsApp:</p>
+            <p>El PDF de cotización profesional está adjunto. Descárgalo y envíalo al cliente por WhatsApp:</p>
             <a href="https://wa.me/1${whatsapp}" 
-               style="display: inline-block; background: #25D366; color: white; padding: 12px 30px; 
+               style="display: inline-block; background: #25D366; color: white; padding: 14px 32px; 
                       text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px;">
               📱 Abrir WhatsApp
             </a>
@@ -423,7 +414,7 @@ export default async function handler(req, res) {
         attachments: [
           {
             filename: `Cotizacion-DJEdy-${nombre.replace(/\s+/g, '-')}.pdf`,
-            content: pdfBuffer.toString('base64')
+            content: Buffer.from(pdfBuffer).toString('base64')
           }
         ]
       })
@@ -441,11 +432,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error:', error);
-    
-    if (browser) {
-      await browser.close();
-    }
-    
     return res.status(500).json({ 
       error: 'Error generando PDF',
       details: error.message 
