@@ -21,91 +21,193 @@ export default async function handler(req, res) {
       total
     } = req.body;
 
-    // Crear PDF
+    // Crear PDF con paginación automática
     const doc = new jsPDF();
+    const pageHeight = 297; // A4 height in mm
+    const margin = 20;
+    const maxY = pageHeight - 40; // Leave space for footer
     
-    // Header - Logo/Título
+    // Helper function to add new page
+    const addNewPage = () => {
+      doc.addPage();
+      return 30; // Reset Y position for new page
+    };
+    
+    // Helper function to add footer on each page
+    const addFooter = (pageNum) => {
+      doc.setTextColor(100, 100, 100);
+      doc.setFontSize(9);
+      doc.setFont(undefined, 'normal');
+      doc.text('DJ EDY | 787-356-8786 | djedypr@gmail.com | www.djedypr.com', 105, pageHeight - 15, { align: 'center' });
+      doc.setFontSize(8);
+      doc.text(`Página ${pageNum}`, 105, pageHeight - 10, { align: 'center' });
+    };
+    
+    let currentPage = 1;
+    
+    // Header - Black bar
     doc.setFillColor(0, 0, 0);
-    doc.rect(0, 0, 210, 40, 'F');
+    doc.rect(0, 0, 210, 35, 'F');
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(32);
+    doc.setFontSize(28);
     doc.setFont(undefined, 'bold');
-    doc.text('DJ EDY', 105, 25, { align: 'center' });
+    doc.text('DJ EDY', 105, 22, { align: 'center' });
     
     // Reset color
     doc.setTextColor(0, 0, 0);
     
-    // Título
-    doc.setFontSize(24);
+    // Title and Number
+    let y = 48;
+    doc.setFontSize(20);
     doc.setFont(undefined, 'bold');
-    doc.text('COTIZACIÓN', 105, 55, { align: 'center' });
+    doc.text('COTIZACIÓN', margin, y);
     
-    // Info del cliente
-    doc.setFontSize(10);
+    doc.setFontSize(11);
     doc.setFont(undefined, 'normal');
+    const today = new Date().toLocaleDateString('es-PR', { year: 'numeric', month: 'long', day: 'numeric' });
+    doc.text(today, 210 - margin, y, { align: 'right' });
     
-    let y = 75;
-    const lineHeight = 7;
-    
-    // Box gris para info cliente
-    doc.setFillColor(245, 245, 245);
-    doc.rect(20, y - 5, 170, 50, 'F');
-    
-    doc.setFont(undefined, 'bold');
-    doc.text('DATOS DEL CLIENTE', 25, y);
-    doc.setFont(undefined, 'normal');
-    
-    y += lineHeight + 2;
-    doc.text(`Nombre: ${nombre}`, 25, y);
-    y += lineHeight;
-    doc.text(`WhatsApp: ${whatsapp}`, 25, y);
-    y += lineHeight;
-    doc.text(`Email: ${email}`, 25, y);
-    y += lineHeight;
-    doc.text(`Fecha evento: ${fecha}`, 25, y);
-    y += lineHeight;
-    doc.text(`Personas: ${personas}`, 25, y);
-    doc.text(`Lugar: ${lugar}`, 110, y);
-    
-    // Servicios
-    y += 20;
-    doc.setFont(undefined, 'bold');
-    doc.setFontSize(14);
-    doc.text('SERVICIOS SOLICITADOS', 20, y);
-    
-    y += 10;
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
-    
-    // Box para servicios
-    const serviciosArray = servicios.split('\n');
-    const boxHeight = serviciosArray.length * lineHeight + 10;
-    doc.setDrawColor(200, 200, 200);
-    doc.rect(20, y - 5, 170, boxHeight);
-    
-    serviciosArray.forEach(servicio => {
-      if (servicio.trim()) {
-        doc.text(servicio.trim(), 25, y);
-        y += lineHeight;
-      }
-    });
-    
-    // Total
+    // Client info box
     y += 15;
-    doc.setFillColor(0, 0, 0);
-    doc.rect(20, y - 5, 170, 20, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(16);
-    doc.setFont(undefined, 'bold');
-    doc.text('TOTAL:', 25, y + 5);
-    doc.text(total, 185, y + 5, { align: 'right' });
+    doc.setFillColor(250, 250, 250);
+    doc.rect(margin, y - 5, 170, 42, 'F');
+    doc.setDrawColor(220, 220, 220);
+    doc.rect(margin, y - 5, 170, 42);
     
-    // Footer
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(8);
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text('INFORMACIÓN DEL CLIENTE', margin + 5, y + 2);
+    
+    doc.setFontSize(10);
     doc.setFont(undefined, 'normal');
-    const footerY = 270;
-    doc.text('DJ EDY | 787-356-8786 | djedypr@gmail.com | www.djedypr.com', 105, footerY, { align: 'center' });
+    y += 10;
+    doc.text(`Nombre:`, margin + 5, y);
+    doc.setFont(undefined, 'bold');
+    doc.text(nombre, margin + 25, y);
+    
+    doc.setFont(undefined, 'normal');
+    y += 7;
+    doc.text(`WhatsApp:`, margin + 5, y);
+    doc.setFont(undefined, 'bold');
+    doc.text(whatsapp, margin + 25, y);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text(`Email:`, margin + 90, y);
+    doc.setFont(undefined, 'bold');
+    doc.text(email, margin + 105, y);
+    
+    doc.setFont(undefined, 'normal');
+    y += 7;
+    doc.text(`Fecha:`, margin + 5, y);
+    doc.setFont(undefined, 'bold');
+    doc.text(fecha, margin + 25, y);
+    
+    doc.setFont(undefined, 'normal');
+    doc.text(`Personas:`, margin + 90, y);
+    doc.setFont(undefined, 'bold');
+    doc.text(personas, margin + 110, y);
+    
+    doc.setFont(undefined, 'normal');
+    y += 7;
+    doc.text(`Lugar:`, margin + 5, y);
+    doc.setFont(undefined, 'bold');
+    doc.text(lugar, margin + 25, y);
+    
+    // Services table header
+    y += 20;
+    doc.setFillColor(50, 50, 50);
+    doc.rect(margin, y - 5, 170, 10, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text('SERVICIOS SOLICITADOS', margin + 5, y + 1);
+    
+    // Parse services
+    y += 10;
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(10);
+    
+    const serviciosArray = servicios.split('\n');
+    let rowBg = true;
+    
+    for (let i = 0; i < serviciosArray.length; i++) {
+      const servicio = serviciosArray[i].trim();
+      if (!servicio) continue;
+      
+      // Check if we need a new page
+      if (y > maxY) {
+        addFooter(currentPage);
+        y = addNewPage();
+        currentPage++;
+      }
+      
+      // Alternate row background
+      if (rowBg) {
+        doc.setFillColor(248, 248, 248);
+        doc.rect(margin, y - 4, 170, 8, 'F');
+      }
+      rowBg = !rowBg;
+      
+      // Parse service line (handles both "• Service: $price" and category headers)
+      const line = servicio.replace(/^[•\-]\s*/, ''); // Remove bullet
+      
+      if (line.includes(':')) {
+        const parts = line.split(':');
+        const serviceName = parts[0].trim();
+        const serviceDetails = parts[1].trim();
+        
+        doc.setFont(undefined, 'normal');
+        doc.text(serviceName, margin + 3, y);
+        
+        // Check if it's a price (starts with $)
+        if (serviceDetails.startsWith('$')) {
+          doc.setFont(undefined, 'bold');
+          doc.text(serviceDetails.split('(')[0].trim(), 210 - margin - 3, y, { align: 'right' });
+          
+          // Add description in parentheses if exists
+          if (serviceDetails.includes('(')) {
+            const desc = serviceDetails.substring(serviceDetails.indexOf('('));
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(8);
+            doc.setTextColor(100, 100, 100);
+            doc.text(desc, 210 - margin - 3, y + 3, { align: 'right' });
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+          }
+        } else {
+          doc.setFont(undefined, 'italic');
+          doc.setFontSize(9);
+          doc.text(serviceDetails, 210 - margin - 3, y, { align: 'right' });
+          doc.setFontSize(10);
+        }
+      } else {
+        // Category header or description line
+        doc.setFont(undefined, 'bold');
+        doc.text(line, margin + 3, y);
+      }
+      
+      y += 8;
+    }
+    
+    // Total box
+    y += 10;
+    if (y > maxY - 30) {
+      addFooter(currentPage);
+      y = addNewPage();
+      currentPage++;
+    }
+    
+    doc.setFillColor(0, 0, 0);
+    doc.rect(margin, y - 5, 170, 18, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text('TOTAL ESTIMADO:', margin + 5, y + 5);
+    doc.setFontSize(18);
+    doc.text(total, 210 - margin - 5, y + 5, { align: 'right' });
+    
+    // Add footer to last page
+    addFooter(currentPage);
     
     // Generar PDF como buffer
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
