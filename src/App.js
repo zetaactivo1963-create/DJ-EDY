@@ -3166,83 +3166,63 @@ function QuoteFlow() {
 
     setSending(true);
 
-    try {
-      // Generar lista de servicios para email
-      const serviciosParaEmail = selectedItems.map(item => {
-        if (item.isComplete) {
-          // Categoría completa - listar todos los precios
-          const opciones = PRECIOS[item.categoryId];
-          const listado = Object.entries(opciones).map(([key, opt]) => {
-            const precioTxt = opt.precio ? `$${opt.precio}` : "Por cotización";
-            const desc = opt.descripcion ? ` (${opt.descripcion})` : "";
-            return `  • ${opt.nombre}: ${precioTxt}${desc}`;
-          }).join('\n');
-          return `${CATEGORIA_NOMBRES[item.categoryId]}:\n${listado}`;
-        } else {
-          // Item específico
-          const precioTexto = item.precio ? `$${item.precio}` : "Por cotización";
-          const desc = item.descripcion ? ` (${item.descripcion})` : "";
-          return `• ${item.nombre}: ${precioTexto}${desc}`;
-        }
-      }).join('\n\n');
-
-      // Mensaje para WhatsApp
-      const mensajeWhatsApp = `Hola ${formData.nombre}!
-
-Aquí está tu cotización:
-
-${serviciosParaEmail}
-
-¿Te interesa alguno? Cuéntame más de tu evento!
-
-DJ EDY`;
-
-      const total = calcularTotal();
-      const totalTexto = total > 0 
-        ? `$${total}` 
-        : selectedItems.some(i => i.isComplete) 
-          ? "Incluye categorías completas - enviaremos todos los precios"
-          : "Incluye servicios por cotización";
-
-      const templateParams = {
-        nombre: formData.nombre,
-        whatsapp: formData.whatsapp,
-        email: formData.email || "No proporcionó",
-        fecha: formData.fecha || "Por definir",
-        personas: formData.personas || "Por definir",
-        lugar: formData.lugar || "Por definir",
-        servicios: serviciosParaEmail,
-        total: totalTexto,
-        mensaje_whatsapp: mensajeWhatsApp
-      };
+      try {
+        // Preparar datos
+        const serviciosParaEmail = selectedItems.map(item => {
+          if (item.isComplete) {
+            const opciones = PRECIOS[item.categoryId];
+            const listado = Object.entries(opciones).map(([key, opt]) => {
+              const precioTxt = opt.precio ? `$${opt.precio}` : "Por cotización";
+              const desc = opt.descripcion ? ` (${opt.descripcion})` : "";
+              return `  • ${opt.nombre}: ${precioTxt}${desc}`;
+            }).join('\n');
+            return `${CATEGORIA_NOMBRES[item.categoryId]}:\n${listado}`;
+          } else {
+            const precioTexto = item.precio ? `$${item.precio}` : "Por cotización";
+            const desc = item.descripcion ? ` (${item.descripcion})` : "";
+            return `• ${item.nombre}: ${precioTexto}${desc}`;
+          }
+        }).join('\n\n');
       
-    console.log("DATOS A ENVIAR:", templateParams);
-
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          service_id: 'service_hik8xkn',
-          template_id: 'template_eiagx3a',
-          user_id: 'rITQraGRa7eL9gr9P',
-          template_params: templateParams
-        })
-      });
-
-      if (response.ok) {
-        setStep("confirmation");
-      } else {
-        throw new Error('Error al enviar');
+        const total = calcularTotal();
+        const totalTexto = total > 0 
+          ? `$${total}` 
+          : selectedItems.some(i => i.isComplete) 
+            ? "Incluye categorías completas"
+            : "Por cotización";
+      
+        // Llamar a Vercel Function para generar PDF
+        const response = await fetch('/api/generate-quote-pdf', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nombre: formData.nombre,
+            whatsapp: formData.whatsapp,
+            email: formData.email || "No proporcionó",
+            fecha: formData.fecha || "Por definir",
+            personas: formData.personas || "Por definir",
+            lugar: formData.lugar || "Por definir",
+            servicios: serviciosParaEmail,
+            total: totalTexto
+          })
+        });
+      
+        if (response.ok) {
+          setStep("confirmation");
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Error generando PDF');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setErrorMessage("Error al enviar. Intenta de nuevo.");
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
+      } finally {
+        setSending(false);
       }
-    } catch (error) {
-      setErrorMessage("Error al enviar. Intenta de nuevo.");
-      setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
-    } finally {
-      setSending(false);
-    }
   };
 
   // RENDER DE OPCIONES
