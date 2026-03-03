@@ -286,7 +286,7 @@ export default async function handler(req, res) {
       <body>
         <!-- Header with Logo -->
         <div class="header">
-          <img src="https://djedypr.com/logo.png" alt="DJ EDY" class="logo" />
+          <img src="https://djedypr.com/4toDisenoLogo.png" alt="DJ EDY" class="logo" />
         </div>
         
         <!-- Title Section -->
