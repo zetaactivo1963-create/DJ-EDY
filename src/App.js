@@ -3001,90 +3001,362 @@ function Footer() {
     </footer>
   );
 }
-
 /* ==========================================
-   SISTEMA DE COTIZACIÓN UNIVERSAL V2
-   Con opción de categoría completa o específica
+   SISTEMA DE COTIZACIÓN FINAL COMPLETO
+   Con navegación por rutas hash
    ========================================== */
 
-// PRECIOS CENTRALIZADOS
-const PRECIOS = {
+// DATOS COMPLETOS DE SERVICIOS
+const SERVICIOS_DATA = {
   montajes: {
-    sencillo: { nombre: "Montaje Sencillo", precio: 550, descripcion: "4 horas" },
-    mediano: { nombre: "Montaje Mediano", precio: 750, descripcion: "5 horas" },
-    premium: { nombre: "Montaje Premium", precio: 850, descripcion: "6 horas" }
+    nombre: "Montajes DJ",
+    opciones: [
+      {
+        id: "sencillo",
+        nombre: "Montaje Sencillo",
+        imagenes: ["/montaje-Sencillo.jpg", "/montajeSencillo.jpg"],
+        duracion: "4 horas",
+        incluye: [
+          "Pantalla TV 32\" Opcional",
+          "Karaoke / Just Dance",
+          "1 micrófono inalámbrico",
+          "DJ Booth iluminado",
+          "2 luces Party LED",
+          "Mixeo de música en vivo"
+        ]
+      },
+      {
+        id: "mediano",
+        nombre: "Montaje Mediano",
+        imagenes: ["/montajeMediano.jpg", "/montaje-Mediano.jpg"],
+        duracion: "5 horas",
+        incluye: [
+          "Pantalla gigante 100\" o TV 55\"",
+          "Karaoke / Just Dance",
+          "2 micrófonos inalámbricos",
+          "DJ Booth iluminado",
+          "2 trussing iluminados",
+          "2 luces Moving Heads",
+          "Máquina de humo o haze",
+          "Mixeo de música en vivo",
+          "Animación desde el DJ Stage"
+        ]
+      },
+      {
+        id: "premium",
+        nombre: "Montaje Premium",
+        imagenes: ["/montaje-Premium.jpg", "/montajePremium.jpg"],
+        duracion: "6 horas",
+        incluye: [
+          "2 pantallas TV 55\"",
+          "Karaoke / Just Dance",
+          "2 micrófonos inalámbricos",
+          "DJ Booth iluminado",
+          "2 trussing iluminados",
+          "2 luces Moving Heads Gobo",
+          "2 luces Moving Heads BeeEye",
+          "Máquina de humo o haze",
+          "Mixeo de música en vivo",
+          "Animación desde el DJ Stage"
+        ]
+      }
+    ]
   },
   
   pistas: {
-    "3d-10x10": { nombre: "Pista 3D 10x10", precio: 850, tipo: "3D Mirror" },
-    "3d-12x12": { nombre: "Pista 3D 12x12", precio: 950, tipo: "3D Mirror" },
-    "3d-14x14": { nombre: "Pista 3D 14x14", precio: 1050, tipo: "3D Mirror" },
-    "3d-16x16": { nombre: "Pista 3D 16x16", precio: 1100, tipo: "3D Mirror" },
-    "blanca-10x10": { nombre: "Pista Blanca 10x10", precio: 750, tipo: "Blanca LED" },
-    "blanca-12x12": { nombre: "Pista Blanca 12x12", precio: 850, tipo: "Blanca LED" },
-    "blanca-14x14": { nombre: "Pista Blanca 14x14", precio: 950, tipo: "Blanca LED" },
-    "blanca-16x16": { nombre: "Pista Blanca 16x16", precio: 1000, tipo: "Blanca LED" }
+    nombre: "Pistas de Baile LED",
+    opciones: [
+      {
+        id: "3d",
+        nombre: "Pista 3D Mirror & Frost",
+        imagen: "/pista-3d-1.jpg",
+        tipo: "3D con efectos espejo",
+        incluye: ["Efectos 3D interactivos", "Acabado espejo", "Efecto frost", "Instalación profesional"],
+        tamanos: ["10x10", "12x12", "14x14", "16x16"]
+      },
+      {
+        id: "blanca",
+        nombre: "Pista Blanca con Puntos LED",
+        imagen: "/pista-blanca-1.jpg",
+        tipo: "Puntos LED de colores o blanco",
+        incluye: ["Puntos LED programables (colores o blanco)", "Base blanca elegante", "Múltiples patrones", "Instalación profesional"],
+        tamanos: ["10x10", "12x12", "14x14", "16x16"]
+      }
+    ]
   },
-  
-  photobooth: {
-    "360-2h": { nombre: "Photo Booth 360° - 2 horas", precio: 450 },
-    "360-3h": { nombre: "Photo Booth 360° - 3 horas", precio: 550 },
-    "estatico-2h": { nombre: "Photo Booth Estático - 2 horas", precio: 350 },
-    "estatico-3h": { nombre: "Photo Booth Estático - 3 horas", precio: 450 }
+
+  sonidoCeremonia: {
+    nombre: "Sonido Ceremonia/Cóctel",
+    opciones: [
+      {
+        id: "ceremonia",
+        nombre: "Sonido Ceremonia/Cóctel",
+        imagen: "/sonido-ceremonia-service.jpg",
+        duracion: "1 hora",
+        incluye: [
+          "1 bocina de batería",
+          "1 micrófono inalámbrico",
+          "Cualquier tipo de música",
+          "Operador incluido"
+        ]
+      }
+    ]
   },
-  
-  efectos: {
-    "chispas": { nombre: "Chispas Frías", precio: 350, descripcion: "3 tiros de 15s" },
-    "humo-vertical": { nombre: "Humo Vertical", precio: 250, descripcion: "2 máquinas, 4hrs" },
-    "confeti": { nombre: "Confeti", precio: 250 },
-    "espuma": { nombre: "Espuma", precio: 550, descripcion: "Desde" },
-    "humo-bajo": { nombre: "Humo Bajo (Baile en Nubes)", precio: null, descripcion: "Por cotización" }
+
+  lucesAmbiente: {
+    nombre: "Luces de Ambiente",
+    opciones: [
+      {
+        id: "ambiente",
+        nombre: "Luces LED de Ambiente",
+        imagen: "/luces-ambiente-service.jpg",
+        duracion: "~5 horas de batería",
+        incluye: [
+          "Luces LED de batería inalámbricas",
+          "Duración aproximada de 5 horas",
+          "Paquetes disponibles: 10, 14, 16, 20, 28, 35 luces",
+          "Se pueden añadir más según necesidad",
+          "Instalación y retiro incluido"
+        ]
+      }
+    ]
   },
   
   fotografia: {
-    "4h": { nombre: "Fotografía 4 horas", precio: 350 },
-    "adicional": { nombre: "Hora adicional", precio: 50, descripcion: "Por hora" }
+    nombre: "Fotografía",
+    opciones: [
+      {
+        id: "profesional",
+        nombre: "Fotografía Profesional",
+        imagen: "/fotografia-service.png",
+        duracion: "4 horas",
+        incluye: [
+          "Cámara profesional Canon M50",
+          "Flash en cámara",
+          "Fotógrafo experimentado",
+          "Cobertura completa",
+          "Entrega digital",
+          "Edición básica"
+        ]
+      }
+    ]
+  },
+  
+  photobooth: {
+    nombre: "Photo Booth",
+    opciones: [
+      {
+        id: "360",
+        nombre: "Photo Booth 360°",
+        imagen: "/photobooth-service.png",
+        incluye: [
+          "Plataforma grande (5-7 personas)",
+          "Videos con edición en cámara lenta",
+          "Mesa con props (collares, gafas, sombreros)",
+          "Separadores estilo alfombra roja",
+          "Alfombra debajo de la maquinaria",
+          "Entrega digital instantánea",
+          "Operador dedicado"
+        ],
+        duraciones: ["2 horas", "3 horas"]
+      },
+      {
+        id: "estatico",
+        nombre: "Photo Booth Estático",
+        imagen: "/photobooth-service.png",
+        incluye: [
+          "Cabina profesional",
+          "Mesa con props (collares, gafas, sombreros)",
+          "Separadores estilo alfombra roja",
+          "Alfombra debajo de la maquinaria",
+          "Compartir redes sociales",
+          "Operador dedicado",
+          "NO incluye impresión"
+        ],
+        duraciones: ["2 horas", "3 horas"]
+      }
+    ]
+  },
+  
+  efectos: {
+    nombre: "Efectos Especiales",
+    opciones: [
+      {
+        id: "truss-gobos",
+        nombre: "Decoración Lumínica para Venue",
+        imagen: "/efectos-service.jpg",
+        subtitulo: "Truss con Moving Heads",
+        opciones: [
+          "2 truss 10' con 4 luces",
+          "4 truss 10' con 8 luces"
+        ],
+        incluye: [
+          "Tela blanca",
+          "Trussing de 10 pies",
+          "Moving Heads profesionales",
+          "Gobos y colores a escoger",
+          "Técnico de luces dedicado",
+          "Consola digital de programación profesional",
+          "Proyección en paredes del venue",
+          "Instalación completa"
+        ]
+      },
+      {
+        id: "chispas",
+        nombre: "Chispas Frías",
+        imagen: "/chispas-frias-service.jpg",
+        detalles: "3 tiros de 15 segundos en momentos que elija",
+        incluye: [
+          "2 máquinas de chispas frías",
+          "Pirotecnia segura",
+          "Altura hasta 15 pies",
+          "Técnico certificado",
+          "Ideal para primer baile",
+          "3 tiros de 15 segundos"
+        ]
+      },
+      {
+        id: "humo-vertical",
+        nombre: "Humo Vertical",
+        imagen: "/efectos-service.jpg",
+        detalles: "2 máquinas, 4 horas",
+        incluye: ["2 máquinas profesionales", "Tiros ilimitados", "Fluido incluido", "Técnico dedicado"]
+      },
+      {
+        id: "confeti",
+        nombre: "Confeti",
+        imagen: "/efectos-service.jpg",
+        incluye: [
+          "Confeti del color elegido",
+          "Lanzamiento aéreo profesional",
+          "Control de timing",
+          "Sujeto a permisos del venue"
+        ]
+      },
+      {
+        id: "espuma",
+        nombre: "Máquina de Espuma",
+        imagen: "/efectos-service.jpg",
+        incluye: ["Espuma no tóxica", "Cañón de alta potencia", "Sujeto a permisos del venue"]
+      },
+      {
+        id: "humo-bajo",
+        nombre: "Humo Bajo (Baile en Nubes)",
+        imagen: "/efectos-service.jpg",
+        incluye: ["Efecto nube baja", "Humo denso", "Ideal para primer baile", "Máquina de hielo seco"],
+        disponible: false
+      }
+    ]
   },
   
   pantallas: {
-    "led": { nombre: "Pantalla LED 13x7", precio: 1000, descripcion: "Desde (varía según montaje)" },
-    "proyeccion": { nombre: "Proyección 100\"", precio: 200, descripcion: "Desde" }
-  },
-  
-  sonido: {
-    "line-array": { nombre: "Sonido Line Array", precio: null, descripcion: "Por cotización" }
-  },
-  
-  luces: {
-    "paquete": { nombre: "Iluminación & Trussing", precio: null, descripcion: "Por cotización" }
+    nombre: "Pantallas & Visuales",
+    opciones: [
+      {
+        id: "led",
+        nombre: "Pantalla LED Modular 13x7",
+        imagen: "/pantallas-service.png",
+        detalles: "Waterproof - Ideal para exteriores",
+        incluye: [
+          "Alta resolución",
+          "Tamaño ajustable",
+          "Waterproof - Resistente al agua",
+          "Uso en exteriores e interiores",
+          "Instalación profesional",
+          "Técnico dedicado"
+        ]
+      },
+      {
+        id: "proyeccion",
+        nombre: "Sistema de Proyección 100\"",
+        imagen: "/pantallas-service.png",
+        incluye: ["Pantalla profesional", "Proyector alta luminosidad", "Montaje incluido"]
+      }
+    ]
   },
   
   animacion: {
-    "animador": { nombre: "Animador 4 horas", precio: 350, descripcion: "Desde" },
-    "mc": { nombre: "Maestro de Ceremonias", precio: 250, descripcion: "Desde" },
-    "batucada": { nombre: "Batucada", precio: 550, descripcion: "Desde" },
-    "coordinador": { nombre: "Coordinador", precio: null, descripcion: "Por cotización" }
+    nombre: "Animación & Coordinación",
+    opciones: [
+      {
+        id: "animador",
+        nombre: "Animador Profesional",
+        imagen: "/animacion-service.png",
+        duracion: "4 horas",
+        incluye: ["Interacción con invitados", "Juegos y actividades", "Manejo de público"]
+      },
+      {
+        id: "mc",
+        nombre: "Maestro de Ceremonias",
+        imagen: "/animacion-service.png",
+        duracion: "3 horas",
+        incluye: ["Conducción del evento", "Anuncios oficiales", "Voz profesional"]
+      },
+      {
+        id: "batucada",
+        nombre: "Batucada",
+        imagen: "/animacion-service.png",
+        detalles: "3-5 integrantes",
+        incluye: ["Percusión en vivo", "Animación energética"]
+      },
+      {
+        id: "coordinador",
+        nombre: "Coordinador de Eventos",
+        imagen: "/animacion-service.png",
+        incluye: ["Planificación completa", "Coordinación con proveedores", "Supervisión del evento"]
+      }
+    ]
+  },
+
+  sonido: {
+    nombre: "Sonido Profesional",
+    esInformativa: true,
+    descripcion: "Contamos con equipos de sonido para todo tipo de eventos, desde venues pequeños hasta grandes producciones en exteriores. Nuestro inventario incluye sistemas Line Array, subwoofers de alta potencia, consolas digitales y mucho más. Cada evento es único y requiere una configuración específica.",
+    opciones: [
+      {
+        id: "consulta",
+        nombre: "Sonido Personalizado",
+        imagen: "/sonido-service.jpg",
+        esContacto: true,
+        incluye: [
+          "Sistemas desde pequeños hasta grandes producciones",
+          "Line Array profesional",
+          "Subwoofers de alta potencia",
+          "Consolas digitales",
+          "Micrófonos inalámbricos profesionales",
+          "Técnico de sonido dedicado",
+          "Configuración personalizada según tu evento"
+        ]
+      }
+    ]
+  },
+  
+  luces: {
+    nombre: "Iluminación Profesional",
+    esInformativa: true,
+    descripcion: "Ofrecemos soluciones de iluminación para todo tipo de eventos y venues. Desde iluminación básica hasta diseños complejos con moving heads, lasers y estructuras trussing personalizadas. Cuéntanos sobre tu evento y te orientaremos con la mejor opción.",
+    opciones: [
+      {
+        id: "consulta",
+        nombre: "Iluminación Personalizada",
+        imagen: "/iluminacion-service.jpg",
+        esContacto: true,
+        incluye: [
+          "Moving Heads Gobo y Wash",
+          "Barras LED profesionales",
+          "Sistemas laser",
+          "Estructuras trussing personalizables",
+          "Diseño de iluminación según venue",
+          "Técnicos profesionales",
+          "Configuración personalizada según tu evento"
+        ]
+      }
+    ]
   }
 };
 
-// Nombres display de categorías
-const CATEGORIA_NOMBRES = {
-  montajes: "Montajes DJ",
-  pistas: "Pista de Baile LED",
-  photobooth: "Photo Booth",
-  efectos: "Efectos Especiales",
-  fotografia: "Fotografía",
-  pantallas: "Pantallas",
-  sonido: "Sonido",
-  luces: "Iluminación & Trussing",
-  animacion: "Animación & Coordinación"
-};
-
-// COMPONENTE PRINCIPAL
-function QuoteFlow() {
-  const [step, setStep] = useState("category");
-  const [currentCategory, setCurrentCategory] = useState(null);
-  const [selectedItems, setSelectedItems] = useState([]);
+// COMPONENTE DE FORMULARIO (se renderiza cuando hash === "#formulario-cotizacion")
+function FormularioCotizacion({ selectedServices }) {
   const [formData, setFormData] = useState({
     fecha: "",
     personas: "",
@@ -3096,59 +3368,7 @@ function QuoteFlow() {
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [sending, setSending] = useState(false);
-
-  const categorias = [
-    { id: "montajes", nombre: "Montajes DJ", imagen: "/montajeSencillo.jpg" },
-    { id: "pistas", nombre: "Pista de Baile", imagen: "/pista-led-service.jpg" },
-    { id: "photobooth", nombre: "Photo Booth", imagen: "/photobooth-service.png" },
-    { id: "efectos", nombre: "Efectos Especiales", imagen: "/chispas-frias-service.jpg" },
-    { id: "fotografia", nombre: "Fotografía", imagen: "/fotografia-service.png" },
-    { id: "pantallas", nombre: "Pantallas", imagen: "/pantallas-service.png" },
-    { id: "sonido", nombre: "Sonido", imagen: "/sonido-ceremonia-service.jpg" },
-    { id: "luces", nombre: "Iluminación", imagen: "/luces-ambiente-service.jpg" },
-    { id: "animacion", nombre: "Animación", imagen: "/animacion-service.png" }
-  ];
-
-  const selectCategory = (catId) => {
-    setCurrentCategory(catId);
-    setStep("options");
-  };
-
-  // COTIZAR CATEGORÍA COMPLETA
-  const addCategoryComplete = (categoryId) => {
-    setSelectedItems([...selectedItems, { 
-      categoryId, 
-      nombre: `${CATEGORIA_NOMBRES[categoryId]} (todas las opciones)`,
-      isComplete: true
-    }]);
-    setStep("addMore");
-  };
-
-  // AÑADIR ITEM ESPECÍFICO
-  const addItem = (categoryId, itemId) => {
-    const item = PRECIOS[categoryId][itemId];
-    if (item) {
-      setSelectedItems([...selectedItems, { 
-        categoryId, 
-        itemId, 
-        nombre: item.nombre, 
-        precio: item.precio,
-        descripcion: item.descripcion,
-        isComplete: false
-      }]);
-    }
-    setStep("addMore");
-  };
-
-  const removeItem = (index) => {
-    setSelectedItems(selectedItems.filter((_, i) => i !== index));
-  };
-
-  const calcularTotal = () => {
-    return selectedItems.reduce((sum, item) => {
-      return sum + (item.precio || 0);
-    }, 0);
-  };
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const enviarCotizacion = async () => {
     if (!formData.nombre.trim()) {
@@ -3166,330 +3386,107 @@ function QuoteFlow() {
 
     setSending(true);
 
-      try {
-        // Preparar datos
-        const serviciosParaEmail = selectedItems.map(item => {
-          if (item.isComplete) {
-            const opciones = PRECIOS[item.categoryId];
-            const listado = Object.entries(opciones).map(([key, opt]) => {
-              const precioTxt = opt.precio ? `$${opt.precio}` : "Por cotización";
-              const desc = opt.descripcion ? ` (${opt.descripcion})` : "";
-              return `  • ${opt.nombre}: ${precioTxt}${desc}`;
-            }).join('\n');
-            return `${CATEGORIA_NOMBRES[item.categoryId]}:\n${listado}`;
-          } else {
-            const precioTexto = item.precio ? `$${item.precio}` : "Por cotización";
-            const desc = item.descripcion ? ` (${item.descripcion})` : "";
-            return `• ${item.nombre}: ${precioTexto}${desc}`;
-          }
-        }).join('\n\n');
+    try {
+      const serviciosTexto = selectedServices.map(s => `• ${s.nombre}`).join('\n');
       
-        const total = calcularTotal();
-        const totalTexto = total > 0 
-          ? `$${total}` 
-          : selectedItems.some(i => i.isComplete) 
-            ? "Incluye categorías completas"
-            : "Por cotización";
+      const response = await fetch('/api/generate-quote-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: formData.nombre,
+          whatsapp: formData.whatsapp,
+          email: formData.email || "No proporcionó",
+          fecha: formData.fecha || "Por definir",
+          personas: formData.personas || "Por definir",
+          lugar: formData.lugar || "Por definir",
+          servicios: serviciosTexto,
+          total: "Por cotización"
+        })
+      });
       
-        // Llamar a Vercel Function para generar PDF
-        const response = await fetch('/api/generate-quote-pdf', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            nombre: formData.nombre,
-            whatsapp: formData.whatsapp,
-            email: formData.email || "No proporcionó",
-            fecha: formData.fecha || "Por definir",
-            personas: formData.personas || "Por definir",
-            lugar: formData.lugar || "Por definir",
-            servicios: serviciosParaEmail,
-            total: totalTexto
-          })
-        });
-      
-        if (response.ok) {
-          setStep("confirmation");
-        } else {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Error generando PDF');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        setErrorMessage("Error al enviar. Intenta de nuevo.");
-        setShowError(true);
-        setTimeout(() => setShowError(false), 3000);
-      } finally {
-        setSending(false);
+      if (response.ok) {
+        setShowConfirmation(true);
+      } else {
+        throw new Error('Error generando PDF');
       }
+    } catch (error) {
+      setErrorMessage("Error al enviar. Intenta de nuevo.");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
+    } finally {
+      setSending(false);
+    }
   };
 
-  // RENDER DE OPCIONES
-  const renderOptions = () => {
-    const opciones = PRECIOS[currentCategory];
-    const nombreCategoria = CATEGORIA_NOMBRES[currentCategory];
-    
-    // MONTAJES
-    if (currentCategory === "montajes") {
-      return (
-        <div className="space-y-8">
-          <h2 className="text-3xl font-bold text-white text-center">
-            {nombreCategoria}
-          </h2>
-
-          {/* Botón categoría completa */}
-          <button
-            onClick={() => addCategoryComplete("montajes")}
-            className={`w-full p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all border-2 border-white/20`}
-          >
-            <p className="text-xl font-bold text-white mb-2">
-              Cotizar todas las opciones de Montajes DJ
-            </p>
-            <p className="text-sm text-zinc-400">
-              Recibirás precios de Sencillo, Mediano y Premium
-            </p>
-          </button>
-
-          <div className="text-center text-zinc-400 text-sm">O selecciona uno específico:</div>
-
-          {/* Opciones individuales */}
-          <div className="grid gap-4">
-            {Object.entries(opciones).map(([key, item]) => (
-              <button
-                key={key}
-                onClick={() => addItem("montajes", key)}
-                className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all text-left`}
-              >
-                <h3 className="text-xl font-bold text-white mb-1">{item.nombre}</h3>
-                <p className="text-sm text-zinc-400">{item.descripcion}</p>
-              </button>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    // PISTAS
-    if (currentCategory === "pistas") {
-      const pistas3D = Object.entries(opciones).filter(([_, item]) => item.tipo === "3D Mirror");
-      const pistasBlancas = Object.entries(opciones).filter(([_, item]) => item.tipo === "Blanca LED");
-      
-      return (
-        <div className="space-y-8">
-          <h2 className="text-3xl font-bold text-white text-center">
-            {nombreCategoria}
-          </h2>
-
-          {/* Botón categoría completa */}
-          <button
-            onClick={() => addCategoryComplete("pistas")}
-            className={`w-full p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all border-2 border-white/20`}
-          >
-            <p className="text-xl font-bold text-white mb-2">
-              Cotizar todas las opciones de Pista de Baile
-            </p>
-            <p className="text-sm text-zinc-400">
-              Recibirás precios de todas las pistas 3D y Blancas (todos los tamaños)
-            </p>
-          </button>
-
-          <div className="text-center text-zinc-400 text-sm">O selecciona una específica:</div>
-
-          {/* Pista 3D */}
-          <div className={`p-6 rounded-2xl ${glass}`}>
-            <h3 className="text-xl font-bold text-white mb-4">Pista 3D Mirror & Frost</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {pistas3D.map(([key, item]) => (
-                <button
-                  key={key}
-                  onClick={() => addItem("pistas", key)}
-                  className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center"
-                >
-                  <p className="text-lg font-bold text-white">{item.nombre.split(" ").pop()}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Pista Blanca */}
-          <div className={`p-6 rounded-2xl ${glass}`}>
-            <h3 className="text-xl font-bold text-white mb-4">Pista Blanca con Puntos LED</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {pistasBlancas.map(([key, item]) => (
-                <button
-                  key={key}
-                  onClick={() => addItem("pistas", key)}
-                  className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all text-center"
-                >
-                  <p className="text-lg font-bold text-white">{item.nombre.split(" ").pop()}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // OTRAS CATEGORÍAS (genérico)
+  if (showConfirmation) {
     return (
-      <div className="space-y-8">
-        <h2 className="text-3xl font-bold text-white text-center">
-          {nombreCategoria}
-        </h2>
+      <section className="pt-28 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`max-w-2xl mx-auto p-12 rounded-2xl ${glass} text-center`}
+          >
+            <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
+              <Check className="w-10 h-10 text-green-500" />
+            </div>
+            
+            <h2 className="text-3xl font-bold text-white mb-4">
+              ¡Solicitud enviada!
+            </h2>
+            
+            <p className="text-lg text-zinc-300 mb-8">
+              Te enviaremos los precios por WhatsApp al{' '}
+              <a 
+                href={`https://wa.me/1${formData.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-green-400 hover:text-green-300 underline"
+              >
+                {formData.whatsapp}
+              </a>
+              {' '}en breve.
+            </p>
 
-        {/* Botón categoría completa */}
-        <button
-          onClick={() => addCategoryComplete(currentCategory)}
-          className={`w-full p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all border-2 border-white/20`}
-        >
-          <p className="text-xl font-bold text-white mb-2">
-            Cotizar todas las opciones de {nombreCategoria}
-          </p>
-          <p className="text-sm text-zinc-400">
-            Recibirás precios de todas las opciones disponibles
-          </p>
-        </button>
-
-        <div className="text-center text-zinc-400 text-sm">O selecciona una específica:</div>
-
-        {/* Opciones individuales */}
-        <div className="grid gap-4">
-          {Object.entries(opciones).map(([key, item]) => (
-            <button
-              key={key}
-              onClick={() => addItem(currentCategory, key)}
-              className={`p-6 rounded-2xl ${glass} hover:bg-white/10 transition-all text-left`}
+            <a
+              href="#home"
+              className="inline-block px-8 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-200 transition-colors"
             >
-              <h3 className="text-lg font-bold text-white">{item.nombre}</h3>
-              {item.descripcion && (
-                <p className="text-sm text-zinc-400 mt-1">{item.descripcion}</p>
-              )}
-            </button>
-          ))}
+              Volver al Inicio
+            </a>
+          </motion.div>
         </div>
-      </div>
+
+        <AnimatePresence>
+          {showError && (
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              className="fixed top-8 left-1/2 -translate-x-1/2 z-50"
+            >
+              <div className="bg-red-500 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+                <X className="w-6 h-6" />
+                <p className="font-medium">{errorMessage}</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
     );
-  };
+  }
 
   return (
-    <Section className="min-h-screen">
-      <div className="max-w-4xl mx-auto">
-        
-        {/* STEP 1: CATEGORÍA */}
-        {step === "category" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-              ¿Qué te interesa cotizar?
-            </h1>
-            <p className="text-zinc-400 text-center mb-12">
-              Selecciona una categoría para empezar
-            </p>
+    <section className="pt-28 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button
+          onClick={() => window.location.hash = "#home"}
+          className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" /> Volver a servicios
+        </button>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {categorias.map((cat, idx) => (
-                <motion.button
-                  key={cat.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.1 }}
-                  onClick={() => selectCategory(cat.id)}
-                  className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
-                >
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${cat.imagen})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-                  <div className="relative h-full p-4 flex flex-col justify-end">
-                    <p className="text-lg font-semibold text-white text-center">
-                      {cat.nombre}
-                    </p>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* STEP 2: OPCIONES */}
-        {step === "options" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            {renderOptions()}
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => setStep("category")}
-                className="px-6 py-3 bg-white/10 text-white rounded-full hover:bg-white/20 transition-colors"
-              >
-                Atrás
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* STEP 3: ¿ALGO MÁS? */}
-        {step === "addMore" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className={`p-6 rounded-2xl ${glass} mb-8`}>
-              <h3 className="text-xl font-bold text-white mb-4">Tu cotización:</h3>
-              {selectedItems.map((item, idx) => (
-                <div key={idx} className="flex items-center justify-between py-2 border-b border-white/10">
-                  <span className="text-zinc-300 text-sm">{item.nombre}</span>
-                  <button
-                    onClick={() => removeItem(idx)}
-                    className="text-red-400 hover:text-red-300"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <h2 className="text-3xl font-bold text-white text-center mb-8">
-              ¿Quieres añadir algo más?
-            </h2>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-              {categorias
-                .filter(cat => !selectedItems.some(item => 
-                  item.categoryId === cat.id && item.isComplete
-                ))
-                .map((cat, idx) => (
-                  <motion.button
-                    key={cat.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.1 }}
-                    onClick={() => selectCategory(cat.id)}
-                    className="group relative overflow-hidden rounded-2xl aspect-square hover:scale-105 transition-transform"
-                  >
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${cat.imagen})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-                    <div className="relative h-full p-4 flex flex-col justify-end">
-                      <p className="text-sm md:text-base font-semibold text-white text-center">
-                        {cat.nombre}
-                      </p>
-                    </div>
-                  </motion.button>
-                ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setStep("form")}
-                className="px-10 py-4 bg-white text-black rounded-full text-lg font-bold hover:bg-zinc-200 transition-colors"
-              >
-                No, enviar cotización
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* STEP 4: FORMULARIO */}
-        {step === "form" && (
+        <div className="max-w-2xl mx-auto">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h2 className="text-3xl font-bold text-white text-center mb-8">
               Completa tu información
@@ -3497,10 +3494,10 @@ function QuoteFlow() {
 
             <div className={`p-8 rounded-2xl ${glass} space-y-6`}>
               <div className="pb-6 border-b border-white/10">
-                <h3 className="text-lg font-semibold text-white mb-3">Servicios solicitados:</h3>
-                {selectedItems.map((item, idx) => (
-                  <p key={idx} className="text-zinc-300 text-sm">
-                    • {item.nombre}
+                <h3 className="text-lg font-semibold text-white mb-3">Servicios seleccionados:</h3>
+                {selectedServices.map((service, idx) => (
+                  <p key={idx} className="text-zinc-300 text-sm mb-1">
+                    • {service.nombre}
                   </p>
                 ))}
               </div>
@@ -3561,9 +3558,6 @@ function QuoteFlow() {
                       maxLength={10}
                       className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
                     />
-                    {formData.whatsapp && formData.whatsapp.length < 10 && (
-                      <p className="text-xs text-red-400 mt-1">Debe tener 10 dígitos</p>
-                    )}
                   </div>
                   <div>
                     <label className="text-sm text-zinc-400 mb-2 block">Email (opcional)</label>
@@ -3578,70 +3572,20 @@ function QuoteFlow() {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <button
-                  onClick={() => setStep("addMore")}
-                  disabled={sending}
-                  className="flex-1 px-6 py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors"
-                >
-                  Atrás
-                </button>
-                <button
-                  onClick={enviarCotizacion}
-                  disabled={sending}
-                  className="flex-1 px-6 py-4 bg-white text-black rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors disabled:opacity-50"
-                >
-                  {sending ? "Enviando..." : "Enviar Solicitud"}
-                </button>
-              </div>
+              <button
+                onClick={enviarCotizacion}
+                disabled={sending}
+                className="w-full px-6 py-4 bg-white text-black rounded-xl text-lg font-bold hover:bg-zinc-200 transition-colors disabled:opacity-50"
+              >
+                {sending ? "Enviando..." : "Enviar Solicitud"}
+              </button>
 
               <p className="text-xs text-zinc-500 text-center">* Campos requeridos</p>
             </div>
           </motion.div>
-        )}
-
-        {/* STEP 5: CONFIRMACIÓN */}
-        {step === "confirmation" && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className={`p-12 rounded-2xl ${glass} text-center`}
-          >
-            <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
-              <Check className="w-10 h-10 text-green-500" />
-            </div>
-            
-            <h2 className="text-3xl font-bold text-white mb-4">
-              ¡Solicitud enviada!
-            </h2>
-            
-            <p className="text-lg text-zinc-300 mb-8">
-              Te enviaremos los precios por WhatsApp al{' '}
-              <a 
-                href={`https://wa.me/1${formData.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-green-400 hover:text-green-300 underline"
-              >
-                {formData.whatsapp}
-              </a>
-              {' '}en breve.
-            </p>
-
-            <div className="space-y-3">
-              <a
-                href="#home"
-                className="block w-full px-6 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-200 transition-colors"
-              >
-                Volver al Inicio
-              </a>
-            </div>
-          </motion.div>
-        )}
-
+        </div>
       </div>
 
-      {/* NOTIFICACIÓN DE ERROR */}
       <AnimatePresence>
         {showError && (
           <motion.div
@@ -3651,15 +3595,1081 @@ function QuoteFlow() {
             className="fixed top-8 left-1/2 -translate-x-1/2 z-50"
           >
             <div className="bg-red-500 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
-              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-                <X className="w-4 h-4" />
-              </div>
+              <X className="w-6 h-6" />
               <p className="font-medium">{errorMessage}</p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </Section>
+    </section>
+  );
+}
+
+// COMPONENTE PRINCIPAL QUOTEFLOW
+function QuoteFlow() {
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [expandedItems, setExpandedItems] = useState({});
+  const [currentImageIndex, setCurrentImageIndex] = useState({});
+
+  useEffect(() => {
+    const saved = localStorage.getItem('selectedServices');
+    if (saved) {
+      setSelectedServices(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('selectedServices', JSON.stringify(selectedServices));
+  }, [selectedServices]);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(`section-${sectionId}`);
+    if (element) {
+      const offset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
+  const toggleExpanded = (categoryId, optionId) => {
+    const key = `${categoryId}-${optionId}`;
+    setExpandedItems(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  const nextImage = (categoryId, optionId, totalImages) => {
+    const key = `${categoryId}-${optionId}`;
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [key]: ((prev[key] || 0) + 1) % totalImages
+    }));
+  };
+
+  const prevImage = (categoryId, optionId, totalImages) => {
+    const key = `${categoryId}-${optionId}`;
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [key]: ((prev[key] || 0) - 1 + totalImages) % totalImages
+    }));
+  };
+
+  const toggleSelection = (categoryId, option, size = null, duration = null) => {
+    const itemId = size 
+      ? `${categoryId}-${option.id}-${size}` 
+      : duration
+        ? `${categoryId}-${option.id}-${duration}`
+        : `${categoryId}-${option.id}`;
+    
+    const isSelected = selectedServices.some(s => s.id === itemId);
+    
+    if (isSelected) {
+      setSelectedServices(selectedServices.filter(s => s.id !== itemId));
+    } else {
+      let nombre = option.nombre;
+      if (size) nombre += ` ${size}`;
+      if (duration) nombre += ` - ${duration}`;
+      
+      setSelectedServices([...selectedServices, {
+        id: itemId,
+        categoryId,
+        nombre
+      }]);
+    }
+  };
+
+  const clearSelection = () => {
+    setSelectedServices([]);
+    localStorage.removeItem('selectedServices');
+  };
+
+  const categoriasOrden = ['montajes', 'pistas', 'fotografia', 'photobooth', 'efectos', 'pantallas', 'animacion', 'sonidoCeremonia', 'lucesAmbiente', 'sonido', 'luces'];
+
+  return (
+    <>
+      <section className="py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            
+
+            {/* NAVEGACIÓN CON DROPDOWN */}
+            <div className="sticky top-20 z-50 mb-8">
+              {/* VERSIÓN DESKTOP - HOVER */}
+              <div className="hidden md:block relative">
+                <div className="group">
+                  {/* BOTÓN TRIGGER */}
+                  <div className={`${glass} backdrop-blur-xl rounded-2xl p-5 cursor-pointer border border-white/20 hover:border-white/40 transition-all`}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-semibold text-base mb-1">Navegar por secciones</p>
+                        <p className="text-zinc-400 text-sm">Selecciona una categoría para ir directamente</p>
+                      </div>
+                      <ChevronDown className="w-6 h-6 text-white group-hover:rotate-180 transition-transform duration-300" />
+                    </div>
+                  </div>
+                  
+                  {/* DROPDOWN AL HOVER */}
+                  <div className="absolute top-full left-0 right-0 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                    <div className="bg-black/98 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-2xl p-6">
+                      <div className="grid grid-cols-3 gap-3">
+                        {categoriasOrden.map(catId => (
+                          <button
+                            key={catId}
+                            onClick={() => scrollToSection(catId)}
+                            className="group/btn px-4 py-3 rounded-xl bg-gradient-to-br from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/10 hover:border-white/30 text-white font-medium transition-all text-left hover:scale-105 hover:shadow-lg"
+                          >
+                            <span className="text-sm">{SERVICIOS_DATA[catId].nombre}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* VERSIÓN MÓVIL - EXPANDIBLE */}
+              <div className="md:hidden">
+                <div className={`${glass} backdrop-blur-xl rounded-2xl border border-white/20`}>
+                  <button
+                    onClick={() => setExpandedItems(prev => ({...prev, navMenu: !prev.navMenu}))}
+                    className="w-full p-5 flex items-center justify-between"
+                  >
+                    <div className="text-left">
+                      <p className="text-white font-semibold text-base mb-1">Ir a sección</p>
+                      <p className="text-zinc-400 text-xs">Toca para ver todas</p>
+                    </div>
+                    <ChevronDown className={`w-6 h-6 text-white transition-transform duration-300 ${expandedItems.navMenu ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {expandedItems.navMenu && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden border-t border-white/10"
+                      >
+                        <div className="p-5 grid grid-cols-2 gap-3">
+                          {categoriasOrden.map((catId, idx) => (
+                            <motion.button
+                              key={catId}
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: idx * 0.05 }}
+                              onClick={() => {
+                                scrollToSection(catId);
+                                setExpandedItems(prev => ({...prev, navMenu: false}));
+                              }}
+                              className="px-4 py-3 rounded-xl bg-gradient-to-br from-white/15 to-white/5 border border-white/20 active:scale-95 text-white font-medium transition-all text-center text-sm"
+                            >
+                              {SERVICIOS_DATA[catId].nombre}
+                            </motion.button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+
+            <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
+              Servicios disponibles para tu evento
+            </h1>
+            <p className="text-zinc-400 text-center mb-16">
+              Explora nuestros servicios y cotiza lo que necesites
+            </p>
+
+            {/* MONTAJES DJ CON CAROUSEL */}
+            <div id="section-montajes" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-3">
+                Montajes DJ
+              </h2>
+              <p className="text-zinc-400 mb-8">
+                Elige el montaje base para tu evento
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                {SERVICIOS_DATA.montajes.opciones.map(option => {
+                  const itemKey = `montajes-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+                  const isSelected = selectedServices.some(s => s.id === itemKey);
+                  const currentIdx = currentImageIndex[itemKey] || 0;
+                  const imagenes = option.imagenes || [option.imagen];
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''}`}>
+                      <div className="relative h-48 group">
+                        <img 
+                          src={imagenes[currentIdx]} 
+                          alt={option.nombre} 
+                          className="w-full h-full object-cover"
+                        />
+                        
+                        {imagenes.length > 1 && (
+                          <>
+                            <button
+                              onClick={() => prevImage('montajes', option.id, imagenes.length)}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <ChevronRight className="w-5 h-5 rotate-180" />
+                            </button>
+                            <button
+                              onClick={() => nextImage('montajes', option.id, imagenes.length)}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <ChevronRight className="w-5 h-5" />
+                            </button>
+                            
+                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                              {imagenes.map((_, idx) => (
+                                <div
+                                  key={idx}
+                                  className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                                    idx === currentIdx ? 'bg-white' : 'bg-white/40'
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-2">{option.nombre}</h3>
+                        <p className="text-sm text-zinc-400 mb-6">{option.duracion}</p>
+
+                        <button
+                          onClick={() => toggleExpanded('montajes', option.id)}
+                          className="w-full mb-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                        >
+                          <span>Más información</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="mb-4 overflow-hidden"
+                            >
+                              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                                <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                                <ul className="space-y-2 text-sm text-zinc-300">
+                                  {option.incluye.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2">
+                                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        <button
+                          onClick={() => toggleSelection('montajes', option)}
+                          className={`w-full py-3 rounded-xl font-semibold transition-colors ${
+                            isSelected 
+                              ? 'bg-white text-black' 
+                              : 'bg-white/10 text-white hover:bg-white/20'
+                          }`}
+                        >
+                          {isSelected ? '✓ Seleccionado para cotizar' : 'Seleccionar para cotizar'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* SEPARADOR */}
+            <div className="my-24">
+              <div className="text-center">
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                  También puedes añadir estos servicios
+                </h2>
+                <div className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-fuchsia-500 mx-auto rounded-full"></div>
+              </div>
+            </div>
+
+            {/* SONIDO CEREMONIA + LUCES AMBIENTE - LADO A LADO */}
+            <div className="mb-20 grid md:grid-cols-2 gap-8">
+              {/* SONIDO CEREMONIA */}
+              <div id="section-sonidoCeremonia">
+                <h2 className="text-2xl font-bold text-white mb-6">
+                  {SERVICIOS_DATA.sonidoCeremonia.nombre}
+                </h2>
+
+                {SERVICIOS_DATA.sonidoCeremonia.opciones.map(option => {
+                  const itemKey = `sonidoCeremonia-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+                  const isSelected = selectedServices.some(s => s.id === itemKey);
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''}`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-56 object-cover" />
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-2">{option.nombre}</h3>
+                        <p className="text-sm text-zinc-400 mb-6">{option.duracion}</p>
+
+                        <button
+                          onClick={() => toggleExpanded('sonidoCeremonia', option.id)}
+                          className="w-full mb-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                        >
+                          <span>Más información</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="mb-4 overflow-hidden"
+                            >
+                              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                                <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                                <ul className="space-y-2 text-sm text-zinc-300">
+                                  {option.incluye.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2">
+                                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        <button
+                          onClick={() => toggleSelection('sonidoCeremonia', option)}
+                          className={`w-full py-3 rounded-xl font-semibold transition-colors ${
+                            isSelected 
+                              ? 'bg-white text-black' 
+                              : 'bg-white/10 text-white hover:bg-white/20'
+                          }`}
+                        >
+                          {isSelected ? '✓ Seleccionado para cotizar' : 'Seleccionar para cotizar'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* LUCES AMBIENTE */}
+              <div id="section-lucesAmbiente">
+                <h2 className="text-2xl font-bold text-white mb-6">
+                  {SERVICIOS_DATA.lucesAmbiente.nombre}
+                </h2>
+
+                {SERVICIOS_DATA.lucesAmbiente.opciones.map(option => {
+                  const itemKey = `lucesAmbiente-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+                  const isSelected = selectedServices.some(s => s.id === itemKey);
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''}`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-56 object-cover" />
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-2">{option.nombre}</h3>
+                        <p className="text-sm text-zinc-400 mb-6">{option.duracion}</p>
+
+                        <button
+                          onClick={() => toggleExpanded('lucesAmbiente', option.id)}
+                          className="w-full mb-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                        >
+                          <span>Más información</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="mb-4 overflow-hidden"
+                            >
+                              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                                <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                                <ul className="space-y-2 text-sm text-zinc-300">
+                                  {option.incluye.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2">
+                                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        <button
+                          onClick={() => toggleSelection('lucesAmbiente', option)}
+                          className={`w-full py-3 rounded-xl font-semibold transition-colors ${
+                            isSelected 
+                              ? 'bg-white text-black' 
+                              : 'bg-white/10 text-white hover:bg-white/20'
+                          }`}
+                        >
+                          {isSelected ? '✓ Seleccionado para cotizar' : 'Seleccionar para cotizar'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* PISTAS */}
+            <div id="section-pistas" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                Pistas de Baile LED
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {SERVICIOS_DATA.pistas.opciones.map(option => {
+                  const itemKey = `pistas-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-56 object-cover" />
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-2">{option.nombre}</h3>
+                        <p className="text-sm text-zinc-400 mb-6">{option.tipo}</p>
+
+                        <button
+                          onClick={() => toggleExpanded('pistas', option.id)}
+                          className="w-full mb-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                        >
+                          <span>Más información</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="mb-4 overflow-hidden"
+                            >
+                              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                                <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                                <ul className="space-y-2 text-sm text-zinc-300">
+                                  {option.incluye.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2">
+                                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        <p className="text-sm text-zinc-400 mb-3 font-medium">Selecciona el tamaño para cotizar:</p>
+                        <div className="grid grid-cols-2 gap-2">
+                          {option.tamanos.map(size => {
+                            const sizeId = `pistas-${option.id}-${size}`;
+                            const isSelected = selectedServices.some(s => s.id === sizeId);
+                            
+                            return (
+                              <button
+                                key={size}
+                                onClick={() => toggleSelection('pistas', option, size)}
+                                className={`py-3 rounded-xl font-semibold text-sm transition-colors ${
+                                  isSelected 
+                                    ? 'bg-white text-black' 
+                                    : 'bg-white/10 text-white hover:bg-white/20'
+                                }`}
+                              >
+                                {isSelected ? `✓ ${size}` : size}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* FOTOGRAFÍA - CENTRALIZADA Y GRANDE */}
+            <div id="section-fotografia" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                Fotografía Profesional
+              </h2>
+
+              {SERVICIOS_DATA.fotografia.opciones.map(option => {
+                const itemKey = `fotografia-${option.id}`;
+                const isExpanded = expandedItems[itemKey];
+                const isSelected = selectedServices.some(s => s.id === itemKey);
+
+                return (
+                  <div key={option.id} className={`max-w-3xl mx-auto rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''}`}>
+                    <img src={option.imagen} alt={option.nombre} className="w-full h-80 object-cover" />
+                    
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-white mb-2">{option.nombre}</h3>
+                      <p className="text-sm text-zinc-400 mb-6">{option.duracion}</p>
+
+                      <button
+                        onClick={() => toggleExpanded('fotografia', option.id)}
+                        className="w-full mb-4 px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 text-white text-base font-medium transition-colors flex items-center justify-center gap-2"
+                      >
+                        <span>Más información</span>
+                        <ChevronDown className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      </button>
+
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="mb-6 overflow-hidden"
+                          >
+                            <div className="p-5 rounded-lg bg-white/5 mb-4">
+                              <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                              <ul className="space-y-2.5 text-base text-zinc-300">
+                                {option.incluye.map((item, idx) => (
+                                  <li key={idx} className="flex items-start gap-3">
+                                    <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <button
+                        onClick={() => toggleSelection('fotografia', option)}
+                        className={`w-full py-4 rounded-xl text-lg font-semibold transition-colors ${
+                          isSelected 
+                            ? 'bg-white text-black' 
+                            : 'bg-white/10 text-white hover:bg-white/20'
+                        }`}
+                      >
+                        {isSelected ? '✓ Seleccionado para cotizar' : 'Seleccionar para cotizar'}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* PHOTO BOOTH */}
+            <div id="section-photobooth" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                Photo Booth
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {SERVICIOS_DATA.photobooth.opciones.map(option => {
+                  const itemKey = `photobooth-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-48 object-cover" />
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-6">{option.nombre}</h3>
+
+                        <button
+                          onClick={() => toggleExpanded('photobooth', option.id)}
+                          className="w-full mb-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                        >
+                          <span>Más información</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="mb-4 overflow-hidden"
+                            >
+                              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                                <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                                <ul className="space-y-2 text-sm text-zinc-300">
+                                  {option.incluye.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2">
+                                      <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        <p className="text-sm text-zinc-400 mb-3 font-medium">Selecciona la duración:</p>
+                        <div className="grid grid-cols-2 gap-3">
+                          {option.duraciones.map(dur => {
+                            const durId = `photobooth-${option.id}-${dur}`;
+                            const isSelected = selectedServices.some(s => s.id === durId);
+                            
+                            return (
+                              <button
+                                key={dur}
+                                onClick={() => toggleSelection('photobooth', option, null, dur)}
+                                className={`py-3 rounded-xl font-semibold text-sm transition-colors ${
+                                  isSelected 
+                                    ? 'bg-white text-black' 
+                                    : 'bg-white/10 text-white hover:bg-white/20'
+                                }`}
+                              >
+                                {isSelected ? `✓ ${dur}` : dur}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* EFECTOS ESPECIALES - ACTUALIZADO */}
+            <div id="section-efectos" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                Efectos Especiales
+              </h2>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {SERVICIOS_DATA.efectos.opciones.map(option => {
+                  const itemKey = `efectos-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+                  const isSelected = selectedServices.some(s => s.id === itemKey);
+                  const isDisabled = option.disponible === false;
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''} ${isDisabled ? 'opacity-60' : ''}`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-40 object-cover" />
+                      
+                      <div className="p-5">
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <h3 className="text-lg font-bold text-white">{option.nombre}</h3>
+                            {option.subtitulo && <p className="text-xs text-zinc-400 mt-1">{option.subtitulo}</p>}
+                          </div>
+                          {isDisabled && (
+                            <span className="text-xs px-2 py-1 rounded-full bg-red-500/20 text-red-400 whitespace-nowrap ml-2">
+                              No disponible
+                            </span>
+                          )}
+                        </div>
+                        {option.detalles && <p className="text-xs text-zinc-400 mb-4">{option.detalles}</p>}
+                        {option.opciones && (
+                          <div className="mb-4 p-3 rounded-lg bg-white/5">
+                            <p className="text-xs text-zinc-400 mb-2 font-medium">OPCIONES:</p>
+                            <ul className="space-y-1.5 text-xs text-zinc-300">
+                              {option.opciones.map((opt, idx) => (
+                                <li key={idx} className="flex items-start gap-2">
+                                  <span className="text-white mt-0.5">•</span>
+                                  <span>{opt}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {option.incluye && (
+                          <>
+                            <button
+                              onClick={() => toggleExpanded('efectos', option.id)}
+                              className="w-full mb-4 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                            >
+                              <span>Más información</span>
+                              <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            <AnimatePresence>
+                              {isExpanded && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  className="mb-4 overflow-hidden"
+                                >
+                                  <div className="p-3 rounded-lg bg-white/5 mb-4">
+                                    <p className="text-xs text-zinc-400 mb-2 font-medium">INCLUYE:</p>
+                                    <ul className="space-y-1.5 text-xs text-zinc-300">
+                                      {option.incluye.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2">
+                                          <Check className="w-3 h-3 text-white mt-0.5 flex-shrink-0" />
+                                          <span>{item}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        )}
+
+                        <button
+                          onClick={() => !isDisabled && toggleSelection('efectos', option)}
+                          disabled={isDisabled}
+                          className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                            isDisabled
+                              ? 'bg-white/5 text-zinc-500 cursor-not-allowed'
+                              : isSelected 
+                                ? 'bg-white text-black' 
+                                : 'bg-white/10 text-white hover:bg-white/20'
+                          }`}
+                        >
+                          {isDisabled ? 'No disponible' : isSelected ? '✓ Seleccionado' : 'Seleccionar'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* PANTALLAS */}
+            <div id="section-pantallas" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                {SERVICIOS_DATA.pantallas.nombre}
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {SERVICIOS_DATA.pantallas.opciones.map(option => {
+                  const itemKey = `pantallas-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+                  const isSelected = selectedServices.some(s => s.id === itemKey);
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''}`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-40 object-cover" />
+                      
+                      <div className="p-5">
+                        <h3 className="text-lg font-bold text-white mb-2">{option.nombre}</h3>
+                        {option.detalles && <p className="text-xs text-zinc-400 mb-4">{option.detalles}</p>}
+
+                        {option.incluye && (
+                          <>
+                            <button
+                              onClick={() => toggleExpanded('pantallas', option.id)}
+                              className="w-full mb-4 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                            >
+                              <span>Más información</span>
+                              <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            <AnimatePresence>
+                              {isExpanded && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  className="mb-4 overflow-hidden"
+                                >
+                                  <div className="p-3 rounded-lg bg-white/5 mb-4">
+                                    <p className="text-xs text-zinc-400 mb-2 font-medium">INCLUYE:</p>
+                                    <ul className="space-y-1.5 text-xs text-zinc-300">
+                                      {option.incluye.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2">
+                                          <Check className="w-3 h-3 text-white mt-0.5 flex-shrink-0" />
+                                          <span>{item}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        )}
+
+                        <button
+                          onClick={() => toggleSelection('pantallas', option)}
+                          className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                            isSelected 
+                              ? 'bg-white text-black' 
+                              : 'bg-white/10 text-white hover:bg-white/20'
+                          }`}
+                        >
+                          {isSelected ? '✓ Seleccionado' : 'Seleccionar'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* ANIMACIÓN */}
+            <div id="section-animacion" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                {SERVICIOS_DATA.animacion.nombre}
+              </h2>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {SERVICIOS_DATA.animacion.opciones.map(option => {
+                  const itemKey = `animacion-${option.id}`;
+                  const isExpanded = expandedItems[itemKey];
+                  const isSelected = selectedServices.some(s => s.id === itemKey);
+
+                  return (
+                    <div key={option.id} className={`rounded-2xl ${glass} overflow-hidden ${isSelected ? 'ring-2 ring-white/40' : ''}`}>
+                      <img src={option.imagen} alt={option.nombre} className="w-full h-40 object-cover" />
+                      
+                      <div className="p-5">
+                        <h3 className="text-lg font-bold text-white mb-2">{option.nombre}</h3>
+                        {option.detalles && <p className="text-xs text-zinc-400 mb-4">{option.detalles}</p>}
+                        {option.duracion && <p className="text-xs text-zinc-400 mb-4">{option.duracion}</p>}
+
+                        {option.incluye && (
+                          <>
+                            <button
+                              onClick={() => toggleExpanded('animacion', option.id)}
+                              className="w-full mb-4 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                            >
+                              <span>Más información</span>
+                              <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            <AnimatePresence>
+                              {isExpanded && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  className="mb-4 overflow-hidden"
+                                >
+                                  <div className="p-3 rounded-lg bg-white/5 mb-4">
+                                    <p className="text-xs text-zinc-400 mb-2 font-medium">INCLUYE:</p>
+                                    <ul className="space-y-1.5 text-xs text-zinc-300">
+                                      {option.incluye.map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-2">
+                                          <Check className="w-3 h-3 text-white mt-0.5 flex-shrink-0" />
+                                          <span>{item}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        )}
+
+                        <button
+                          onClick={() => toggleSelection('animacion', option)}
+                          className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                            isSelected 
+                              ? 'bg-white text-black' 
+                              : 'bg-white/10 text-white hover:bg-white/20'
+                          }`}
+                        >
+                          {isSelected ? '✓ Seleccionado' : 'Seleccionar'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* SONIDO - CARD INFORMATIVA */}
+            <div id="section-sonido" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                {SERVICIOS_DATA.sonido.nombre}
+              </h2>
+
+              {SERVICIOS_DATA.sonido.opciones.map(option => {
+                const itemKey = `sonido-${option.id}`;
+                const isExpanded = expandedItems[itemKey];
+
+                return (
+                  <div key={option.id} className={`max-w-3xl mx-auto rounded-2xl ${glass} overflow-hidden`}>
+                    <img src={option.imagen} alt={option.nombre} className="w-full h-64 object-cover" />
+                    
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-white mb-4">{option.nombre}</h3>
+                      <p className="text-zinc-300 mb-6 leading-relaxed">
+                        {SERVICIOS_DATA.sonido.descripcion}
+                      </p>
+
+                      <button
+                        onClick={() => toggleExpanded('sonido', option.id)}
+                        className="w-full mb-6 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                      >
+                        <span>Ver qué incluye</span>
+                        <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      </button>
+
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="mb-6 overflow-hidden"
+                          >
+                            <div className="p-4 rounded-lg bg-white/5 mb-4">
+                              <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                              <ul className="space-y-2 text-sm text-zinc-300">
+                                {option.incluye.map((item, idx) => (
+                                  <li key={idx} className="flex items-start gap-2">
+                                    <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <a
+                        href={`https://wa.me/17873568786?text=Hola, me interesa información sobre Sonido Profesional para mi evento`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full py-3 rounded-xl text-center font-semibold bg-green-600 hover:bg-green-700 text-white transition-colors"
+                      >
+                        Contáctanos por WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* LUCES - CARD INFORMATIVA */}
+            <div id="section-luces" className="mb-20">
+              <h2 className="text-3xl font-bold text-white mb-8">
+                {SERVICIOS_DATA.luces.nombre}
+              </h2>
+
+              {SERVICIOS_DATA.luces.opciones.map(option => {
+                const itemKey = `luces-${option.id}`;
+                const isExpanded = expandedItems[itemKey];
+
+                return (
+                  <div key={option.id} className={`max-w-3xl mx-auto rounded-2xl ${glass} overflow-hidden`}>
+                    <img src={option.imagen} alt={option.nombre} className="w-full h-64 object-cover" />
+                    
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-white mb-4">{option.nombre}</h3>
+                      <p className="text-zinc-300 mb-6 leading-relaxed">
+                        {SERVICIOS_DATA.luces.descripcion}
+                      </p>
+
+                      <button
+                        onClick={() => toggleExpanded('luces', option.id)}
+                        className="w-full mb-6 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
+                      >
+                        <span>Ver qué incluye</span>
+                        <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      </button>
+
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="mb-6 overflow-hidden"
+                          >
+                            <div className="p-4 rounded-lg bg-white/5 mb-4">
+                              <p className="text-xs text-zinc-400 mb-3 font-medium">INCLUYE:</p>
+                              <ul className="space-y-2 text-sm text-zinc-300">
+                                {option.incluye.map((item, idx) => (
+                                  <li key={idx} className="flex items-start gap-2">
+                                    <Check className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <a
+                        href={`https://wa.me/17873568786?text=Hola, me interesa información sobre Iluminación Profesional para mi evento`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full py-3 rounded-xl text-center font-semibold bg-green-600 hover:bg-green-700 text-white transition-colors"
+                      >
+                        Contáctanos por WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* BOTONES FLOTANTES */}
+      {selectedServices.length > 0 && (
+        <>
+          {/* DESKTOP - ABAJO DERECHA */}
+          <motion.a
+            href="#formulario-cotizacion"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="hidden md:flex fixed bottom-6 right-6 px-6 py-3 bg-white text-black rounded-full text-base font-bold shadow-2xl hover:scale-105 transition-transform z-50 items-center gap-2"
+          >
+            Solicitar cotización ({selectedServices.length})
+          </motion.a>
+
+          {/* MÓVIL - ABAJO CENTRO */}
+          <motion.a
+            href="#formulario-cotizacion"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-white text-black rounded-full text-base font-bold shadow-2xl hover:scale-105 transition-transform z-50"
+          >
+            Solicitar ({selectedServices.length})
+          </motion.a>
+
+          {/* LIMPIAR SELECCIÓN */}
+          <motion.button
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            onClick={clearSelection}
+            className="fixed bottom-24 right-6 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-full text-sm font-medium shadow-xl transition-colors z-50"
+          >
+            Limpiar selección
+          </motion.button>
+        </>
+      )}
+    </>
   );
 }
 
@@ -3673,6 +4683,8 @@ export default function App() {
   const showMontajes = hash === "#montajes";
   const showServices = hash === "#servicios";
   const showQuote = hash === "#cotizar";
+  const showFormulario = hash === "#formulario-cotizacion";
+
 
   // Sub-páginas de servicios individuales: #servicio/<slug>
   const serviceSlug = hash.startsWith("#servicio/")
@@ -3727,6 +4739,16 @@ export default function App() {
           <QuoteFlow />
           <Footer />
         </>
+
+      ) : showFormulario ? (
+        /* ===== Sub-pantalla: FORMULARIO COTIZACIÓN ===== */
+        <>
+          <FormularioCotizacion 
+            selectedServices={JSON.parse(localStorage.getItem('selectedServices') || '[]')}
+          />
+          <Footer />
+        </>  
+
       ) : showPackages ? (
         <>
           <PackagesPage />
@@ -3745,7 +4767,7 @@ export default function App() {
       ) : (
         <>
           <Hero />
-          <BestSellers />
+          <QuoteFlow />
           <Gallery />
           <Testimonials />
           <Contact />
